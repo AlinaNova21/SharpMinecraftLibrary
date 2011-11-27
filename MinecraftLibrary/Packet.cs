@@ -381,9 +381,9 @@ namespace MinecraftLibrary
         }
         public override bool read(Queue<byte> data)
         {
-            if (data.Peek() == 0x05)
+            if (data.Peek() == 0x12)
             {
-                fromQueue(12, ref data);
+                fromQueue(6, ref data);
                 return true;
             }
             else { return false; }
@@ -581,6 +581,31 @@ namespace MinecraftLibrary
             else { return false; }
         }
     }
+    class Packet_EntityPainting : Packet
+    {
+        public string name;
+        public override byte[] write()
+        {
+            return new byte[] { };
+        }
+        public override bool read(Queue<byte> data)
+        {
+            if (data.Peek() == 0x19)
+            {
+                data.Dequeue();
+                fromQueue(4, ref data);
+                string tmp = readString(data.ToArray());
+                   for (int I = 0; I < (tmp.Length + 1) * 2; I++)
+                    {
+                        data.Dequeue();
+                    }
+                    name = tmp;
+                    fromQueue(16, ref data);
+                return true;
+            }
+            else { return false; }
+        }
+    }
     class Packet_EntityLook : Packet
     {
         public long time;
@@ -751,7 +776,27 @@ namespace MinecraftLibrary
             else { return false; }
         }
     }
-    class Packet_BLockChange : Packet
+    class Packet_MultiBlockChange : Packet
+    {
+        public long time;
+        public override byte[] write()
+        {
+            return new byte[] { };
+        }
+        public override bool read(Queue<byte> data)
+        {
+            if (data.Peek() == 0x34)
+            {
+                fromQueue(9, ref data);
+                int cnt = readShort(fromQueue(2, ref data),0);
+                fromQueue(cnt * 4, ref data);
+
+                return true;
+            }
+            else { return false; }
+        }
+    }
+    class Packet_BlockChange : Packet
     {
         public long time;
         public override byte[] write()
@@ -831,6 +876,144 @@ namespace MinecraftLibrary
             if (data.Peek() == 0x47)
             {
                 fromQueue(18, ref data);
+                return true;
+            }
+            else { return false; }
+        }
+    }
+    class Packet_CloseWnd : Packet
+    {
+        public long time;
+        public override byte[] write()
+        {
+            return new byte[] { };
+        }
+        public override bool read(Queue<byte> data)
+        {
+            if (data.Peek() == 0x65)
+            {
+                fromQueue(2, ref data);
+                return true;
+            }
+            else { return false; }
+        }
+    }
+    class Packet_SetSlot : Packet
+    {
+        public long time;
+        public override byte[] write()
+        {
+            return new byte[] { };
+        }
+        public override bool read(Queue<byte> data)
+        {
+            if (data.Peek() == 0x67)
+            {
+                fromQueue(6, ref data);
+                return true;
+            }
+            else { return false; }
+        }
+    }
+    class Packet_WndItems : Packet
+    {
+        public long time;
+        public override byte[] write()
+        {
+            return new byte[] { };
+        }
+        public override bool read(Queue<byte> data)
+        {
+            if (data.Peek() == 0x68)
+            {
+                fromQueue(94, ref data);
+                return true;
+            }
+            else { return false; }
+        }
+    }
+    class Packet_UpdateWndProp : Packet
+    {
+        public long time;
+        public override byte[] write()
+        {
+            return new byte[] { };
+        }
+        public override bool read(Queue<byte> data)
+        {
+            if (data.Peek() == 0x69)
+            {
+                fromQueue(6, ref data);
+                return true;
+            }
+            else { return false; }
+        }
+    }
+    class Packet_UpdateSign : Packet
+    {
+        public int x;
+        public short y;
+        public int z;
+        public string text1;
+        public string text2;
+        public string text3;
+        public string text4;
+
+        public override byte[] write()
+        {
+            return new byte[] { };
+        }
+        public override bool read(Queue<byte> data)
+        {
+            if (data.Peek() == 0x82)
+            {
+                //todo Messy! Cleanup!
+                data.Dequeue();
+                x = readInt(fromQueue(4, ref data), 0);
+                y = readShort(fromQueue(2, ref data), 0);
+                z = readInt(fromQueue(4, ref data), 0);
+                string tmp;
+                tmp = readString(data.ToArray());
+                for (int I = 0; I < (tmp.Length + 1) * 2; I++)
+                {
+                    data.Dequeue();
+                }
+                text1 = tmp;
+                tmp = readString(data.ToArray());
+                for (int I = 0; I < (tmp.Length + 1) * 2; I++)
+                {
+                    data.Dequeue();
+                }
+                text2 = tmp;
+                tmp = readString(data.ToArray());
+                for (int I = 0; I < (tmp.Length + 1) * 2; I++)
+                {
+                    data.Dequeue();
+                }
+                text3 = tmp;
+                tmp = readString(data.ToArray());
+                for (int I = 0; I < (tmp.Length + 1) * 2; I++)
+                {
+                    data.Dequeue();
+                }
+                text4 = tmp;
+                return true;
+            }
+            else { return false; }
+        }
+    }
+    class Packet_IncStatistic : Packet
+    {
+        public long time;
+        public override byte[] write()
+        {
+            return new byte[] { };
+        }
+        public override bool read(Queue<byte> data)
+        {
+            if (data.Peek() == 0xC8)
+            {
+                fromQueue(6, ref data);
                 return true;
             }
             else { return false; }
