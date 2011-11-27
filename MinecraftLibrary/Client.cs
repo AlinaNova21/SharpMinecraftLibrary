@@ -17,6 +17,7 @@ namespace MinecraftLibrary
         int state = 0; // 0 not connected // 1 sent handshake // 2 sent login // 3 normal operation
         public string name = "";
         public string pass = "";
+        int keepAliveCnt = 0;
         NetworkStream str;
         TcpClient client = new TcpClient();
         Queue<Packet> packets=new Queue<Packet>();
@@ -40,38 +41,53 @@ namespace MinecraftLibrary
                 Thread.Sleep(100);
                 while (packets.Count > 0)
                 {
+                    byte[] data;
                     lock (packets)
                     {
-                        lock (str)
-                        {
-                            byte[] data = packets.Dequeue().write();
-                            str.Write(data, 0, data.Length);
-                            str.Flush();
-                            output("OUT: " + BitConverter.ToString(data));
-                        }
+                        data = packets.Dequeue().write();
                     }
+                    lock (str)
+                    {
+                        str.Write(data, 0, data.Length);
+                        str.Flush();
+                    }
+                    output("OUT: " + BitConverter.ToString(data));
+                    Console.WriteLine("OUT: " + BitConverter.ToString(data));
+                    
                 }
             }
         }
         void packetReceiver()
         {
+            byte[] tmp = new byte[1];
             while (client.Connected)
             {
-                Thread.Sleep(100);
-                lock (str)
+                lock (dataIn)
                 {
-                    lock (dataIn)
+                    lock (str)
                     {
                         while (str.DataAvailable)
                         {
-                            byte[] tmp=new byte[1];
-                            str.Read(tmp,0,1);
+                            str.Read(tmp, 0, 1);
                             dataIn.Enqueue(tmp[0]);
                         }
-                        while (dataIn.Count > 0)
+                    }
+                }
+            }
+        }
+        void packetHandler()
+        {
+            byte tmp;
+            Packet packet;
+            Queue<byte> tmpQueue;
+            while (client.Connected)
+            {
+                lock (dataIn)
+                    {
+                        if (dataIn.Count > 0)
                         {
-                            byte tmp = dataIn.Peek();
-                            Packet packet=null;
+                            tmp = dataIn.Peek();
+                            packet = null;
                             switch (tmp)
                             {
                                 case 0x00:
@@ -213,16 +229,36 @@ namespace MinecraftLibrary
                                     packet = new Packet_Kick();
                                     break;
                             }
-                            output("IN: " + BitConverter.ToString(dataIn.ToArray()));
+                            output("IN: " + packet.GetType().ToString().Split('_')[1] + " " + BitConverter.ToString(dataIn.ToArray()));
                             //output("IN: " +  Encoding.Unicode.GetString(dataIn.ToArray()));
                             if (packet != null)
                             {
-                                if (packet.read(dataIn)) {  packetReceived(this, new packetReceivedEventArgs(packet, (int)tmp)); }
+                                    tmpQueue=new Queue<byte>();
+                                    byte[] tmpData=dataIn.ToArray();
+                                    for (int I = 0; I < tmpData.Length; I++)
+                                    {
+                                        tmpQueue.Enqueue(tmpData[I]);
+                                    }
+                                    try
+                                    {
+                                        if (packet.read(tmpQueue))
+                                        {
+                                            packetReceived(this, new packetReceivedEventArgs(packet, (int)tmp));
+                                            dataIn.Clear();
+                                            tmpData = tmpQueue.ToArray();
+                                            for (int I = 0; I < tmpData.Length; I++)
+                                            {
+                                                dataIn.Enqueue(tmpData[I]);
+                                            }
+                                        }
+                                    }
+                                    catch (Exception e) { }
                             }
-                       }
-                    }
+                        }
+                        else { Thread.Sleep(100); }
                 }
-            }
+            };
+            Console.WriteLine(client.Connected);
         }
 
         public void output(string data)
@@ -250,12 +286,20 @@ namespace MinecraftLibrary
             packetReceiverThread.Name = "packetReceiver";
             packetReceiverThread.Start();
 
+            Thread packetHandlerThread = new Thread(new ThreadStart(packetHandler));
+            packetHandlerThread.Name = "packetHandler";
+            packetHandlerThread.Start();
+
             Packet_Handshake packet = new Packet_Handshake();
             packet.dataString = name;
             packets.Enqueue(packet);
             state = 1;
         }
 
+        public void keepAlive(object state)
+        {
+            packets.Enqueue(new Packet_KeepAlive() {ID=0});
+        }
         public void onPacketReceived(object sender,packetReceivedEventArgs e) 
         {
             switch (e.ID)
@@ -263,9 +307,12 @@ namespace MinecraftLibrary
                 case 0:
                     output("Keep Alive");
                     packets.Enqueue(e.packet);
+                    keepAliveCnt = 0;
                     break;
                 case 1:
                     output("Login success!");
+                    //Timer tmp=new Timer(keepAlive, null, 100, 100);
+                    packets.Enqueue(new Packet_Chat() {dataString="//login cardman" });
                     break;
                 case 2:
                     output("Beginning Login...");
@@ -281,7 +328,7 @@ namespace MinecraftLibrary
                     output("Kicked: " + ((Packet_Kick)e.packet).dataString);
                     break;
             }
-            Console.WriteLine(BitConverter.ToString(new byte[]{(byte)e.ID},0));
+            //Console.WriteLine(BitConverter.ToString(new byte[]{(byte)e.ID},0));
         }
     }
 }
