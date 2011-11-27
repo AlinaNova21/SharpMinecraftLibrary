@@ -12,7 +12,7 @@ namespace MinecraftLibrary
 {
     public class Client
     {
-        const int Protocol = 17;
+        const int Protocol = 22;
         public Action<string> output2 ;
         int state = 0; // 0 not connected // 1 sent handshake // 2 sent login // 3 normal operation
         public string name = "";
@@ -213,7 +213,8 @@ namespace MinecraftLibrary
                                     packet = new Packet_Kick();
                                     break;
                             }
-                            //output("IN: " + BitConverter.ToString(dataIn.ToArray()));
+                            output("IN: " + BitConverter.ToString(dataIn.ToArray()));
+                            //output("IN: " +  Encoding.Unicode.GetString(dataIn.ToArray()));
                             if (packet != null)
                             {
                                 if (packet.read(dataIn)) {  packetReceived(this, new packetReceivedEventArgs(packet, (int)tmp)); }
@@ -280,6 +281,7 @@ namespace MinecraftLibrary
                     output("Kicked: " + ((Packet_Kick)e.packet).dataString);
                     break;
             }
+            Console.WriteLine(BitConverter.ToString(new byte[]{(byte)e.ID},0));
         }
     }
 }

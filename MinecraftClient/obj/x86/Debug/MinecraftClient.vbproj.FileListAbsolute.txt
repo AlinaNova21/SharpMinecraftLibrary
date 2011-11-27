@@ -12,10 +12,3 @@ C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftCli
 C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftClient\obj\x86\Debug\MinecraftClient.Resources.resources
 C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftClient\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftClient\obj\x86\Debug\GenerateResource.write.1.tlog
-C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftClient\bin\Debug\Chraft.dll
-C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftClient\bin\Debug\ICSharpCode.SharpZipLib.dll
-C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftClient\bin\Debug\IKVM.OpenJDK.Core.dll
-C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftClient\bin\Debug\Ionic.Zip.dll
-C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftClient\bin\Debug\IKVM.Runtime.dll
-C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftClient\bin\Debug\IKVM.OpenJDK.Util.dll
-C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftClient\bin\Debug\Chraft.pdb

@@ -104,7 +104,6 @@ namespace MinecraftLibrary
             }
             return res;
         }
-
     }
 
     class Packet_KeepAlive : Packet
@@ -481,7 +480,14 @@ namespace MinecraftLibrary
     }
     class Packet_MobSpawn : Packet
     {
-        public long time;
+        public int eID;
+        public byte type;
+        public int x;
+        public int y;
+        public int z;
+        public byte yaw;
+        public byte pitch;
+
         public override byte[] write()
         {
             return new byte[] { };
@@ -490,7 +496,37 @@ namespace MinecraftLibrary
         {
             if (data.Peek() == 0x18)
             {
-                fromQueue(21, ref data);
+                if (!data.Contains(0x7f)) return false;
+                if (data.Count < 20) return false;
+                data.Dequeue();
+                eID = readInt(fromQueue(4, ref data), 0);
+                type = data.Dequeue();
+                x = readInt(fromQueue(4, ref data), 0);
+                y = readInt(fromQueue(4, ref data), 0);
+                z = readInt(fromQueue(4, ref data), 0);
+                yaw = data.Dequeue();
+                pitch=data.Dequeue();
+
+                byte xx = data.Dequeue();
+                while (xx != 127)
+                {
+                    int index = xx & 0x1F ;//# Lower 5 bits
+                    int ty    = xx >> 5   ;//# Upper 3 bits
+                    //Console.WriteLine(xx + "_" + index + "_" + ty);
+                    if (ty == 0) data.Dequeue();
+                    if (ty == 1) fromQueue(2,ref data);
+                    if (ty == 2) fromQueue(4,ref data); 
+                    if (ty == 3) fromQueue(4,ref data);
+                    if (ty == 4)
+                    {
+                       string tmp= readString(data.ToArray());
+                       for (int I = 0; I < (tmp.Length + 1) * 2; I++)
+                       {
+                           data.Dequeue();
+                       }
+                    }
+                    xx = data.Dequeue();
+                }
                 return true;
             }
             else { return false; }
@@ -592,16 +628,17 @@ namespace MinecraftLibrary
         {
             if (data.Peek() == 0x19)
             {
+                if (data.Count < 32) return false;
                 data.Dequeue();
-                fromQueue(4, ref data);
-                string tmp = readString(data.ToArray());
-                   for (int I = 0; I < (tmp.Length + 1) * 2; I++)
+                    fromQueue(4, ref data);
+                    string tmp = readString(data.ToArray());
+                    for (int I = 0; I < (tmp.Length + 1) * 2; I++)
                     {
                         data.Dequeue();
                     }
                     name = tmp;
                     fromQueue(16, ref data);
-                return true;
+                    return true;
             }
             else { return false; }
         }
