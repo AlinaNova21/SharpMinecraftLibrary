@@ -86,6 +86,24 @@ namespace MinecraftLibrary
             Stream str = client.GetStream();
             while (client.Connected)
             {
+                Packet pack = null;
+                bool p = false;
+                lock (packets)
+                {
+                    p = packets.Count > 0;
+                    if (p) pack = packets.Dequeue();
+                }
+                if (p)
+                {
+                    MemoryStream tmps = new MemoryStream();
+                    pack.write(tmps);
+                    //str.Write(data, 0, data.Length);
+                    tmps.WriteTo(str);
+                    output(BitConverter.ToString(tmps.ToArray()));
+                    tmps.Close();
+                    str.Flush();
+                    output("OUT: " + pack.GetType().ToString().Split('_')[1]);
+                }
                 packet = null;
                 str.Read(tmp, 0, 1);
                 switch (tmp[0])
@@ -229,10 +247,10 @@ namespace MinecraftLibrary
                         packet = new Packet_Kick();
                         break;
                 }
-                //output("IN: " +  Encoding.Unicode.GetString(dataIn.ToArray()));
+                output("IN: " +  BitConverter.ToString(tmp));
                 if (packet != null)
                 {
-                    output("IN: " + packet.GetType().ToString().Split('_')[1]);
+                    //output("IN: " + packet.GetType().ToString().Split('_')[1]);
                     packet.read(str);
                     packetReceived(this, new packetReceivedEventArgs(packet, (int)tmp[0]));
                 }
@@ -258,7 +276,7 @@ namespace MinecraftLibrary
 
             Thread packetSenderThread = new Thread(new ThreadStart(packetSender));
             packetSenderThread.Name = "PacketSender";
-            packetSenderThread.Start();
+            //packetSenderThread.Start();
 
             Thread packetReceiverThread = new Thread(new ThreadStart(packetReceiver));
             packetReceiverThread.Name = "packetReceiver";
@@ -283,7 +301,7 @@ namespace MinecraftLibrary
             switch (e.ID)
             {
                 case 0:
-                    output("Keep Alive");
+                    //output("Keep Alive");
                     packets.Enqueue(e.packet);
                     break;
                 case 1:
@@ -293,9 +311,10 @@ namespace MinecraftLibrary
                     break;
                 case 2:
                     output("Beginning Login...");
-                    packets.Enqueue(new Packet_Login(){username="agsBot",protocol=Protocol});
+                    packets.Enqueue(new Packet_Login(){username=name,protocol=Protocol});
                     break;
                 case 3:
+                    Console.WriteLine(((Packet_Chat)e.packet).dataString);
                     output(((Packet_Chat)e.packet).dataString);
                     break;
                 case 6:

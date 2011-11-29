@@ -6,7 +6,7 @@ using System.IO;
 
 namespace MinecraftLibrary
 {
-    public abstract  class Packet
+    public abstract class Packet
     {
         public abstract void write(Stream str);
         public abstract void read(Stream str);
@@ -15,78 +15,16 @@ namespace MinecraftLibrary
             byte[] res = new byte[data.Length];
             for (int i = 0; i < data.Length; i++)
             {
-                res[i]=data[data.Length-1-i];
+                res[i] = data[data.Length - 1 - i];
             }
             return res;
         }
-        protected string readString(Stream str)
+        protected byte[] readSTUB(Stream str, int len)
         {
-            short len = readShort(str);
-            byte[] tmp = new byte[(len * 2)];
-            str.Read(tmp, 0, len*2);
-            return UnicodeEncoding.BigEndianUnicode.GetString(tmp, 0, tmp.Length);
-        }
-        protected void writeString(Stream str, string data)
-        {
-            writeShort(str,(short)data.Length);
-            byte[] name = ASCIIEncoding.BigEndianUnicode.GetBytes(data);
-            str.Write(name, 0, name.Length);
-        }
-        protected short readShort(Stream str)
-        {
-            byte[] tmp=new byte[2];
-            str.Read(tmp, 0, 2);
-            return BitConverter.ToInt16(reverse(tmp), 0);
-        }
-        protected void writeShort(Stream str,short data)
-        {
-            byte[] tmp=reverse(BitConverter.GetBytes(data));
-            str.Write(tmp, 0, tmp.Length);
-        }
-        protected int readInt(Stream str)
-        {
-            byte[] tmp = new byte[4];
-            str.Read(tmp, 0, 4);
-            tmp = reverse(tmp);
-            return BitConverter.ToInt32(tmp, 0);
-        }
-        protected void writeInt(Stream str,int data)
-        {
-            byte[] tmp= reverse(BitConverter.GetBytes(data));
-            str.Write(tmp, 0, tmp.Length);
-        }
-        protected long readLong(Stream str)
-        {
-            byte[] tmp = new byte[8];
-            str.Read(tmp, 0, 8);
-            return BitConverter.ToInt64(reverse(tmp), 0);
-        }
-        protected void writeLong(Stream str, long data)
-        {
-            byte[] tmp = reverse(BitConverter.GetBytes(data));
-            str.Write(tmp, 0, tmp.Length);
-        }
-        protected float readFloat(Stream str)
-        {
-            byte[] tmp = new byte[4];
-            str.Read(tmp, 0, 4);
-            return BitConverter.ToSingle(reverse(tmp), 0);
-        }
-        protected void writeFloat(Stream str, float data)
-        {
-            byte[] tmp = reverse(BitConverter.GetBytes(data));
-            str.Write(tmp, 0, tmp.Length);
-        }
-        protected double readDouble(Stream str)
-        {
-            byte[] tmp = new byte[8];
-            str.Read(tmp, 0, 8);
-            return BitConverter.ToDouble (reverse(tmp), 0);
-        }
-        protected void writeDouble(Stream str, double data)
-        {
-            byte[] tmp = reverse(BitConverter.GetBytes(data));
-            str.Write(tmp, 0, tmp.Length);
+            byte[] tmp = new byte[len];
+            str.Read(tmp, 0, len);
+            //System.Diagnostics.Debug.WriteLine("STUBBED!");
+            return tmp;
         }
         protected bool readBool(Stream str)
         {
@@ -119,14 +57,114 @@ namespace MinecraftLibrary
         {
             str.WriteByte((byte)data);
         }
-
-        protected void readSTUB(Stream str,int len)
+        protected string readString(Stream str)
         {
-            byte[] tmp = new byte[len];
-            str.Read(tmp, 0, len);
+            short len = readShort(str);
+            byte[] tmp = new byte[(len * 2)];
+            str.Read(tmp, 0, len * 2);
+            return UnicodeEncoding.BigEndianUnicode.GetString(tmp, 0, tmp.Length);
         }
-     }
-
+        protected void writeString(Stream str, string data)
+        {
+            writeShort(str, (short)data.Length);
+            byte[] name = ASCIIEncoding.BigEndianUnicode.GetBytes(data);
+            str.Write(name, 0, name.Length);
+        }
+        protected short readShort(Stream str)
+        {
+            byte[] tmp = new byte[2];
+            str.Read(tmp, 0, 2);
+            return BitConverter.ToInt16(reverse(tmp), 0);
+        }
+        protected void writeShort(Stream str, short data)
+        {
+            byte[] tmp = reverse(BitConverter.GetBytes(data));
+            str.Write(tmp, 0, tmp.Length);
+        }
+        protected int readInt(Stream str)
+        {
+            byte[] tmp = new byte[4];
+            str.Read(tmp, 0, 4);
+            tmp = reverse(tmp);
+            return BitConverter.ToInt32(tmp, 0);
+        }
+        protected void writeInt(Stream str, int data)
+        {
+            byte[] tmp = reverse(BitConverter.GetBytes(data));
+            str.Write(tmp, 0, tmp.Length);
+        }
+        protected long readLong(Stream str)
+        {
+            byte[] tmp = new byte[8];
+            str.Read(tmp, 0, 8);
+            return BitConverter.ToInt64(reverse(tmp), 0);
+        }
+        protected void writeLong(Stream str, long data)
+        {
+            byte[] tmp = reverse(BitConverter.GetBytes(data));
+            str.Write(tmp, 0, tmp.Length);
+        }
+        protected float readFloat(Stream str)
+        {
+            byte[] tmp = new byte[4];
+            str.Read(tmp, 0, 4);
+            return BitConverter.ToSingle(reverse(tmp), 0);
+        }
+        protected void writeFloat(Stream str, float data)
+        {
+            byte[] tmp = reverse(BitConverter.GetBytes(data));
+            str.Write(tmp, 0, tmp.Length);
+        }
+        protected double readDouble(Stream str)
+        {
+            byte[] tmp = new byte[8];
+            str.Read(tmp, 0, 8);
+            return BitConverter.ToDouble(reverse(tmp), 0);
+        }
+        protected void writeDouble(Stream str, double data)
+        {
+            byte[] tmp = reverse(BitConverter.GetBytes(data));
+            str.Write(tmp, 0, tmp.Length);
+        }
+        protected void readSlotData(Stream str)
+        {
+            short[] enchantable = {
+ 0x103, //#Flint and steel
+ 0x105, //#Bow
+ 0x15A, //#Fishing rod
+ 0x167, //#Shears
+ 
+ //#TOOLS
+ //#sword, shovel, pickaxe, axe, hoe
+ 0x10C, 0x10D, 0x10E, 0x10F, 0x122, //#WOOD
+ 0x110, 0x111, 0x112, 0x113, 0x123, //#STONE
+ 0x10B, 0x100, 0x101, 0x102, 0x124, //#IRON
+ 0x114, 0x115, 0x116, 0x117, 0x125, //#DIAMOND
+ 0x11B, 0x11C, 0x11D, 0x11E, 0x126, //#GOLD
+ 
+ //#ARMOUR
+ //#helmet, chestplate, leggings, boots
+ 0x12A, 0x12B, 0x12C, 0x12D, //#LEATHER
+ 0x12E, 0x12F, 0x130, 0x131, //#CHAIN
+ 0x132, 0x133, 0x134, 0x135, //#IRON
+ 0x136, 0x137, 0x138, 0x139, //#DIAMOND
+ 0x13A, 0x13B, 0x13C, 0x14D  //#GOLD};
+                             };
+            if (readShort(str) != -1)
+            {
+                readSByte(str);
+                if (enchantable.Contains(readShort(str)))
+                {
+                    short tmp = readShort(str);
+                    if (tmp != -1)
+                    {
+                        readSTUB(str, tmp);
+                    }
+                }
+            }
+        }
+    }
+    //0x00
     class Packet_KeepAlive : Packet
     {
         public int ID { get; set; }
@@ -140,6 +178,7 @@ namespace MinecraftLibrary
                 ID = readInt(str);
         }
     }
+    //0x01
     class Packet_Login : Packet
     {
         public int protocol;
@@ -177,6 +216,7 @@ namespace MinecraftLibrary
             maxPlayers=readByte(str);
         }
     }
+    //0x02
     class Packet_Handshake : Packet
     {
         public string dataString { get; set; }
@@ -190,6 +230,7 @@ namespace MinecraftLibrary
             dataString = readString(str);
         }
     }
+    //0x03
     class Packet_Chat : Packet
     {
         public string dataString { get; set; }
@@ -203,6 +244,7 @@ namespace MinecraftLibrary
             dataString=readString(str);
         }
     }
+    //0x04
     class Packet_Time : Packet
     {
         public long time;
@@ -215,6 +257,7 @@ namespace MinecraftLibrary
             time=readLong(str);
         }
     }
+    //0x05
     class Packet_EntityEquipment : Packet
     {
         public int eID;
@@ -233,6 +276,7 @@ namespace MinecraftLibrary
             damage = readShort(str);
         }
     }
+    //0x06
     class Packet_SpawnPosition : Packet
     {
         public int x;
@@ -249,6 +293,7 @@ namespace MinecraftLibrary
                 z = readInt(str);
         }
     }
+    //0x07
     class Packet_UseEntity: Packet
     {
         public int user;
@@ -266,6 +311,7 @@ namespace MinecraftLibrary
             throw new NotImplementedException();
         }
     }
+    //0x08
     class Packet_UpdateHealth : Packet
     {
         public short health;
@@ -283,6 +329,7 @@ namespace MinecraftLibrary
             saturation = readFloat(str);
         }
     }
+    //0x09
     class Packet_Respawn : Packet
     {
         public sbyte dim;
@@ -308,6 +355,7 @@ namespace MinecraftLibrary
             mapSeed = readLong(str);
         }
     }
+    //0x0A
     class Packet_Player : Packet
     {
         public bool onGround;
@@ -321,6 +369,7 @@ namespace MinecraftLibrary
             throw new NotImplementedException();
         }
     }
+    //0x0B
     class Packet_PlayerPos : Packet
     {
         public double x;
@@ -342,6 +391,7 @@ namespace MinecraftLibrary
             throw new NotImplementedException();
         }
     }
+    //0x0C
     class Packet_PlayerLook : Packet
     {
         public float yaw;
@@ -359,6 +409,7 @@ namespace MinecraftLibrary
             throw new NotImplementedException();
         }
     }
+    //0x0D
     class Packet_PlayerPosAndLook : Packet
     {
         public double x;
@@ -390,6 +441,7 @@ namespace MinecraftLibrary
             onGround = readBool(str);
         }
     }
+    //0x0E
     class Packet_PlayerDigging : Packet
     {
         public sbyte status;
@@ -414,6 +466,7 @@ namespace MinecraftLibrary
     }
     // TODO: Implement 0x0F Player Block Placement 
     // TODO: Implement 0x10 Holding Change
+    //0x11
     class Packet_UseBed : Packet
     {
         public int eID;
@@ -434,6 +487,7 @@ namespace MinecraftLibrary
             z = readInt(str);
         }
     }
+    //0x12
     class Packet_Animation : Packet
     {
         public int eID;
@@ -450,6 +504,7 @@ namespace MinecraftLibrary
         }
     }
     // TODO: Implement 0x13 Entity Action
+    //0x14
     class Packet_NamedEntitySpawn : Packet
     {
         public int eID;
@@ -476,6 +531,7 @@ namespace MinecraftLibrary
             item = readShort(str);
         }
     }
+    //0x15
     class Packet_PickupSpawn : Packet
     {
         public int eID;
@@ -507,6 +563,7 @@ namespace MinecraftLibrary
             roll = readSByte(str);
         }
     }
+    //0x16
     class Packet_CollectItem : Packet
     {
         public int itemEID;
@@ -521,17 +578,38 @@ namespace MinecraftLibrary
             playerEID = readInt(str);
         }
     }
+    //0x17
     class Packet_AddObjVehicle : Packet
     {
+        public int eID;
+        public sbyte type;
+        public int x;
+        public int y;
+        public int z;
+        public int fbeID;
+        public short unknown;
+
         public override void write(Stream str)
         {
             throw new NotImplementedException();
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 22);
+            eID = readInt(str);
+            type = readSByte(str);
+            x = readInt(str);
+            y = readInt(str);
+            z = readInt(str);
+            fbeID = readInt(str);
+            if (fbeID > 0)
+            {
+                unknown = readShort(str);
+                unknown = readShort(str);
+                unknown = readShort(str);
+            }
         }
     }
+    //0x18
     class Packet_MobSpawn : Packet
     {
         public int eID;
@@ -593,6 +671,7 @@ namespace MinecraftLibrary
             }
         }
     }
+    //0x19
     class Packet_EntityPainting : Packet
     {
         public string name;
@@ -604,9 +683,13 @@ namespace MinecraftLibrary
         {
             readInt(str);
             readString(str);
-            readSTUB(str, 16);
+            readInt(str);
+            readInt(str);
+            readInt(str);
+            readInt(str);
         }
     }
+    //0x1A
     class Packet_ExpOrb : Packet
     {
         public override void write(Stream str)
@@ -615,9 +698,14 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 19);
+            readInt(str);
+            readInt(str);
+            readInt(str);
+            readInt(str);
+            readShort(str);
         }
     }
+    //0x1C
     class Packet_EntityVel : Packet
     {
         public override void write(Stream str)
@@ -626,9 +714,13 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 11);
+            readInt(str);
+            readShort(str);
+            readShort(str);
+            readShort(str);
         }
     }
+    //0x1D
     class Packet_DestroyEntity : Packet
     {
         public override void write(Stream str)
@@ -637,9 +729,10 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 5);
+            readInt(str);
         }
     }
+    //0x1E
     class Packet_Entity : Packet
     {
         public override void write(Stream str)
@@ -648,9 +741,10 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 5);
+            readInt(str);
         }
     }
+    //0x1F
     class Packet_EntityRelativeMove : Packet
     {
         public override void write(Stream str)
@@ -659,9 +753,13 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 8);
+            readInt(str);
+            readSByte(str);
+            readSByte(str);
+            readSByte(str);
         }
     }
+    //0x20
     class Packet_EntityLook : Packet
     {
         public override void write(Stream str)
@@ -670,9 +768,12 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 7);
+            readInt(str);
+            readSByte(str);
+            readSByte(str);
         }
     }
+    //0x21
     class Packet_EntityLookAndRelativeMove : Packet
     {
         public override void write(Stream str)
@@ -681,9 +782,15 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 10);
+            readInt(str);
+            readSByte(str);
+            readSByte(str);
+            readSByte(str);
+            readSByte(str);
+            readSByte(str);
         }
     }
+    //0x22
     class Packet_EntityTeleport : Packet
     {
         public override void write(Stream str)
@@ -692,9 +799,15 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 19);
+            readInt(str);
+            readInt(str);
+            readInt(str);
+            readInt(str);
+            readSByte(str);
+            readSByte(str);
         }
     }
+    //0x26
     class Packet_EntityStatus : Packet
     {
         public override void write(Stream str)
@@ -703,9 +816,11 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 6);
+            readInt(str);
+            readSByte(str);
         }
     }
+    //0x27
     class Packet_AttachEntity : Packet
     {
         public override void write(Stream str)
@@ -714,9 +829,12 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 9);
+            readInt(str);
+            readInt(str);
         }
     }
+    // TODO: Implement 0x28 Entity Metadata
+    //0x29
     class Packet_EntityEffect : Packet
     {
         public override void write(Stream str)
@@ -725,9 +843,13 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 9);
+            readInt(str);
+            readSByte(str);
+            readSByte(str);
+            readShort(str);
         }
     }
+    //0x2A
     class Packet_RemoveEntityEffect : Packet
     {
         public override void write(Stream str)
@@ -736,9 +858,12 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 6);
+            readInt(str);
+            readSByte(str);
         }
     }
+    // TODO: Implement 0x2B Experience
+    //0x32
     class Packet_PreChunk : Packet
     {
         public override void write(Stream str)
@@ -747,9 +872,12 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 10);
+            readInt(str);
+            readInt(str);
+            readBool(str);
         }
     }
+    //0x33
     class Packet_MapChunk : Packet
     {
         public int x;
@@ -778,6 +906,7 @@ namespace MinecraftLibrary
             str.Read(data, 0, size);
         }
     }
+    //0x34
     class Packet_MultiBlockChange : Packet
     {
         public override void write(Stream str)
@@ -786,11 +915,24 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 9);
+            readInt(str);
+            readInt(str);
             int cnt = readShort(str);
-            readSTUB(str, cnt * 4);
+            for (int i = 0; i < cnt; i++)
+            {
+                readShort(str);
+            }
+            for (int i = 0; i < cnt; i++)
+            {
+                readSByte(str);
+            }
+            for (int i = 0; i < cnt; i++)
+            {
+                readSByte(str);
+            }
         }
     }
+    //0x35
     class Packet_BlockChange : Packet
     {
         public override void write(Stream str)
@@ -799,9 +941,14 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 12);
+            readInt(str);
+            readSByte(str);
+            readInt(str);
+            readSByte(str);
+            readSByte(str);
         }
     }
+    //0x35
     class Packet_BlockAction : Packet
     {
         public override void write(Stream str)
@@ -810,9 +957,15 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 13);
+            readInt(str);
+            readShort(str);
+            readInt(str);
+            readSByte(str);
+            readSByte(str);
         }
     }
+    // TODO: Implement 0x3C Explosion
+    //0x3D
     class Packet_SoundEffect : Packet
     {
         public override void write(Stream str)
@@ -821,9 +974,14 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 18);
+            readInt(str);
+            readInt(str);
+            readSByte(str);
+            readInt(str);
+            readInt(str);
         }
     }
+    //0x34
     class Packet_NewOrInvalidState : Packet
     {
         public override void write(Stream str)
@@ -832,9 +990,11 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 3);
+            readSByte(str);
+            readSByte(str);
         }
     }
+    //0x47
     class Packet_Thunder : Packet
     {
         public override void write(Stream str)
@@ -843,9 +1003,15 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 18);
+            readInt(str);
+            readBool(str); //always true
+            readInt(str);
+            readInt(str);
+            readInt(str);
         }
     }
+    // TODO: Implement 0x64 Open Window
+    //0x65
     class Packet_CloseWnd : Packet
     {
         public override void write(Stream str)
@@ -854,9 +1020,11 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 2);
+            readSByte(str);
         }
     }
+    // TODO: Implement 0x66 Window Click
+    //0x67
     class Packet_SetSlot : Packet
     {
         public override void write(Stream str)
@@ -865,9 +1033,12 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 6);
+            readSByte(str);
+            readShort(str);
+            readSlotData(str);
         }
     }
+    //0x68
     class Packet_WndItems : Packet
     {
         public override void write(Stream str)
@@ -876,9 +1047,15 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 94);
+            readSByte(str);
+            short cnt=readShort(str);
+            for (int i=0;i<cnt;i++)
+            {
+                readSlotData(str);
+            }
         }
     }
+    //0x69
     class Packet_UpdateWndProp : Packet
     {
         public override void write(Stream str)
@@ -887,9 +1064,15 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 6);
+            readSByte(str);
+            readShort(str);
+            readShort(str);
         }
     }
+    // TODO: Implement 0x6A Transaction
+    // TODO: Implement 0x6B Creative inventory action
+    // TODO: Implement 0x6C Enchant item
+    //0x82
     class Packet_UpdateSign : Packet
     {
         public int x;
@@ -906,7 +1089,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            x=readInt(str);
+            x = readInt(str);
             y = readShort(str);
             z = readInt(str);
             text1 = readString(str);
@@ -915,6 +1098,8 @@ namespace MinecraftLibrary
             text4 = readString(str);
         }
      }
+    // TODO: Implement 0x83 Item Data (Maps)
+    //0xC8
     class Packet_IncStatistic : Packet
     {
         public override void write(Stream str)
@@ -923,10 +1108,12 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            readSTUB(str, 6);
+            readInt(str);
+            readSByte(str);
         }
     }
-
+    // TODO: Implement 0xFE Server List Ping (Basically get server info)
+    //0xC9
     class Packet_PlayerListItem : Packet
     {
         public string name;
@@ -944,6 +1131,7 @@ namespace MinecraftLibrary
             ping = readShort(str);
         }
     }
+    //0xFF
     class Packet_Kick : Packet
     {
         public string dataString { get; set; }

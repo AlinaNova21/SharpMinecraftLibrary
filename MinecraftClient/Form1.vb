@@ -19,6 +19,7 @@ Public Class Form1
         mc.name = "agsBot"
         mc.output2 = AddressOf wl
         'mc.connect("192.168.59.137", 25566) 'MineOS+
+        'mc.connect("192.168.159.129", 25566) 'MineOS+
         'mc.connect("127.0.0.1", 25566)
         mc.connect("178.33.81.147", 25565)
     End Sub
