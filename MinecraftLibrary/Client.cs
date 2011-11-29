@@ -83,7 +83,7 @@ namespace MinecraftLibrary
             byte[] tmp = new byte[1];
             Packet packet;
             Queue<byte> tmpQueue;
-            Stream str = client.GetStream();
+            Stream str = new blockingStream(client.GetStream());
             while (client.Connected)
             {
                 Packet pack = null;
@@ -102,7 +102,7 @@ namespace MinecraftLibrary
                     output(BitConverter.ToString(tmps.ToArray()));
                     tmps.Close();
                     str.Flush();
-                    output("OUT: " + pack.GetType().ToString().Split('_')[1]);
+                    //output("OUT: " + pack.GetType().ToString().Split('_')[1]);
                 }
                 packet = null;
                 str.Read(tmp, 0, 1);
@@ -247,13 +247,14 @@ namespace MinecraftLibrary
                         packet = new Packet_Kick();
                         break;
                 }
-                output("IN: " +  BitConverter.ToString(tmp));
+                //output("IN: " +  BitConverter.ToString(tmp));
                 if (packet != null)
                 {
                     //output("IN: " + packet.GetType().ToString().Split('_')[1]);
                     packet.read(str);
                     packetReceived(this, new packetReceivedEventArgs(packet, (int)tmp[0]));
                 }
+                //Thread.Sleep(10);
             }
         }
 
@@ -314,8 +315,42 @@ namespace MinecraftLibrary
                     packets.Enqueue(new Packet_Login(){username=name,protocol=Protocol});
                     break;
                 case 3:
-                    Console.WriteLine(((Packet_Chat)e.packet).dataString);
-                    output(((Packet_Chat)e.packet).dataString);
+                    Dictionary<int, ConsoleColor> cc = new Dictionary<int, ConsoleColor>();
+                    cc.Add(0, ConsoleColor.Black);
+                    cc.Add(1, ConsoleColor.DarkBlue);
+                    cc.Add(2, ConsoleColor.DarkGreen);
+                    cc.Add(3, ConsoleColor.DarkCyan);
+                    cc.Add(4, ConsoleColor.DarkRed);
+                    cc.Add(5, ConsoleColor.DarkMagenta);
+                    cc.Add(6, ConsoleColor.DarkYellow);
+                    cc.Add(7, ConsoleColor.Gray);
+                    cc.Add(8, ConsoleColor.DarkGray);
+                    cc.Add(9, ConsoleColor.Blue);
+                    cc.Add(10, ConsoleColor.Green);
+                    cc.Add(11, ConsoleColor.Cyan);
+                    cc.Add(12, ConsoleColor.Red);
+                    cc.Add(13, ConsoleColor.Magenta);
+                    cc.Add(14, ConsoleColor.Yellow);
+                    cc.Add(15, ConsoleColor.White);
+
+                    string msg = ((Packet_Chat)e.packet).dataString;
+                    output(msg);
+                    StreamReader sr = new StreamReader(new MemoryStream(Encoding.Default.GetBytes(msg)));
+                    char[] tmp=new char[1];
+                    while (!sr.EndOfStream)
+                    {
+                        sr.Read(tmp, 0, 1);
+                        if (tmp[0] == (char)0xA7)
+                        {
+                            sr.Read(tmp, 0, 1);
+                            Console.ForegroundColor = cc[(int)tmp[0]];
+                        }
+                        else
+                        {
+                            Console.Write(tmp[0]);
+                        }
+                    }
+                    Console.WriteLine();
                     break;
                 case 6:
                     output("SpawnPosition");
@@ -325,6 +360,79 @@ namespace MinecraftLibrary
                     break;
             }
             //Console.WriteLine(BitConverter.ToString(new byte[]{(byte)e.ID},0));
+        }
+    }
+
+    public class blockingStream : Stream
+    {
+        NetworkStream _str;
+        public blockingStream(NetworkStream str)
+        {
+            _str = str;
+        }
+        public override bool CanRead
+        {
+            get { return _str.CanRead; }
+        }
+
+        public override bool CanSeek
+        {
+            get { return _str.CanSeek; }
+        }
+
+        public override bool CanWrite
+        {
+            get { return _str.CanWrite; }
+        }
+
+        public override void Flush()
+        {
+            _str.Flush();
+        }
+
+        public override long Length
+        {
+            get { return _str.Length; }
+        }
+
+        public override long Position
+        {
+            get
+            {
+                return _str.Position;
+            }
+            set
+            {
+                _str.Position=value;
+            }
+        }
+
+        public override int Read(byte[] buffer, int offset, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                while (!_str.DataAvailable)
+                {
+                    Thread.Sleep(100);
+                }
+                _str.Read(buffer, offset + i, 1);
+            }
+            return 0;
+        }
+
+        public override long Seek(long offset, SeekOrigin origin)
+        {
+            return _str.Seek(offset,origin);
+        }
+
+        public override void SetLength(long value)
+        {
+            _str.SetLength(value);
+        }
+
+        public override void Write(byte[] buffer, int offset, int count)
+        {
+            _str.Write(buffer,offset,count);
         }
     }
 }

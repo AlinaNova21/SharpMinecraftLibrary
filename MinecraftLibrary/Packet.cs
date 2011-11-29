@@ -12,12 +12,14 @@ namespace MinecraftLibrary
         public abstract void read(Stream str);
         protected byte[] reverse(byte[] data)
         {
-            byte[] res = new byte[data.Length];
-            for (int i = 0; i < data.Length; i++)
-            {
-                res[i] = data[data.Length - 1 - i];
-            }
-            return res;
+            Array.Reverse(data);
+            return data;
+            //byte[] res = new byte[data.Length];
+            //for (int i = 0; i < data.Length; i++)
+            //{
+            //    res[i] = data[data.Length - 1 - i];
+            //}
+            //return res;
         }
         protected byte[] readSTUB(Stream str, int len)
         {
@@ -674,19 +676,24 @@ namespace MinecraftLibrary
     //0x19
     class Packet_EntityPainting : Packet
     {
+        public int eID;
         public string name;
+        public int x;
+        public int y;
+        public int z;
+        public int dir;
         public override void write(Stream str)
         {
             throw new NotImplementedException();
         }
         public override void read(Stream str)
         {
-            readInt(str);
-            readString(str);
-            readInt(str);
-            readInt(str);
-            readInt(str);
-            readInt(str);
+            eID=readInt(str);
+            name=readString(str);
+            x=readInt(str);
+            y=readInt(str);
+            z=readInt(str);
+            dir=readInt(str);
         }
     }
     //0x1A
@@ -698,6 +705,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x1A ExpOrb)
             readInt(str);
             readInt(str);
             readInt(str);
@@ -714,6 +722,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x1C EntityVel)
             readInt(str);
             readShort(str);
             readShort(str);
@@ -729,6 +738,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x1D DestroyEntity)
             readInt(str);
         }
     }
@@ -741,6 +751,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x1E Entity)
             readInt(str);
         }
     }
@@ -753,6 +764,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x1F EntityRelativeMove)
             readInt(str);
             readSByte(str);
             readSByte(str);
@@ -768,6 +780,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x20 EntityLook)
             readInt(str);
             readSByte(str);
             readSByte(str);
@@ -782,6 +795,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x21 EntityLookAndRelativeMove)
             readInt(str);
             readSByte(str);
             readSByte(str);
@@ -799,6 +813,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x22 EntityTeleport)
             readInt(str);
             readInt(str);
             readInt(str);
@@ -816,6 +831,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x26 EntityStatus)
             readInt(str);
             readSByte(str);
         }
@@ -829,6 +845,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x27 AttachEntity)
             readInt(str);
             readInt(str);
         }
@@ -843,6 +860,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x29 EntityEffect)
             readInt(str);
             readSByte(str);
             readSByte(str);
@@ -858,6 +876,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x2A RemoveEntityEffect)
             readInt(str);
             readSByte(str);
         }
@@ -872,6 +891,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x32 Prechunk)
             readInt(str);
             readInt(str);
             readBool(str);
@@ -915,6 +935,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x34 MultiBlockChange)
             readInt(str);
             readInt(str);
             int cnt = readShort(str);
@@ -941,6 +962,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x35 BlockChange)
             readInt(str);
             readSByte(str);
             readInt(str);
@@ -948,7 +970,7 @@ namespace MinecraftLibrary
             readSByte(str);
         }
     }
-    //0x35
+    //0x36?
     class Packet_BlockAction : Packet
     {
         public override void write(Stream str)
@@ -957,6 +979,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x36? BlockAction)
             readInt(str);
             readShort(str);
             readInt(str);
@@ -974,6 +997,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x3D SoundEffect)
             readInt(str);
             readInt(str);
             readSByte(str);
@@ -981,7 +1005,7 @@ namespace MinecraftLibrary
             readInt(str);
         }
     }
-    //0x34
+    //0x3E?
     class Packet_NewOrInvalidState : Packet
     {
         public override void write(Stream str)
@@ -990,6 +1014,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x3E? NewOrInvalidState)
             readSByte(str);
             readSByte(str);
         }
@@ -1003,6 +1028,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x47 Thunder)
             readInt(str);
             readBool(str); //always true
             readInt(str);
@@ -1020,6 +1046,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x65 CloseWnd)
             readSByte(str);
         }
     }
@@ -1033,6 +1060,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x67 SetSlot)
             readSByte(str);
             readShort(str);
             readSlotData(str);
@@ -1047,6 +1075,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x68 WndItems)
             readSByte(str);
             short cnt=readShort(str);
             for (int i=0;i<cnt;i++)
@@ -1064,6 +1093,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0x69 UpdateWndProp)
             readSByte(str);
             readShort(str);
             readShort(str);
@@ -1108,6 +1138,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
+            // TODO: Add variables (0xC8 IncStatistic)
             readInt(str);
             readSByte(str);
         }
@@ -1140,7 +1171,6 @@ namespace MinecraftLibrary
         {
             writeString(str, dataString) ;
         }
-        
         public override void read(Stream str)
         {
             dataString = readString(str);
