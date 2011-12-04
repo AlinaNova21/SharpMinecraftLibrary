@@ -57,7 +57,6 @@ namespace MinecraftLibrary
                     str.Flush();
                     output("OUT: " + pack.GetType().ToString().Split('_')[1]);
                 }
-
             }
         }
         void packetReceiver()
@@ -292,7 +291,10 @@ namespace MinecraftLibrary
             packets.Enqueue(packet);
             state = 1;
         }
-
+        public void sendPacket(Packet pack)
+        {
+            packets.Enqueue(pack);
+        }
         public void keepAlive(object state)
         {
             packets.Enqueue(new Packet_KeepAlive() {ID=0});
@@ -308,30 +310,30 @@ namespace MinecraftLibrary
                 case 1:
                     output("Login success!");
                     //Timer tmp=new Timer(keepAlive, null, 100, 100);
-                    packets.Enqueue(new Packet_Chat() {dataString="/login cardman" });
+                    // packets.Enqueue(new Packet_Chat() {dataString="/login *PassordRemoved*" });
                     break;
                 case 2:
                     output("Beginning Login...");
                     packets.Enqueue(new Packet_Login(){username=name,protocol=Protocol});
                     break;
                 case 3:
-                    Dictionary<int, ConsoleColor> cc = new Dictionary<int, ConsoleColor>();
-                    cc.Add(0, ConsoleColor.Black);
-                    cc.Add(1, ConsoleColor.DarkBlue);
-                    cc.Add(2, ConsoleColor.DarkGreen);
-                    cc.Add(3, ConsoleColor.DarkCyan);
-                    cc.Add(4, ConsoleColor.DarkRed);
-                    cc.Add(5, ConsoleColor.DarkMagenta);
-                    cc.Add(6, ConsoleColor.DarkYellow);
-                    cc.Add(7, ConsoleColor.Gray);
-                    cc.Add(8, ConsoleColor.DarkGray);
-                    cc.Add(9, ConsoleColor.Blue);
-                    cc.Add(10, ConsoleColor.Green);
-                    cc.Add(11, ConsoleColor.Cyan);
-                    cc.Add(12, ConsoleColor.Red);
-                    cc.Add(13, ConsoleColor.Magenta);
-                    cc.Add(14, ConsoleColor.Yellow);
-                    cc.Add(15, ConsoleColor.White);
+                    Dictionary<char, ConsoleColor> cc = new Dictionary<char, ConsoleColor>();
+                    cc.Add('0', ConsoleColor.Black);
+                    cc.Add('1', ConsoleColor.DarkBlue);
+                    cc.Add('2', ConsoleColor.DarkGreen);
+                    cc.Add('3', ConsoleColor.DarkCyan);
+                    cc.Add('4', ConsoleColor.DarkRed);
+                    cc.Add('5', ConsoleColor.DarkMagenta);
+                    cc.Add('6', ConsoleColor.DarkYellow);
+                    cc.Add('7', ConsoleColor.Gray);
+                    cc.Add('8', ConsoleColor.DarkGray);
+                    cc.Add('9', ConsoleColor.Blue);
+                    cc.Add('a', ConsoleColor.Green);
+                    cc.Add('b', ConsoleColor.Cyan);
+                    cc.Add('c', ConsoleColor.Red);
+                    cc.Add('d', ConsoleColor.Magenta);
+                    cc.Add('e', ConsoleColor.Yellow);
+                    cc.Add('f', ConsoleColor.White);
 
                     string msg = ((Packet_Chat)e.packet).dataString;
                     output(msg);
@@ -340,10 +342,10 @@ namespace MinecraftLibrary
                     while (!sr.EndOfStream)
                     {
                         sr.Read(tmp, 0, 1);
-                        if (tmp[0] == (char)0xA7)
+                        if (tmp[0] == (char)65533)
                         {
                             sr.Read(tmp, 0, 1);
-                            Console.ForegroundColor = cc[(int)tmp[0]];
+                            Console.ForegroundColor = cc[tmp[0]];
                         }
                         else
                         {
@@ -351,6 +353,7 @@ namespace MinecraftLibrary
                         }
                     }
                     Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.White;
                     break;
                 case 6:
                     output("SpawnPosition");

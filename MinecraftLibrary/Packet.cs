@@ -167,7 +167,7 @@ namespace MinecraftLibrary
         }
     }
     //0x00
-    class Packet_KeepAlive : Packet
+    public class Packet_KeepAlive : Packet
     {
         public int ID { get; set; }
         public override void write(Stream str)
@@ -181,7 +181,7 @@ namespace MinecraftLibrary
         }
     }
     //0x01
-    class Packet_Login : Packet
+    public class Packet_Login : Packet
     {
         public int protocol;
         public string username;
@@ -219,7 +219,7 @@ namespace MinecraftLibrary
         }
     }
     //0x02
-    class Packet_Handshake : Packet
+    public class Packet_Handshake : Packet
     {
         public string dataString { get; set; }
         public override void write(Stream str)
@@ -233,7 +233,7 @@ namespace MinecraftLibrary
         }
     }
     //0x03
-    class Packet_Chat : Packet
+    public class Packet_Chat : Packet
     {
         public string dataString { get; set; }
         public override void write(Stream str)
@@ -247,7 +247,7 @@ namespace MinecraftLibrary
         }
     }
     //0x04
-    class Packet_Time : Packet
+    public class Packet_Time : Packet
     {
         public long time;
         public override void write(Stream str)
@@ -260,7 +260,7 @@ namespace MinecraftLibrary
         }
     }
     //0x05
-    class Packet_EntityEquipment : Packet
+    public class Packet_EntityEquipment : Packet
     {
         public int eID;
         public short slot;
@@ -279,7 +279,7 @@ namespace MinecraftLibrary
         }
     }
     //0x06
-    class Packet_SpawnPosition : Packet
+    public class Packet_SpawnPosition : Packet
     {
         public int x;
         public int y;
@@ -296,7 +296,7 @@ namespace MinecraftLibrary
         }
     }
     //0x07
-    class Packet_UseEntity: Packet
+    public class Packet_UseEntity : Packet
     {
         public int user;
         public int target;
@@ -314,7 +314,7 @@ namespace MinecraftLibrary
         }
     }
     //0x08
-    class Packet_UpdateHealth : Packet
+    public class Packet_UpdateHealth : Packet
     {
         public short health;
         public short food;
@@ -332,7 +332,7 @@ namespace MinecraftLibrary
         }
     }
     //0x09
-    class Packet_Respawn : Packet
+    public class Packet_Respawn : Packet
     {
         public sbyte dim;
         public sbyte difficulty;
@@ -358,7 +358,7 @@ namespace MinecraftLibrary
         }
     }
     //0x0A
-    class Packet_Player : Packet
+    public class Packet_Player : Packet
     {
         public bool onGround;
         public override void write(Stream str)
@@ -372,7 +372,7 @@ namespace MinecraftLibrary
         }
     }
     //0x0B
-    class Packet_PlayerPos : Packet
+    public class Packet_PlayerPos : Packet
     {
         public double x;
         public double y;
@@ -394,7 +394,7 @@ namespace MinecraftLibrary
         }
     }
     //0x0C
-    class Packet_PlayerLook : Packet
+    public class Packet_PlayerLook : Packet
     {
         public float yaw;
         public float pitch;
@@ -412,7 +412,7 @@ namespace MinecraftLibrary
         }
     }
     //0x0D
-    class Packet_PlayerPosAndLook : Packet
+    public class Packet_PlayerPosAndLook : Packet
     {
         public double x;
         public double y;
@@ -444,7 +444,7 @@ namespace MinecraftLibrary
         }
     }
     //0x0E
-    class Packet_PlayerDigging : Packet
+    public class Packet_PlayerDigging : Packet
     {
         public sbyte status;
         public int x;
@@ -469,7 +469,7 @@ namespace MinecraftLibrary
     // TODO: Implement 0x0F Player Block Placement 
     // TODO: Implement 0x10 Holding Change
     //0x11
-    class Packet_UseBed : Packet
+    public class Packet_UseBed : Packet
     {
         public int eID;
         public sbyte inBed;
@@ -490,7 +490,7 @@ namespace MinecraftLibrary
         }
     }
     //0x12
-    class Packet_Animation : Packet
+    public class Packet_Animation : Packet
     {
         public int eID;
         public sbyte animation;
@@ -507,7 +507,7 @@ namespace MinecraftLibrary
     }
     // TODO: Implement 0x13 Entity Action
     //0x14
-    class Packet_NamedEntitySpawn : Packet
+    public class Packet_NamedEntitySpawn : Packet
     {
         public int eID;
         public string name;
@@ -534,7 +534,7 @@ namespace MinecraftLibrary
         }
     }
     //0x15
-    class Packet_PickupSpawn : Packet
+    public class Packet_PickupSpawn : Packet
     {
         public int eID;
         public short item;
@@ -566,7 +566,7 @@ namespace MinecraftLibrary
         }
     }
     //0x16
-    class Packet_CollectItem : Packet
+    public class Packet_CollectItem : Packet
     {
         public int itemEID;
         public int playerEID;
@@ -581,7 +581,7 @@ namespace MinecraftLibrary
         }
     }
     //0x17
-    class Packet_AddObjVehicle : Packet
+    public class Packet_AddObjVehicle : Packet
     {
         public int eID;
         public sbyte type;
@@ -612,7 +612,7 @@ namespace MinecraftLibrary
         }
     }
     //0x18
-    class Packet_MobSpawn : Packet
+    public class Packet_MobSpawn : Packet
     {
         public int eID;
         public sbyte type;
@@ -674,7 +674,7 @@ namespace MinecraftLibrary
         }
     }
     //0x19
-    class Packet_EntityPainting : Packet
+    public class Packet_EntityPainting : Packet
     {
         public int eID;
         public string name;
@@ -697,7 +697,7 @@ namespace MinecraftLibrary
         }
     }
     //0x1A
-    class Packet_ExpOrb : Packet
+    public class Packet_ExpOrb : Packet
     {
         public override void write(Stream str)
         {
@@ -714,7 +714,7 @@ namespace MinecraftLibrary
         }
     }
     //0x1C
-    class Packet_EntityVel : Packet
+    public class Packet_EntityVel : Packet
     {
         public override void write(Stream str)
         {
@@ -730,7 +730,7 @@ namespace MinecraftLibrary
         }
     }
     //0x1D
-    class Packet_DestroyEntity : Packet
+    public class Packet_DestroyEntity : Packet
     {
         public override void write(Stream str)
         {
@@ -743,7 +743,7 @@ namespace MinecraftLibrary
         }
     }
     //0x1E
-    class Packet_Entity : Packet
+    public class Packet_Entity : Packet
     {
         public override void write(Stream str)
         {
@@ -756,7 +756,7 @@ namespace MinecraftLibrary
         }
     }
     //0x1F
-    class Packet_EntityRelativeMove : Packet
+    public class Packet_EntityRelativeMove : Packet
     {
         public override void write(Stream str)
         {
@@ -772,7 +772,7 @@ namespace MinecraftLibrary
         }
     }
     //0x20
-    class Packet_EntityLook : Packet
+    public class Packet_EntityLook : Packet
     {
         public override void write(Stream str)
         {
@@ -787,7 +787,7 @@ namespace MinecraftLibrary
         }
     }
     //0x21
-    class Packet_EntityLookAndRelativeMove : Packet
+    public class Packet_EntityLookAndRelativeMove : Packet
     {
         public override void write(Stream str)
         {
@@ -805,7 +805,7 @@ namespace MinecraftLibrary
         }
     }
     //0x22
-    class Packet_EntityTeleport : Packet
+    public class Packet_EntityTeleport : Packet
     {
         public override void write(Stream str)
         {
@@ -823,7 +823,7 @@ namespace MinecraftLibrary
         }
     }
     //0x26
-    class Packet_EntityStatus : Packet
+    public class Packet_EntityStatus : Packet
     {
         public override void write(Stream str)
         {
@@ -837,7 +837,7 @@ namespace MinecraftLibrary
         }
     }
     //0x27
-    class Packet_AttachEntity : Packet
+    public class Packet_AttachEntity : Packet
     {
         public override void write(Stream str)
         {
@@ -852,7 +852,7 @@ namespace MinecraftLibrary
     }
     // TODO: Implement 0x28 Entity Metadata
     //0x29
-    class Packet_EntityEffect : Packet
+    public class Packet_EntityEffect : Packet
     {
         public override void write(Stream str)
         {
@@ -868,7 +868,7 @@ namespace MinecraftLibrary
         }
     }
     //0x2A
-    class Packet_RemoveEntityEffect : Packet
+    public class Packet_RemoveEntityEffect : Packet
     {
         public override void write(Stream str)
         {
@@ -883,7 +883,7 @@ namespace MinecraftLibrary
     }
     // TODO: Implement 0x2B Experience
     //0x32
-    class Packet_PreChunk : Packet
+    public class Packet_PreChunk : Packet
     {
         public override void write(Stream str)
         {
@@ -898,7 +898,7 @@ namespace MinecraftLibrary
         }
     }
     //0x33
-    class Packet_MapChunk : Packet
+    public class Packet_MapChunk : Packet
     {
         public int x;
         public short y;
@@ -927,7 +927,7 @@ namespace MinecraftLibrary
         }
     }
     //0x34
-    class Packet_MultiBlockChange : Packet
+    public class Packet_MultiBlockChange : Packet
     {
         public override void write(Stream str)
         {
@@ -954,7 +954,7 @@ namespace MinecraftLibrary
         }
     }
     //0x35
-    class Packet_BlockChange : Packet
+    public class Packet_BlockChange : Packet
     {
         public override void write(Stream str)
         {
@@ -971,7 +971,7 @@ namespace MinecraftLibrary
         }
     }
     //0x36?
-    class Packet_BlockAction : Packet
+    public class Packet_BlockAction : Packet
     {
         public override void write(Stream str)
         {
@@ -989,7 +989,7 @@ namespace MinecraftLibrary
     }
     // TODO: Implement 0x3C Explosion
     //0x3D
-    class Packet_SoundEffect : Packet
+    public class Packet_SoundEffect : Packet
     {
         public override void write(Stream str)
         {
@@ -1006,7 +1006,7 @@ namespace MinecraftLibrary
         }
     }
     //0x3E?
-    class Packet_NewOrInvalidState : Packet
+    public class Packet_NewOrInvalidState : Packet
     {
         public override void write(Stream str)
         {
@@ -1020,7 +1020,7 @@ namespace MinecraftLibrary
         }
     }
     //0x47
-    class Packet_Thunder : Packet
+    public class Packet_Thunder : Packet
     {
         public override void write(Stream str)
         {
@@ -1038,7 +1038,7 @@ namespace MinecraftLibrary
     }
     // TODO: Implement 0x64 Open Window
     //0x65
-    class Packet_CloseWnd : Packet
+    public class Packet_CloseWnd : Packet
     {
         public override void write(Stream str)
         {
@@ -1052,7 +1052,7 @@ namespace MinecraftLibrary
     }
     // TODO: Implement 0x66 Window Click
     //0x67
-    class Packet_SetSlot : Packet
+    public class Packet_SetSlot : Packet
     {
         public override void write(Stream str)
         {
@@ -1067,7 +1067,7 @@ namespace MinecraftLibrary
         }
     }
     //0x68
-    class Packet_WndItems : Packet
+    public class Packet_WndItems : Packet
     {
         public override void write(Stream str)
         {
@@ -1085,7 +1085,7 @@ namespace MinecraftLibrary
         }
     }
     //0x69
-    class Packet_UpdateWndProp : Packet
+    public class Packet_UpdateWndProp : Packet
     {
         public override void write(Stream str)
         {
@@ -1103,7 +1103,7 @@ namespace MinecraftLibrary
     // TODO: Implement 0x6B Creative inventory action
     // TODO: Implement 0x6C Enchant item
     //0x82
-    class Packet_UpdateSign : Packet
+    public class Packet_UpdateSign : Packet
     {
         public int x;
         public short y;
@@ -1130,7 +1130,7 @@ namespace MinecraftLibrary
      }
     // TODO: Implement 0x83 Item Data (Maps)
     //0xC8
-    class Packet_IncStatistic : Packet
+    public class Packet_IncStatistic : Packet
     {
         public override void write(Stream str)
         {
@@ -1145,7 +1145,7 @@ namespace MinecraftLibrary
     }
     // TODO: Implement 0xFE Server List Ping (Basically get server info)
     //0xC9
-    class Packet_PlayerListItem : Packet
+    public class Packet_PlayerListItem : Packet
     {
         public string name;
         public bool online;
@@ -1163,7 +1163,7 @@ namespace MinecraftLibrary
         }
     }
     //0xFF
-    class Packet_Kick : Packet
+    public class Packet_Kick : Packet
     {
         public string dataString { get; set; }
 
