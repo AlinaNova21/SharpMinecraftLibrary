@@ -21,8 +21,8 @@ Public Class Form1
         Dim mc As New MinecraftLibrary.Client
         w("Please enter a name:")
         mc.name = Console.ReadLine()
-        wl("Connecting...")
         mc.output2 = AddressOf writeDebug
+        'mc.registerPacket(&H3, GetType(MinecraftLibrary.Packet_Chat))
         'mc.connect("192.168.59.137", 25566) 'MineOS+
         'mc.connect("192.168.159.129", 25566) 'MineOS+
         'mc.connect("127.0.0.1", 25566)

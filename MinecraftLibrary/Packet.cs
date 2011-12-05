@@ -135,18 +135,18 @@ namespace MinecraftLibrary
         protected void readSlotData(Stream str)
         {
             short[] enchantable = {
-                0x103, //#Flint and steel
-                0x105, //#Bow
-                0x15A, //#Fishing rod
-                0x167, //#Shears
+                //0x103, //#Flint and steel
+                //0x105, //#Bow
+                //0x15A, //#Fishing rod
+                //0x167, //#Shears
  
                 //#TOOLS
                 //#sword, shovel, pickaxe, axe, hoe
-                0x10C, 0x10D, 0x10E, 0x10F, 0x122, //#WOOD
-                0x110, 0x111, 0x112, 0x113, 0x123, //#STONE
-                0x10B, 0x100, 0x101, 0x102, 0x124, //#IRON
-                0x114, 0x115, 0x116, 0x117, 0x125, //#DIAMOND
-                0x11B, 0x11C, 0x11D, 0x11E, 0x126, //#GOLD
+                0x10C, 0x10D, 0x10E, 0x10F, //0x122, //#WOOD
+                0x110, 0x111, 0x112, 0x113, //0x123, //#STONE
+                0x10B, 0x100, 0x101, 0x102, //0x124, //#IRON
+                0x114, 0x115, 0x116, 0x117, //0x125, //#DIAMOND
+                0x11B, 0x11C, 0x11D, 0x11E, //0x126, //#GOLD
  
                 //#ARMOUR
                 //#helmet, chestplate, leggings, boots
@@ -156,10 +156,12 @@ namespace MinecraftLibrary
                 0x136, 0x137, 0x138, 0x139, //#DIAMOND
                 0x13A, 0x13B, 0x13C, 0x14D  //#GOLD};
             };
-            if (readShort(str) != -1)
+            short itemID = readShort(str);
+            if (itemID != -1)
             {
-                readSByte(str);
-                if (enchantable.Contains(readShort(str)))
+                sbyte cnt = readSByte(str);
+                short damage = readShort(str);
+                if (enchantable.Contains(itemID))
                 {
                     short tmp = readShort(str);
                     if (tmp != -1)
@@ -854,7 +856,56 @@ namespace MinecraftLibrary
             readInt(str);
         }
     }
-    // TODO: Implement 0x28 Entity Metadata
+    //0x28
+    public class Packet_EntityMetadata : Packet
+    {
+        public int eID;
+
+        public override void write(Stream str)
+        {
+            throw new NotImplementedException();
+        }
+        public override void read(Stream str)
+        {
+            eID = readInt(str);
+            byte xx;
+            xx = readByte(str);
+            while (xx != (byte)127)
+            {
+                int index = xx & 0x1F; //Lower 5 bits
+                int ty = xx >> 5;     //Upper 3 bits
+                switch (ty)
+                {
+                    case 0:
+                        readSByte(str);
+                        break;
+                    case 1:
+                        readShort(str);
+                        break;
+                    case 2:
+                        readInt(str);
+                        break;
+                    case 3:
+                        readFloat(str);
+                        break;
+                    case 4:
+                        readString(str);
+                        break;
+                    case 5:
+                        readShort(str);
+                        readSByte(str);
+                        readShort(str);
+                        break;
+                    case 6:
+                        readInt(str);
+                        readInt(str);
+                        readInt(str);
+                        break;
+                }
+                xx = readByte(str);
+            }
+        }
+    }
     //0x29
     public class Packet_EntityEffect : Packet
     {
@@ -1058,15 +1109,17 @@ namespace MinecraftLibrary
     //0x67
     public class Packet_SetSlot : Packet
     {
+        sbyte wndID;
+        short slot;
         public override void write(Stream str)
         {
             throw new NotImplementedException();
         }
         public override void read(Stream str)
         {
-            // TODO: Add variables (0x67 SetSlot)
-            readSByte(str);
-            readShort(str);
+            // TODO: Add slotData variable (0x67 SetSlot)
+            wndID=readSByte(str);
+            slot=readShort(str);
             readSlotData(str);
         }
     }

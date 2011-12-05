@@ -14,14 +14,13 @@ namespace MinecraftLibrary
     {
         const int Protocol = 22;
         public Action<string> output2 ;
-        int state = 0; // 0 not connected // 1 sent handshake // 2 sent login // 3 normal operation
         public string name = "";
         public string pass = "";
-        int keepAliveCnt = 0;
         NetworkStream str;
         TcpClient client = new TcpClient();
         Queue<Packet> packets=new Queue<Packet>();
         Queue<byte> dataIn = new Queue<byte>();
+        Dictionary<byte, Type> customPackets=new Dictionary<byte,Type>();
         public class packetReceivedEventArgs : EventArgs
         {
             public packetReceivedEventArgs(Packet pack,int ID)
@@ -79,10 +78,10 @@ namespace MinecraftLibrary
         }
         void packetHandler()
         {
+            bool debug = false;
             byte[] tmp = new byte[1];
             Packet packet;
-            Queue<byte> tmpQueue;
-            Stream str = new blockingStream(client.GetStream());
+            Stream str = new blockingStream(client.GetStream(),debug);
             while (client.Connected)
             {
                 Packet pack = null;
@@ -96,7 +95,7 @@ namespace MinecraftLibrary
                 {
                     MemoryStream tmps = new MemoryStream();
                     pack.write(tmps);
-                    //str.Write(data, 0, data.Length);
+                    //str.Write(data, 0, data.Length)
                     tmps.WriteTo(str);
                     output(BitConverter.ToString(tmps.ToArray()));
                     tmps.Close();
@@ -191,6 +190,9 @@ namespace MinecraftLibrary
                     case 0x27:
                         packet = new Packet_AttachEntity();
                         break;
+                    case 0x28:
+                        packet = new Packet_EntityMetadata();
+                        break;
                     case 0x29:
                         packet = new Packet_EntityEffect();
                         break;
@@ -246,12 +248,22 @@ namespace MinecraftLibrary
                         packet = new Packet_Kick();
                         break;
                 }
+                if (packet == null && customPackets.ContainsKey(tmp[0]))
+                {
+                    packet = (Packet)customPackets[tmp[0]].GetConstructor(Type.EmptyTypes).Invoke(null);
+                }
+
                 //output("IN: " +  BitConverter.ToString(tmp));
                 if (packet != null)
                 {
-                    //output("IN: " + packet.GetType().ToString().Split('_')[1]);
+                    if (debug)
+                        output("Packet: " + packet.GetType().ToString().Split('_')[1]);
                     packet.read(str);
                     packetReceived(this, new packetReceivedEventArgs(packet, (int)tmp[0]));
+                }
+                else
+                {
+                    throw new InvalidDataException("Unhandled Packet! " + BitConverter.ToString(tmp, 0));
                 }
                 //Thread.Sleep(10);
             }
@@ -268,6 +280,8 @@ namespace MinecraftLibrary
             //ChraftTestClient.TestClient client = new ChraftTestClient.TestClient("agsbot", new Random());
             ////client.Start(new IPEndPoint(IPAddress.Parse("192.168.59.137"), 25566));
             //client.Start(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 25566));
+            if (File.Exists("Out.bin"))
+                File.Delete("Out.bin");
             output("Connecting...");
             packetReceived += new packetReceivedEventHandler(onPacketReceived);
             client.NoDelay = true;
@@ -289,7 +303,6 @@ namespace MinecraftLibrary
             Packet_Handshake packet = new Packet_Handshake();
             packet.dataString = name;
             packets.Enqueue(packet);
-            state = 1;
         }
         public void sendPacket(Packet pack)
         {
@@ -364,14 +377,32 @@ namespace MinecraftLibrary
             }
             //Console.WriteLine(BitConverter.ToString(new byte[]{(byte)e.ID},0));
         }
+
+        public void registerPacket(byte id, Type packet)
+        {
+            if (customPackets.ContainsKey(id))
+            {
+                throw new InvalidOperationException("Packet ID already registered");
+            }
+            else if (!packet.IsSubclassOf(typeof(Packet)))
+            {
+                throw new InvalidOperationException("Invalid packet class! Must inherit Packet");
+            }
+            else
+            {
+                customPackets.Add(id, packet);
+            }
+        }
     }
 
     public class blockingStream : Stream
     {
+        bool _debug;
         NetworkStream _str;
-        public blockingStream(NetworkStream str)
+        public blockingStream(NetworkStream str, bool debug=false)
         {
             _str = str;
+            _debug = debug;
         }
         public override bool CanRead
         {
@@ -412,6 +443,7 @@ namespace MinecraftLibrary
 
         public override int Read(byte[] buffer, int offset, int count)
         {
+            //FileStream fs = new FileStream("Out.bin", FileMode.Append);
             for (int i = 0; i < count; i++)
             {
                 while (!_str.DataAvailable)
@@ -419,7 +451,11 @@ namespace MinecraftLibrary
                     Thread.Sleep(100);
                 }
                 _str.Read(buffer, offset + i, 1);
+                //fs.Write(buffer,offset+i,1);
             }
+            if (_debug)
+                System.Diagnostics.Debug.WriteLine("R:" + offset + ',' + count + ' ' + BitConverter.ToString(buffer));
+            //fs.Close();
             return 0;
         }
 
@@ -435,6 +471,8 @@ namespace MinecraftLibrary
 
         public override void Write(byte[] buffer, int offset, int count)
         {
+            if (_debug)
+                System.Diagnostics.Debug.WriteLine("W:" +offset+','+count+' ' + BitConverter.ToString(buffer));
             _str.Write(buffer,offset,count);
         }
     }
