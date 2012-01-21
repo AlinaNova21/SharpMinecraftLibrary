@@ -12,8 +12,8 @@ namespace MinecraftLibrary
 {
     public class Client
     {
-        const int Protocol = 22;
-        public Action<string> output2 ;
+        const int Protocol = 23;
+        public Action<string,Boolean> output2 ;
         public string name = "";
         public string pass = "";
         NetworkStream str;
@@ -244,6 +244,9 @@ namespace MinecraftLibrary
                     case 0xC9:
                         packet = new Packet_PlayerListItem();
                         break;
+                    case 0xFA:
+                        packet = new Packet_PluginMessage();
+                        break;
                     case 0xFF:
                         packet = new Packet_Kick();
                         break;
@@ -269,9 +272,9 @@ namespace MinecraftLibrary
             }
         }
 
-        public void output(string data)
+        public void output(string data,Boolean show=false)
         {
-            output2(data);
+            output2(data,show);
         }
 
         public void connect(string address, int port)
@@ -321,12 +324,12 @@ namespace MinecraftLibrary
                     packets.Enqueue(e.packet);
                     break;
                 case 1:
-                    output("Login success!");
+                    output("Login success!",true);
                     //Timer tmp=new Timer(keepAlive, null, 100, 100);
                     // packets.Enqueue(new Packet_Chat() {dataString="/login *PassordRemoved*" });
                     break;
                 case 2:
-                    output("Beginning Login...");
+                    output("Beginning Login...",true);
                     packets.Enqueue(new Packet_Login(){username=name,protocol=Protocol});
                     break;
                 case 3:
@@ -368,11 +371,9 @@ namespace MinecraftLibrary
                     Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.White;
                     break;
-                case 6:
-                    output("SpawnPosition");
-                    break;
                 case 255:
-                    output("Kicked: " + ((Packet_Kick)e.packet).dataString);
+                    //Console.WriteLine("Kicked: " + ((Packet_Kick)e.packet).dataString);
+                    output("Kicked: " + ((Packet_Kick)e.packet).dataString,true);
                     break;
             }
             //Console.WriteLine(BitConverter.ToString(new byte[]{(byte)e.ID},0));

@@ -12,3 +12,16 @@ C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftCli
 C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftClient\obj\x86\Debug\MinecraftClient.Resources.resources
 C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftClient\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftClient\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\MinecraftClient.exe
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\MinecraftClient.xml
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\MinecraftClient.pdb
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\bin\Debug\MinecraftClient.exe
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\bin\Debug\MinecraftClient.pdb
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\bin\Debug\MinecraftClient.xml
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\bin\Debug\MinecraftLibrary.dll
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\bin\Debug\MinecraftLibrary.pdb
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\MinecraftClient.Form1.resources
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\MinecraftClient.Resources.resources
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\GenerateResource.write.1.tlog

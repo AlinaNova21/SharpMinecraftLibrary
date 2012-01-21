@@ -10,3 +10,14 @@ C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftLib
 C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftLibrary\bin\Debug\IKVM.Runtime.dll
 C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftLibrary\bin\Debug\IKVM.OpenJDK.Util.dll
 C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftLibrary\bin\Debug\Chraft.pdb
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\MinecraftLibrary.dll
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\MinecraftLibrary.pdb
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\IKVM.OpenJDK.Core.dll
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\Ionic.Zip.dll
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\IKVM.Runtime.dll
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\IKVM.OpenJDK.Util.dll
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\Chraft.pdb
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftLibrary\obj\Debug\ResolveAssemblyReference.cache
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftLibrary\obj\Debug\MinecraftLibrary.dll
+C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftLibrary\obj\Debug\MinecraftLibrary.pdb

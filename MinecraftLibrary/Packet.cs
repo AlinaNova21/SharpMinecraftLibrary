@@ -29,6 +29,13 @@ namespace MinecraftLibrary
         {
             byte[] tmp = new byte[len];
             str.Read(tmp, 0, len);
+            System.Diagnostics.Debug.WriteLine("STUBBED!");
+            return tmp;
+        }
+        protected byte[] readByteArray(Stream str, int len)
+        {
+            byte[] tmp = new byte[len];
+            str.Read(tmp, 0, len);
             //System.Diagnostics.Debug.WriteLine("STUBBED!");
             return tmp;
         }
@@ -199,6 +206,7 @@ namespace MinecraftLibrary
         public SByte difficulty;
         public byte worldHeigth;
         public byte maxPlayers;
+        public string levelType;
 
         public override void write(Stream str)
         {
@@ -206,6 +214,7 @@ namespace MinecraftLibrary
             writeInt(str,protocol);
             writeString(str, username);
             writeLong(str, 0);
+            writeString(str, "");
             writeInt(str,0);
             writeSByte(str, 0x00);
             writeSByte(str, 0x00);
@@ -217,6 +226,7 @@ namespace MinecraftLibrary
             eID=readInt(str);
             readString(str);//unused
             seed=readLong(str);
+            levelType = readString(str);
             mode=readInt(str);
             dim=readSByte(str);
             difficulty=readSByte(str);
@@ -345,6 +355,7 @@ namespace MinecraftLibrary
         public sbyte creative;
         public short worldHeight;
         public long mapSeed;
+        public string levelType;
         public override void write(Stream str)
         {
             writeByte(str, 0x09);
@@ -353,6 +364,7 @@ namespace MinecraftLibrary
             writeSByte(str, creative);
             writeShort(str, worldHeight);
             writeLong(str, mapSeed);
+            writeString(str, levelType);
         }
         public override void read(Stream str)
         {
@@ -361,6 +373,7 @@ namespace MinecraftLibrary
             creative  = readSByte(str);
             worldHeight  = readShort(str);
             mapSeed = readLong(str);
+            levelType = readString(str);
         }
     }
     //0x0A
@@ -1198,6 +1211,22 @@ namespace MinecraftLibrary
             // TODO: Add variables (0xC8 IncStatistic)
             readInt(str);
             readSByte(str);
+        }
+    }
+    public class Packet_PluginMessage : Packet
+    {
+        string channel;
+        short length;
+        byte[] data;
+        public override void write(Stream str)
+        {
+            throw new NotImplementedException();
+        }
+        public override void read(Stream str)
+        {
+            channel = readString(str);
+            length = readShort(str);
+            data = readByteArray(str, length);
         }
     }
     // TODO: Implement 0xFE Server List Ping (Basically get server info)
