@@ -5,7 +5,6 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using Chraft.Net;
 using System.IO;
 
 namespace MinecraftLibrary
@@ -268,6 +267,9 @@ namespace MinecraftLibrary
                     case 0xC9:
                         packet = new Packet_PlayerListItem();
                         break;
+                    case 0xCA:
+                        packet = new Packet_PlayerAbilities();
+                        break;
                     case 0xFA:
                         packet = new Packet_PluginMessage();
                         break;
@@ -328,7 +330,7 @@ namespace MinecraftLibrary
             packetHandlerThread.Start();
 
             Packet_Handshake packet = new Packet_Handshake();
-            packet.dataString = name;
+            packet.dataString = name;// +";" + address + ":" + port;
             packets.Enqueue(packet);
         }
         public void sendPacket(Packet pack)
@@ -385,7 +387,10 @@ namespace MinecraftLibrary
                         if (tmp[0] == (char)65533)
                         {
                             sr.Read(tmp, 0, 1);
-                            Console.ForegroundColor = cc[tmp[0]];
+                            if(cc.ContainsKey(tmp[0]))
+                                Console.ForegroundColor = cc[tmp[0]];
+                            else
+                                Console.Write(tmp[0]);
                         }
                         else
                         {

@@ -20,11 +20,8 @@ C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\bin\Debug\Mine
 C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\bin\Debug\MinecraftClient.xml
 C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\bin\Debug\MinecraftLibrary.dll
 C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\bin\Debug\MinecraftLibrary.pdb
-C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\MinecraftClient.Form1.resources
 C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\MinecraftClient.Resources.resources
-C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\GenerateResource.read.1.tlog
-C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\GenerateResource.write.1.tlog
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\MinecraftClient.exe
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\MinecraftClient.xml
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\MinecraftClient.pdb
@@ -38,3 +35,5 @@ C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftClient\obj\x86\
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\MinecraftClient.Resources.resources
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\MinecraftClient.vbprojResolveAssemblyReference.cache
+C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftClient\obj\x86\Debug\MinecraftClient.vbproj.GenerateResource.Cache

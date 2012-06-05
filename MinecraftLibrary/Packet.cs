@@ -221,10 +221,9 @@ namespace MinecraftLibrary
             writeByte(str, 0x01);
             writeInt(str, protocol);
             writeString(str, username);
-            writeLong(str, 0);
             writeString(str, "");
             writeInt(str, 0);
-            writeSByte(str, 0x00);
+            writeInt(str, 0);
             writeSByte(str, 0x00);
             writeByte(str, 0x00);
             writeByte(str, 0x00);
@@ -236,11 +235,11 @@ namespace MinecraftLibrary
             //seed = readLong(str); //no longer passed
             levelType = readString(str);
             mode = readInt(str);
-            dim = readSByte(str);
+            dim = readInt(str);
             difficulty = readSByte(str);
-            //worldHeigth = readByte(str);
-            maxPlayers = readByte(str);
             readByte(str);
+            maxPlayers = readByte(str);
+            //readByte(str);
         }
     }
     //0x02
@@ -378,7 +377,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            dim = readSByte(str);
+            dim = readInt(str);
             difficulty = readByte(str);
             creative = readByte(str);
             worldHeight = readShort(str);
@@ -1022,8 +1021,9 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             // TODO: Add variables (0x2B Experience)
-            readInt(str);
-            readByte(str);
+            readFloat(str);
+            readShort(str);
+            readShort(str);
 
         }
     }
@@ -1139,7 +1139,7 @@ namespace MinecraftLibrary
             readByte(str);
         }
     }
-    // TODO: Implement 0x3C Explosion //!
+    // TODO: Implement 0x3C Explosion //! IMPORTANT!
     //0x3D
     public class Packet_SoundEffect : Packet
     {
@@ -1334,6 +1334,23 @@ namespace MinecraftLibrary
             readByte(str);
         }
     }
+    //0xCA
+    public class Packet_PlayerAbilities : Packet
+    {
+        public override void write(Stream str)
+        {
+            throw new NotImplementedException();
+        }
+        public override void read(Stream str)
+        {
+            // TODO: Add variables (0xC8 IncStatistic)
+            readBool(str);
+            readBool(str);
+            readBool(str);
+            readBool(str);
+        }
+    }
+    //0xFA
     public class Packet_PluginMessage : Packet
     {
         string channel;

@@ -1,0 +1,12 @@
+C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.Form1.resources
+C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.Resources.resources
+C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.vbproj.GenerateResource.Cache
+C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftClient.exe
+C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftClient.pdb
+C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftClient.xml
+C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftLibrary.dll
+C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftLibrary.pdb
+C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.vbprojResolveAssemblyReference.cache
+C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.exe
+C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.xml
+C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.pdb
