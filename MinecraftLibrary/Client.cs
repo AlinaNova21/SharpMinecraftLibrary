@@ -12,18 +12,18 @@ namespace MinecraftLibrary
 {
     public class Client
     {
-        const int Protocol = 23;
-        public Action<string,Boolean> output2 ;
+        const int Protocol = 29;
+        public Action<string, Boolean> output2;
         public string name = "";
         public string pass = "";
         NetworkStream str;
         TcpClient client = new TcpClient();
-        Queue<Packet> packets=new Queue<Packet>();
+        Queue<Packet> packets = new Queue<Packet>();
         Queue<byte> dataIn = new Queue<byte>();
-        Dictionary<byte, Type> customPackets=new Dictionary<byte,Type>();
+        Dictionary<byte, Type> customPackets = new Dictionary<byte, Type>();
         public class packetReceivedEventArgs : EventArgs
         {
-            public packetReceivedEventArgs(Packet pack,int ID)
+            public packetReceivedEventArgs(Packet pack, int ID)
             {
                 this.packet = pack;
                 this.ID = ID;
@@ -38,7 +38,7 @@ namespace MinecraftLibrary
             Stream str = client.GetStream();
             while (client.Connected)
             {
-                Packet pack=null;
+                Packet pack = null;
                 bool p = false;
                 lock (packets)
                 {
@@ -46,16 +46,16 @@ namespace MinecraftLibrary
                     if (p) pack = packets.Dequeue();
                 }
                 if (p) lock (str)
-                {
-                    MemoryStream tmp = new MemoryStream();
-                    pack.write(tmp);
-                    //str.Write(data, 0, data.Length);
-                    tmp.WriteTo(str);
-                    output(BitConverter.ToString(tmp.ToArray()));
-                    tmp.Close();
-                    str.Flush();
-                    output("OUT: " + pack.GetType().ToString().Split('_')[1]);
-                }
+                    {
+                        MemoryStream tmp = new MemoryStream();
+                        pack.write(tmp);
+                        //str.Write(data, 0, data.Length);
+                        tmp.WriteTo(str);
+                        output(BitConverter.ToString(tmp.ToArray()));
+                        tmp.Close();
+                        str.Flush();
+                        output("OUT: " + pack.GetType().ToString().Split('_')[1]);
+                    }
             }
         }
         void packetReceiver()
@@ -81,7 +81,7 @@ namespace MinecraftLibrary
             bool debug = false;
             byte[] tmp = new byte[1];
             Packet packet;
-            Stream str = new blockingStream(client.GetStream(),debug);
+            Stream str = new blockingStream(client.GetStream(), debug);
             while (client.Connected)
             {
                 Packet pack = null;
@@ -133,8 +133,26 @@ namespace MinecraftLibrary
                     case 0x09:
                         packet = new Packet_Respawn();
                         break;
+                    case 0x0A:
+                        packet = new Packet_Player();
+                        break;
+                    case 0x0B:
+                        packet = new Packet_PlayerPos();
+                        break;
+                    case 0x0C:
+                        packet = new Packet_PlayerLook();
+                        break;
                     case 0x0D:
                         packet = new Packet_PlayerPosAndLook();
+                        break;
+                    case 0x0E:
+                        packet = new Packet_PlayerDigging();
+                        break;
+                    case 0x0F:
+                        packet = new Packet_PlayerBlockPlacement();
+                        break;
+                    case 0x10:
+                        packet = new Packet_HoldingChange();
                         break;
                     case 0x11:
                         packet = new Packet_UseBed();
@@ -184,6 +202,9 @@ namespace MinecraftLibrary
                     case 0x22:
                         packet = new Packet_EntityTeleport();
                         break;
+                    case 0x23:
+                        packet = new Packet_EntityHeadLook();
+                        break;
                     case 0x26:
                         packet = new Packet_EntityStatus();
                         break;
@@ -198,6 +219,9 @@ namespace MinecraftLibrary
                         break;
                     case 0x2A:
                         packet = new Packet_RemoveEntityEffect();
+                        break;
+                    case 0x2B:
+                        packet = new Packet_Experience();
                         break;
                     case 0x32:
                         packet = new Packet_PreChunk();
@@ -272,9 +296,9 @@ namespace MinecraftLibrary
             }
         }
 
-        public void output(string data,Boolean show=false)
+        public void output(string data, Boolean show = false)
         {
-            output2(data,show);
+            output2(data, show);
         }
 
         public void connect(string address, int port)
@@ -313,9 +337,9 @@ namespace MinecraftLibrary
         }
         public void keepAlive(object state)
         {
-            packets.Enqueue(new Packet_KeepAlive() {ID=0});
+            packets.Enqueue(new Packet_KeepAlive() { ID = 0 });
         }
-        public void onPacketReceived(object sender,packetReceivedEventArgs e) 
+        public void onPacketReceived(object sender, packetReceivedEventArgs e)
         {
             switch (e.ID)
             {
@@ -324,13 +348,13 @@ namespace MinecraftLibrary
                     packets.Enqueue(e.packet);
                     break;
                 case 1:
-                    output("Login success!",true);
+                    output("Login success!", true);
                     //Timer tmp=new Timer(keepAlive, null, 100, 100);
                     // packets.Enqueue(new Packet_Chat() {dataString="/login *PassordRemoved*" });
                     break;
                 case 2:
-                    output("Beginning Login...",true);
-                    packets.Enqueue(new Packet_Login(){username=name,protocol=Protocol});
+                    output("Beginning Login...", true);
+                    packets.Enqueue(new Packet_Login() { username = name, protocol = Protocol });
                     break;
                 case 3:
                     Dictionary<char, ConsoleColor> cc = new Dictionary<char, ConsoleColor>();
@@ -354,7 +378,7 @@ namespace MinecraftLibrary
                     string msg = ((Packet_Chat)e.packet).dataString;
                     output(msg);
                     StreamReader sr = new StreamReader(new MemoryStream(Encoding.Default.GetBytes(msg)));
-                    char[] tmp=new char[1];
+                    char[] tmp = new char[1];
                     while (!sr.EndOfStream)
                     {
                         sr.Read(tmp, 0, 1);
@@ -373,7 +397,7 @@ namespace MinecraftLibrary
                     break;
                 case 255:
                     //Console.WriteLine("Kicked: " + ((Packet_Kick)e.packet).dataString);
-                    output("Kicked: " + ((Packet_Kick)e.packet).dataString,true);
+                    output("Kicked: " + ((Packet_Kick)e.packet).dataString, true);
                     break;
             }
             //Console.WriteLine(BitConverter.ToString(new byte[]{(byte)e.ID},0));
@@ -400,7 +424,7 @@ namespace MinecraftLibrary
     {
         bool _debug;
         NetworkStream _str;
-        public blockingStream(NetworkStream str, bool debug=false)
+        public blockingStream(NetworkStream str, bool debug = false)
         {
             _str = str;
             _debug = debug;
@@ -438,7 +462,7 @@ namespace MinecraftLibrary
             }
             set
             {
-                _str.Position=value;
+                _str.Position = value;
             }
         }
 
@@ -462,7 +486,7 @@ namespace MinecraftLibrary
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            return _str.Seek(offset,origin);
+            return _str.Seek(offset, origin);
         }
 
         public override void SetLength(long value)
@@ -473,8 +497,8 @@ namespace MinecraftLibrary
         public override void Write(byte[] buffer, int offset, int count)
         {
             if (_debug)
-                System.Diagnostics.Debug.WriteLine("W:" +offset+','+count+' ' + BitConverter.ToString(buffer));
-            _str.Write(buffer,offset,count);
+                System.Diagnostics.Debug.WriteLine("W:" + offset + ',' + count + ' ' + BitConverter.ToString(buffer));
+            _str.Write(buffer, offset, count);
         }
     }
 }

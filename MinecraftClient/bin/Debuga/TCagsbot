@@ -1,0 +1,12 @@
+ConnectionExc: System.Net.Sockets.SocketException (0x80004005): No connection could be made because the target machine actively refused it 192.168.59.137:25565
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at ChraftTestClient.TestClient.Start(IPEndPoint ipEnd) in C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftLibrary\C#raft\TestClient.cs:line 93
+ConnectionExc: System.Net.Sockets.SocketException (0x80004005): No connection could be made because the target machine actively refused it 192.168.59.137:25565
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at ChraftTestClient.TestClient.Start(IPEndPoint ipEnd) in C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftLibrary\C#raft\TestClient.cs:line 93
+ConnectionExc: System.Net.Sockets.SocketException (0x80004005): A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond 192.168.59.137:25566
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at ChraftTestClient.TestClient.Start(IPEndPoint ipEnd) in C:\Users\Adam\Documents\Visual Studio 2010\Projects\MinecraftClient\MinecraftLibrary\C#raft\TestClient.cs:line 93

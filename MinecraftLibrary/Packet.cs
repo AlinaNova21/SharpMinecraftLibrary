@@ -186,11 +186,11 @@ namespace MinecraftLibrary
         public override void write(Stream str)
         {
             writeByte(str, 0x00);
-            writeInt(str,ID);
+            writeInt(str, ID);
         }
         public override void read(Stream str)
         {
-                ID = readInt(str);
+            ID = readInt(str);
         }
     }
     //0x01
@@ -199,23 +199,31 @@ namespace MinecraftLibrary
         public int protocol;
         public string username;
 
+
+
         public int eID;
-        public long seed;
-        public int mode;
-        public SByte dim;
-        public SByte difficulty;
-        public byte worldHeigth;
-        public byte maxPlayers;
         public string levelType;
+        public int mode;
+        public int dim;
+        public SByte difficulty;
+        public byte maxPlayers;
+//        public int eID;
+//        public long seed;
+//        public int mode;
+//        public SByte dim;
+//        public SByte difficulty;
+//        public byte worldHeigth;
+//        public byte maxPlayers;
+//        public string levelType;
 
         public override void write(Stream str)
         {
-            writeByte(str,0x01);
-            writeInt(str,protocol);
+            writeByte(str, 0x01);
+            writeInt(str, protocol);
             writeString(str, username);
             writeLong(str, 0);
             writeString(str, "");
-            writeInt(str,0);
+            writeInt(str, 0);
             writeSByte(str, 0x00);
             writeSByte(str, 0x00);
             writeByte(str, 0x00);
@@ -223,15 +231,16 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            eID=readInt(str);
+            eID = readInt(str);
             readString(str);//unused
-            seed=readLong(str);
+            //seed = readLong(str); //no longer passed
             levelType = readString(str);
-            mode=readInt(str);
-            dim=readSByte(str);
-            difficulty=readSByte(str);
-            worldHeigth=readByte(str);
-            maxPlayers=readByte(str);
+            mode = readInt(str);
+            dim = readSByte(str);
+            difficulty = readSByte(str);
+            //worldHeigth = readByte(str);
+            maxPlayers = readByte(str);
+            readByte(str);
         }
     }
     //0x02
@@ -259,7 +268,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            dataString=readString(str);
+            dataString = readString(str);
         }
     }
     //0x04
@@ -272,7 +281,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            time=readLong(str);
+            time = readLong(str);
         }
     }
     //0x05
@@ -290,7 +299,7 @@ namespace MinecraftLibrary
         {
             eID = readInt(str);
             slot = readShort(str);
-            itemID= readShort(str);
+            itemID = readShort(str);
             damage = readShort(str);
         }
     }
@@ -306,9 +315,9 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-                x = readInt(str);
-                y = readInt(str);
-                z = readInt(str);
+            x = readInt(str);
+            y = readInt(str);
+            z = readInt(str);
         }
     }
     //0x07
@@ -342,7 +351,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            health=readShort(str);
+            health = readShort(str);
             food = readShort(str);
             saturation = readFloat(str);
         }
@@ -350,29 +359,30 @@ namespace MinecraftLibrary
     //0x09
     public class Packet_Respawn : Packet
     {
-        public sbyte dim;
-        public sbyte difficulty;
-        public sbyte creative;
+        //public sbyte dim;
+        public int dim;
+        public byte difficulty;
+        public byte creative;
         public short worldHeight;
-        public long mapSeed;
+        //public long mapSeed;
         public string levelType;
         public override void write(Stream str)
         {
             writeByte(str, 0x09);
-            writeSByte(str, dim);
-            writeSByte(str, difficulty );
-            writeSByte(str, creative);
+            writeInt(str, dim);
+            writeByte(str, difficulty);
+            writeByte(str, creative);
             writeShort(str, worldHeight);
-            writeLong(str, mapSeed);
+            //writeLong(str, mapSeed);
             writeString(str, levelType);
         }
         public override void read(Stream str)
         {
             dim = readSByte(str);
-            difficulty  = readSByte(str);
-            creative  = readSByte(str);
-            worldHeight  = readShort(str);
-            mapSeed = readLong(str);
+            difficulty = readByte(str);
+            creative = readByte(str);
+            worldHeight = readShort(str);
+            //mapSeed = readLong(str);
             levelType = readString(str);
         }
     }
@@ -467,18 +477,18 @@ namespace MinecraftLibrary
     {
         public sbyte status;
         public int x;
-        public sbyte y;
+        public byte y;
         public int z;
-        public sbyte face;
+        public byte face;
 
         public override void write(Stream str)
         {
             writeByte(str, 0x0E);
-            writeSByte(str,status);
+            writeSByte(str, status);
             writeInt(str, x);
-            writeSByte(str, y);
+            writeByte(str, y);
             writeInt(str, z);
-            writeSByte(str, face);
+            writeByte(str, face);
         }
         public override void read(Stream str)
         {
@@ -486,7 +496,42 @@ namespace MinecraftLibrary
         }
     }
     // TODO: Implement 0x0F Player Block Placement 
+    public class Packet_PlayerBlockPlacement : Packet
+    {
+        public int x;
+        public sbyte y;
+        public int z;
+        public sbyte direction;
+        public int held;
+        public override void write(Stream str)
+        {
+            writeByte(str, 0x0F);
+            writeInt(str, x);
+            writeSByte(str, y);
+            writeInt(str, z);
+            writeSByte(str, direction);
+            writeInt(str, held);
+        }
+        public override void read(Stream str)
+        {
+            throw new NotImplementedException();
+          }
+    }
     // TODO: Implement 0x10 Holding Change
+    public class Packet_HoldingChange : Packet
+    {
+        public short slotID;
+        public override void write(Stream str)
+        {
+            writeByte(str, 0x0F);
+            writeShort(str, slotID);
+
+        }
+        public override void read(Stream str)
+        {
+            throw new NotImplementedException();
+        }
+    }
     //0x11
     public class Packet_UseBed : Packet
     {
@@ -501,7 +546,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            eID=readInt(str);
+            eID = readInt(str);
             inBed = readSByte(str);
             x = readInt(str);
             y = readSByte(str);
@@ -521,7 +566,7 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             eID = readInt(str);
-            animation=readSByte(str);
+            animation = readSByte(str);
         }
     }
     // TODO: Implement 0x13 Entity Action
@@ -533,8 +578,8 @@ namespace MinecraftLibrary
         public int x;
         public int y;
         public int z;
-        public SByte rotation;
-        public SByte pitch;
+        public Byte rotation;
+        public Byte pitch;
         public short item;
         public override void write(Stream str)
         {
@@ -547,8 +592,8 @@ namespace MinecraftLibrary
             x = readInt(str);
             y = readInt(str);
             z = readInt(str);
-            rotation = readSByte(str);
-            pitch = readSByte(str);
+            rotation = readByte(str);
+            pitch = readByte(str);
             item = readShort(str);
         }
     }
@@ -557,14 +602,14 @@ namespace MinecraftLibrary
     {
         public int eID;
         public short item;
-        public sbyte count;
+        public byte count;
         public short damage;
         public int x;
         public int y;
         public int z;
-        public sbyte rotation;
-        public sbyte pitch;
-        public sbyte roll;
+        public byte rotation;
+        public byte pitch;
+        public byte roll;
 
         public override void write(Stream str)
         {
@@ -574,14 +619,14 @@ namespace MinecraftLibrary
         {
             eID = readInt(str);
             item = readShort(str);
-            count = readSByte(str);
-            damage=readShort(str);
+            count = readByte(str);
+            damage = readShort(str);
             x = readInt(str);
             y = readInt(str);
             z = readInt(str);
-            rotation = readSByte(str);
-            pitch = readSByte(str);
-            roll = readSByte(str);
+            rotation = readByte(str);
+            pitch = readByte(str);
+            roll = readByte(str);
         }
     }
     //0x16
@@ -595,7 +640,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            itemEID= readInt(str);
+            itemEID = readInt(str);
             playerEID = readInt(str);
         }
     }
@@ -603,12 +648,13 @@ namespace MinecraftLibrary
     public class Packet_AddObjVehicle : Packet
     {
         public int eID;
-        public sbyte type;
+        public byte type;
         public int x;
         public int y;
         public int z;
         public int fbeID;
         public short unknown;
+      
 
         public override void write(Stream str)
         {
@@ -617,16 +663,16 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             eID = readInt(str);
-            type = readSByte(str);
+            type = readByte(str);
             x = readInt(str);
             y = readInt(str);
             z = readInt(str);
             fbeID = readInt(str);
             if (fbeID > 0)
             {
-                unknown = readShort(str);
-                unknown = readShort(str);
-                unknown = readShort(str);
+                readShort(str);
+                readShort(str);
+                readShort(str);
             }
         }
     }
@@ -638,8 +684,9 @@ namespace MinecraftLibrary
         public int x;
         public int y;
         public int z;
-        public sbyte yaw;
-        public sbyte pitch;
+        public byte yaw;
+        public byte pitch;
+        public byte hyaw;
 
         public override void write(Stream str)
         {
@@ -652,8 +699,9 @@ namespace MinecraftLibrary
             x = readInt(str);
             y = readInt(str);
             z = readInt(str);
-            yaw = readSByte(str);
-            pitch = readSByte(str);
+            yaw = readByte(str);
+            pitch = readByte(str);
+            hyaw = readByte(str);
             byte xx;
             xx = readByte(str);
             while (xx != (byte)127)
@@ -661,7 +709,7 @@ namespace MinecraftLibrary
                 int index = xx & 0x1F; //Lower 5 bits
                 int ty = xx >> 5;     //Upper 3 bits
                 switch (ty)
-                { 
+                {
                     case 0:
                         readSByte(str);
                         break;
@@ -696,7 +744,7 @@ namespace MinecraftLibrary
     public class Packet_EntityPainting : Packet
     {
         public int eID;
-        public string name;
+        public string name; //aka, title
         public int x;
         public int y;
         public int z;
@@ -707,12 +755,12 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            eID=readInt(str);
-            name=readString(str);
-            x=readInt(str);
-            y=readInt(str);
-            z=readInt(str);
-            dir=readInt(str);
+            eID = readInt(str);
+            name = readString(str);
+            x = readInt(str);
+            y = readInt(str);
+            z = readInt(str);
+            dir = readInt(str);
         }
     }
     //0x1A
@@ -785,9 +833,9 @@ namespace MinecraftLibrary
         {
             // TODO: Add variables (0x1F EntityRelativeMove)
             readInt(str);
-            readSByte(str);
-            readSByte(str);
-            readSByte(str);
+            readByte(str);
+            readByte(str);
+            readByte(str);
         }
     }
     //0x20
@@ -801,8 +849,8 @@ namespace MinecraftLibrary
         {
             // TODO: Add variables (0x20 EntityLook)
             readInt(str);
-            readSByte(str);
-            readSByte(str);
+            readByte(str);
+            readByte(str);
         }
     }
     //0x21
@@ -816,11 +864,11 @@ namespace MinecraftLibrary
         {
             // TODO: Add variables (0x21 EntityLookAndRelativeMove)
             readInt(str);
-            readSByte(str);
-            readSByte(str);
-            readSByte(str);
-            readSByte(str);
-            readSByte(str);
+            readByte(str);
+            readByte(str);
+            readByte(str);
+            readByte(str);
+            readByte(str);
         }
     }
     //0x22
@@ -837,8 +885,22 @@ namespace MinecraftLibrary
             readInt(str);
             readInt(str);
             readInt(str);
-            readSByte(str);
-            readSByte(str);
+            readByte(str);
+            readByte(str);
+        }
+    }
+    //0x23
+    public class Packet_EntityHeadLook : Packet
+    {
+        public override void write(Stream str)
+        {
+            throw new NotImplementedException();
+        }
+        public override void read(Stream str)
+        {
+            // TODO: Add variables (0x23 EntityHeadLook)
+            readInt(str);
+            readByte(str);
         }
     }
     //0x26
@@ -852,7 +914,7 @@ namespace MinecraftLibrary
         {
             // TODO: Add variables (0x26 EntityStatus)
             readInt(str);
-            readSByte(str);
+            readByte(str);
         }
     }
     //0x27
@@ -930,8 +992,8 @@ namespace MinecraftLibrary
         {
             // TODO: Add variables (0x29 EntityEffect)
             readInt(str);
-            readSByte(str);
-            readSByte(str);
+            readByte(str);
+            readByte(str);
             readShort(str);
         }
     }
@@ -946,10 +1008,25 @@ namespace MinecraftLibrary
         {
             // TODO: Add variables (0x2A RemoveEntityEffect)
             readInt(str);
-            readSByte(str);
+            readByte(str);
         }
     }
     // TODO: Implement 0x2B Experience
+    //0x2B
+    public class Packet_Experience : Packet
+    {
+        public override void write(Stream str)
+        {
+            throw new NotImplementedException();
+        }
+        public override void read(Stream str)
+        {
+            // TODO: Add variables (0x2B Experience)
+            readInt(str);
+            readByte(str);
+
+        }
+    }
     //0x32
     public class Packet_PreChunk : Packet
     {
@@ -965,15 +1042,18 @@ namespace MinecraftLibrary
             readBool(str);
         }
     }
-    //0x33
+    //0x33  //!
     public class Packet_MapChunk : Packet
     {
         public int x;
-        public short y;
+        //public int y;
         public int z;
-        public SByte size_x;
-        public SByte size_y;
-        public SByte size_z;
+        //public SByte size_x;
+        //public SByte size_y;
+        //public SByte size_z;
+        public bool groundUC;
+        public short primaryBM;
+        public short addBM;
         public int size;
         public byte[] data;
 
@@ -984,17 +1064,21 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             x = readInt(str);
-            y = readShort(str);
+            //y = readShort(str);
             z = readInt(str);
-            size_x = readSByte(str);
-            size_y = readSByte(str);
-            size_z = readSByte(str);
+            //size_x = readSByte(str);
+            //size_y = readSByte(str);
+            //size_z = readSByte(str);
+            groundUC = readBool(str);
+            primaryBM = readShort(str);
+            addBM = readShort(str);
             size = readInt(str);
+            readInt(str);
             data = new byte[size];
             str.Read(data, 0, size);
         }
     }
-    //0x34
+    //0x34 //!
     public class Packet_MultiBlockChange : Packet
     {
         public override void write(Stream str)
@@ -1032,10 +1116,10 @@ namespace MinecraftLibrary
         {
             // TODO: Add variables (0x35 BlockChange)
             readInt(str);
-            readSByte(str);
+            readByte(str);
             readInt(str);
-            readSByte(str);
-            readSByte(str);
+            readByte(str);
+            readByte(str);
         }
     }
     //0x36?
@@ -1051,11 +1135,11 @@ namespace MinecraftLibrary
             readInt(str);
             readShort(str);
             readInt(str);
-            readSByte(str);
-            readSByte(str);
+            readByte(str);
+            readByte(str);
         }
     }
-    // TODO: Implement 0x3C Explosion
+    // TODO: Implement 0x3C Explosion //!
     //0x3D
     public class Packet_SoundEffect : Packet
     {
@@ -1068,7 +1152,7 @@ namespace MinecraftLibrary
             // TODO: Add variables (0x3D SoundEffect)
             readInt(str);
             readInt(str);
-            readSByte(str);
+            readByte(str);
             readInt(str);
             readInt(str);
         }
@@ -1087,6 +1171,24 @@ namespace MinecraftLibrary
             readSByte(str);
         }
     }
+    //0x46
+    public class Packet_GameStateChange : Packet
+    {
+        public byte reason;
+        public byte gamemode;
+        public override void write(Stream str)
+        {
+            throw new NotImplementedException();
+        }
+        public override void read(Stream str)
+        {
+            
+            readByte(str);
+            readByte(str);
+
+        }
+    }
+        
     //0x47
     public class Packet_Thunder : Packet
     {
@@ -1115,7 +1217,7 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             // TODO: Add variables (0x65 CloseWnd)
-            readSByte(str);
+            readByte(str);
         }
     }
     // TODO: Implement 0x66 Window Click
@@ -1131,8 +1233,8 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             // TODO: Add slotData variable (0x67 SetSlot)
-            wndID=readSByte(str);
-            slot=readShort(str);
+            wndID = readSByte(str);
+            slot = readShort(str);
             readSlotData(str);
         }
     }
@@ -1146,9 +1248,9 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             // TODO: Add variables (0x68 WndItems)
-            readSByte(str);
-            short cnt=readShort(str);
-            for (int i=0;i<cnt;i++)
+            readByte(str);
+            short cnt = readShort(str);
+            for (int i = 0; i < cnt; i++)
             {
                 readSlotData(str);
             }
@@ -1164,7 +1266,7 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             // TODO: Add variables (0x69 UpdateWndProp)
-            readSByte(str);
+            readByte(str);
             readShort(str);
             readShort(str);
         }
@@ -1197,8 +1299,27 @@ namespace MinecraftLibrary
             text3 = readString(str);
             text4 = readString(str);
         }
-     }
+    }
     // TODO: Implement 0x83 Item Data (Maps)
+    //0x84
+    public class Packet_EntiryTileUpdate : Packet
+    {
+        public override void write(Stream str)
+        {
+            throw new NotImplementedException();
+        }
+        public override void read(Stream str)
+        {
+            // TODO: Add variables (0x84 TileEntityUpdate)
+            readInt(str);
+            readShort(str);
+            readInt(str);
+            readByte(str);
+            readInt(str);
+            readInt(str);
+            readInt(str);
+        }
+    }
     //0xC8
     public class Packet_IncStatistic : Packet
     {
@@ -1210,7 +1331,7 @@ namespace MinecraftLibrary
         {
             // TODO: Add variables (0xC8 IncStatistic)
             readInt(str);
-            readSByte(str);
+            readByte(str);
         }
     }
     public class Packet_PluginMessage : Packet
@@ -1255,7 +1376,7 @@ namespace MinecraftLibrary
 
         public override void write(Stream str)
         {
-            writeString(str, dataString) ;
+            writeString(str, dataString);
         }
         public override void read(Stream str)
         {
