@@ -6,7 +6,7 @@ using System.IO;
 
 namespace MinecraftLibrary
 {
-    class Block
+    public class Block
     {
         public short ID=0;
         public short metaData=0;
@@ -23,40 +23,16 @@ namespace MinecraftLibrary
             this.metaData=metaData;
         }
     }
-    class Chunk
+    public class Chunk
     {
         public int x;
         //public int y;
         public int z;
-        public Block[,,] blocks = new Block[16, 256, 16];
+        public Block[, ,] blocks = new Block[16, 256, 16];
         public void update(Packet_MapChunk data)
         {
             x = data.x;
             z = data.z;
-            /*int StartX,StartY,StartZ=0;
-            StartX = data.x & 15;
-            StartY = data.y & 127;
-            StartZ = data.z & 15;
-            int ind = 0;
-            for(int ix=0; ix <= data.size_x; ix++)
-                for(int iz=0; iz <= data.size_z; iz++)
-                    for (int iy = 0; iy <= data.size_y; iy++)
-                    {
-                        ind = 
-                            iy + (iz * (data.size_y + 1))
-                            + (ix * (data.size_y + 1)
-                            * (data.size_z + 1));
-                        //ind = ind++;
-                        blocks[ix + StartX, iy + StartY, iz + StartZ] = 
-                            new Block(
-                                ix + StartX,
-                                iy + StartY,
-                                iz + StartZ,
-                                data.chunkData[ind],
-                                0);
-                    }
-                */
-            //Stream io=new MemoryStream(data.chunkData,false);
             byte[] cubic_chunk_data=new byte[4096];
             //Loop over 16x16x16 chunks in the 16x256x16 column
             int ii=-1;

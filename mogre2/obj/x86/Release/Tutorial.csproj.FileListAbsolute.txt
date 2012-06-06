@@ -1,0 +1,12 @@
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Release\Tutorial.exe.config
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Release\Tutorial.exe
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Release\Tutorial.pdb
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Release\Mogre.dll
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Release\Mogre.TutorialFramework.dll
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Release\MOIS.dll
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Release\Mogre.xml
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\obj\x86\Release\Tutorial.csprojResolveAssemblyReference.cache
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\obj\x86\Release\Tutorial.exe
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\obj\x86\Release\Tutorial.pdb
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Release\MinecraftLibrary.dll
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Release\MinecraftLibrary.pdb

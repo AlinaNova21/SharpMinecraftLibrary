@@ -1075,6 +1075,10 @@ namespace MinecraftLibrary
 
                 return rawData;
             }
+            set
+            {
+                rawData = value;
+            }
         }
         public override void write(Stream str)
         {

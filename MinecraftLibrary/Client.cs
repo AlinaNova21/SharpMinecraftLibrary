@@ -483,16 +483,14 @@ namespace MinecraftLibrary
                     break;
                 case 0x32:
                     Packet_PreChunk c = (Packet_PreChunk)e.packet;
-                    /*if (c.mode)
+                    if (c.mode)
                     {
-                        if (chunks.ContainsKey(c.x + "_" + c.z))
-                            chunks.Remove(c.x + "_" + c.z);
-                        chunks.Add(c.x + "_" + c.z, new Chunk());
+                        if (!chunks.ContainsKey(c.x + "_" + c.z))
+                            chunks.Add(c.x + "_" + c.z, new Chunk());
                     }
                     else
                         if (chunks.ContainsKey(c.x + "_" + c.z))
                             chunks.Remove(c.x + "_" + c.z);
-                    */
                     break;
                 case 0x33:
                     Packet_MapChunk mc = (Packet_MapChunk)e.packet;
@@ -507,7 +505,8 @@ namespace MinecraftLibrary
                         //output("Chunk had to be added! " + key, true);
                     }*/
                     //chunks[key].update(mc);
-                    //System.IO.File.WriteAllBytes(@"chunks\" + key + ".bin", mc.chunkData);
+                    System.IO.File.WriteAllBytes(@"chunks\" + key + "_bm_"+mc.groundUC.ToString()+".bin",BitConverter.GetBytes(mc.primaryBM));
+                    System.IO.File.WriteAllBytes(@"chunks\" + key + ".bin", mc.chunkData);
                     //for (int y = 0; y < 128; y++)
                     //    for (int x = 0; x < 16; x++)
                     //        for (int z = 0; z < 16; z++)

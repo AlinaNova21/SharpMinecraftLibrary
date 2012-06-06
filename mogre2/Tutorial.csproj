@@ -90,6 +90,13 @@
       <HintPath>bin\Debug\MOIS.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MinecraftLibrary\MinecraftLibrary.csproj">
+      <Project>{2FBC032E-DEBA-420A-86ED-D30693938B89}</Project>
+      <Name>MinecraftLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,9 @@
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\Tutorial.exe.config
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\Tutorial.exe
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\Tutorial.pdb
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\MinecraftLibrary.dll
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\MinecraftLibrary.pdb
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\Mogre.xml
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\obj\x86\Debug\Tutorial.csprojResolveAssemblyReference.cache
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\obj\x86\Debug\Tutorial.exe
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\obj\x86\Debug\Tutorial.pdb
