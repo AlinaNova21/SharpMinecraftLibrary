@@ -21,12 +21,21 @@ namespace Mogre.Tutorials
             Entity ent = mSceneMgr.CreateEntity("Head", "ogrehead.mesh");
             SceneNode node = mSceneMgr.RootSceneNode.CreateChildSceneNode("HeadNode");
             //node.AttachObject(ent);
-            Chunk c=new Chunk();
+            MaterialPtr mat = MaterialManager.Singleton.Create("BoxColor", "General", true );
+	        Technique tech = mat.GetTechnique(0);
+	        Pass pass = tech.GetPass(0);
+	        TextureUnitState tex = pass.CreateTextureUnitState();
+            tex.SetTextureName("sphax.jpg",TextureType.TEX_TYPE_2D);
+            tex.NumMipmaps=4;
+            tex.TextureAnisotropy=1;
+            tex.SetTextureFiltering(FilterOptions.FO_POINT, FilterOptions.FO_POINT, FilterOptions.FO_POINT);
+
             foreach (string file in System.IO.Directory.GetFiles("chunks", "*_bm_true.bin"))
             {
                 int x = int.Parse(file.Split('\\')[1].Split('_')[0]);
                 int z = int.Parse(file.Split('\\')[1].Split('_')[1]);
 
+                Chunk c = new Chunk();
                 c.update(new Packet_MapChunk()
                 {
                     x=x,z=z,
@@ -76,12 +85,14 @@ namespace Mogre.Tutorials
             Mogre.ManualObject MeshChunk = mSceneMgr.CreateManualObject("MeshManChunk" + c.x + "_" + c.z);
 
    
-	        MeshChunk.Begin("BoxColor");
-            mes
+	        MeshChunk.Begin("BoxColor",RenderOperation.OperationTypes.OT_TRIANGLE_LIST);
+      
 	        uint iVertex = 0;
 	        Block Block;
             Block Block1;
- 
+            float bo = 1f / 16f;
+            Console.WriteLine(bo);
+            float U1, U2, V1, V2;
 	        for (int z = 0; z < 16; ++z)
 	        {
 		        for (int y = 0; y < 256; ++y)
@@ -92,22 +103,25 @@ namespace Mogre.Tutorials
                         if (Block == null) continue;
                         if (Block.ID == 0) continue;
 
+                        //Compute the block's texture coordinates
+                        U1 = bo * (float)(Block.U());
+                        U2 = U1 + bo;
+                        V1 = bo * (float)(Block.V());
+                        V2 = V1 + bo;
                         //x-1
+
                         Block1 = new Block(x, y, z, 0, 0);
 				        if (x > 0) Block1 = c.blocks[x-1,y,z];
 
                         if (Block1.ID == 0)
 				        {
-					        MeshChunk.Position(x, y,   z+1);	MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(0, 1);
-					        MeshChunk.Position(x, y+1, z+1);	MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(1, 1);
-					        MeshChunk.Position(x, y+1, z);		MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(1, 0);
-					        MeshChunk.Position(x, y,   z);		MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(0, 0);
+					        MeshChunk.Position(x, y,   z+1);	MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(U1, V2);
+					        MeshChunk.Position(x, y+1, z+1);	MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(U2, V2);
+					        MeshChunk.Position(x, y+1, z);		MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(U2, V1);
+					        MeshChunk.Position(x, y,   z);		MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(U1, V1);
  
 					        MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
 					        MeshChunk.Triangle(iVertex+2, iVertex+3, iVertex);
-                            
-                            MeshChunk.Colour(getColor(Block1.ID));
-                            MeshChunk.Colour(getColor(Block1.ID));
 
 					        iVertex += 4;
 				        }
@@ -119,16 +133,13 @@ namespace Mogre.Tutorials
 
                         if (Block1.ID == 0)
 				        {
-					        MeshChunk.Position(x+1, y,   z);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(0, 1);
-					        MeshChunk.Position(x+1, y+1, z);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(1, 1);
-					        MeshChunk.Position(x+1, y+1, z+1);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(1, 0);
-					        MeshChunk.Position(x+1, y,   z+1);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(0, 0);
+					        MeshChunk.Position(x+1, y,   z);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(U1, V2);
+					        MeshChunk.Position(x+1, y+1, z);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(U2, V2);
+					        MeshChunk.Position(x+1, y+1, z+1);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(U2, V1);
+					        MeshChunk.Position(x+1, y,   z+1);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(U1, V1);
  
 					        MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
                             MeshChunk.Triangle(iVertex + 2, iVertex + 3, iVertex);
-
-                            MeshChunk.Colour(getColor(Block1.ID));
-                            MeshChunk.Colour(getColor(Block1.ID));
  
 					        iVertex += 4;
 				        }
@@ -140,16 +151,13 @@ namespace Mogre.Tutorials
 
                         if (Block1.ID == 0)
 				        {
-					        MeshChunk.Position(x,   y, z);		MeshChunk.Normal(0,-1,0); MeshChunk.TextureCoord(0, 1);
-					        MeshChunk.Position(x+1, y, z);		MeshChunk.Normal(0,-1,0); MeshChunk.TextureCoord(1, 1);
-					        MeshChunk.Position(x+1, y, z+1);	MeshChunk.Normal(0,-1,0); MeshChunk.TextureCoord(1, 0);
-					        MeshChunk.Position(x,   y, z+1);	MeshChunk.Normal(0,-1,0); MeshChunk.TextureCoord(0, 0);
- 
+					        MeshChunk.Position(x,   y, z);		MeshChunk.Normal(0,-1,0); MeshChunk.TextureCoord(U1, V2);
+					        MeshChunk.Position(x+1, y, z);		MeshChunk.Normal(0,-1,0); MeshChunk.TextureCoord(U2, V2);
+					        MeshChunk.Position(x+1, y, z+1);	MeshChunk.Normal(0,-1,0); MeshChunk.TextureCoord(U2,V1);
+					        MeshChunk.Position(x,   y, z+1);	MeshChunk.Normal(0,-1,0); MeshChunk.TextureCoord(U1,V1);
+
 					        MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
                             MeshChunk.Triangle(iVertex + 2, iVertex + 3, iVertex);
-
-                            MeshChunk.Colour(getColor(Block1.ID));
-                            MeshChunk.Colour(getColor(Block1.ID));
  
 					        iVertex += 4;
 				        }
@@ -162,16 +170,13 @@ namespace Mogre.Tutorials
 
                         if (Block1.ID == 0)
 				        {
-					        MeshChunk.Position(x,   y+1, z+1);		MeshChunk.Normal(0,1,0); MeshChunk.TextureCoord(0, 1);
-					        MeshChunk.Position(x+1, y+1, z+1);		MeshChunk.Normal(0,1,0); MeshChunk.TextureCoord(1, 1);
-					        MeshChunk.Position(x+1, y+1, z);		MeshChunk.Normal(0,1,0); MeshChunk.TextureCoord(1, 0);
-					        MeshChunk.Position(x,   y+1, z);		MeshChunk.Normal(0,1,0); MeshChunk.TextureCoord(0, 0);
+					        MeshChunk.Position(x,   y+1, z+1);		MeshChunk.Normal(0,1,0); MeshChunk.TextureCoord(U1, V2);
+					        MeshChunk.Position(x+1, y+1, z+1);		MeshChunk.Normal(0,1,0); MeshChunk.TextureCoord(U2, V2);
+					        MeshChunk.Position(x+1, y+1, z);		MeshChunk.Normal(0,1,0); MeshChunk.TextureCoord(U2,V1);
+					        MeshChunk.Position(x,   y+1, z);		MeshChunk.Normal(0,1,0); MeshChunk.TextureCoord(U1,V1);
  
 					        MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
                             MeshChunk.Triangle(iVertex + 2, iVertex + 3, iVertex);
-
-                            MeshChunk.Colour(getColor(Block1.ID));
-                            MeshChunk.Colour(getColor(Block1.ID));
  
 					        iVertex += 4;
 				        }
@@ -183,16 +188,13 @@ namespace Mogre.Tutorials
 
                         if (Block1.ID == 0)
 				        {
-					        MeshChunk.Position(x,   y+1, z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(0, 1);
-					        MeshChunk.Position(x+1, y+1, z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(1, 1);
-					        MeshChunk.Position(x+1, y,   z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(1, 0);
-					        MeshChunk.Position(x,   y,   z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(0, 0);
+					        MeshChunk.Position(x,   y+1, z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(U1, V2);
+					        MeshChunk.Position(x+1, y+1, z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(U2, V2);
+					        MeshChunk.Position(x+1, y,   z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(U2,V1);
+					        MeshChunk.Position(x,   y,   z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(U1,V1);
  
 					        MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
                             MeshChunk.Triangle(iVertex + 2, iVertex + 3, iVertex);
-
-                            MeshChunk.Colour(getColor(Block1.ID));
-                            MeshChunk.Colour(getColor(Block1.ID));
  
 					        iVertex += 4;
 				        }
@@ -205,16 +207,13 @@ namespace Mogre.Tutorials
 
                         if (Block1.ID == 0)
 				        {
-					        MeshChunk.Position(x,   y,   z+1);		MeshChunk.Normal(0,0,1); MeshChunk.TextureCoord(0, 1);
-					        MeshChunk.Position(x+1, y,   z+1);		MeshChunk.Normal(0,0,1); MeshChunk.TextureCoord(1, 1);
-					        MeshChunk.Position(x+1, y+1, z+1);		MeshChunk.Normal(0,0,1); MeshChunk.TextureCoord(1, 0);
-					        MeshChunk.Position(x,   y+1, z+1);		MeshChunk.Normal(0,0,1); MeshChunk.TextureCoord(0, 0);
+					        MeshChunk.Position(x,   y,   z+1);		MeshChunk.Normal(0,0,1); MeshChunk.TextureCoord(U1, V2);
+					        MeshChunk.Position(x+1, y,   z+1);		MeshChunk.Normal(0,0,1); MeshChunk.TextureCoord(U2, V2);
+					        MeshChunk.Position(x+1, y+1, z+1);		MeshChunk.Normal(0,0,1); MeshChunk.TextureCoord(U2,V1);
+					        MeshChunk.Position(x,   y+1, z+1);		MeshChunk.Normal(0,0,1); MeshChunk.TextureCoord(U1,V1);
  
 					        MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
                             MeshChunk.Triangle(iVertex + 2, iVertex + 3, iVertex);
-
-                            MeshChunk.Colour(getColor(Block1.ID));
-                            MeshChunk.Colour(getColor(Block1.ID));
  
 					        iVertex += 4;
 				        }
