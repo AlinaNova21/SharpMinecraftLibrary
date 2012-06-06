@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Ionic.Zlib;
 
 namespace MinecraftLibrary
 {
@@ -142,10 +143,10 @@ namespace MinecraftLibrary
         protected void readSlotData(Stream str)
         {
             short[] enchantable = {
-                //0x103, //#Flint and steel
-                //0x105, //#Bow
-                //0x15A, //#Fishing rod
-                //0x167, //#Shears
+                0x103, //#Flint and steel
+                0x105, //#Bow
+                0x15A, //#Fishing rod
+                0x167, //#Shears
  
                 //#TOOLS
                 //#sword, shovel, pickaxe, axe, hoe
@@ -1024,12 +1025,14 @@ namespace MinecraftLibrary
             readFloat(str);
             readShort(str);
             readShort(str);
-
         }
     }
     //0x32
     public class Packet_PreChunk : Packet
     {
+        public int x;
+        public int z;
+        public bool mode;
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1037,9 +1040,9 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             // TODO: Add variables (0x32 Prechunk)
-            readInt(str);
-            readInt(str);
-            readBool(str);
+            x = readInt(str);
+            z = readInt(str);
+            mode = readBool(str);
         }
     }
     //0x33  //!
@@ -1056,7 +1059,23 @@ namespace MinecraftLibrary
         public short addBM;
         public int size;
         public byte[] data;
+        private byte[] rawData = null;
+        public byte[] chunkData
+        {
+            get
+            {
+                if (rawData == null)
+                    rawData = ZlibStream.UncompressBuffer(data);
+                /*{
+                    ICSharpCode.SharpZipLib.Zip.Compression.Inflater inf = new ICSharpCode.SharpZipLib.Zip.Compression.Inflater();
+                    rawData = new byte[size];
+                    inf.SetInput(data, 0, size);
+                    inf.Inflate(rawData);
+                }*/
 
+                return rawData;
+            }
+        }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1302,7 +1321,7 @@ namespace MinecraftLibrary
     }
     // TODO: Implement 0x83 Item Data (Maps)
     //0x84
-    public class Packet_EntiryTileUpdate : Packet
+    public class Packet_EntityTileUpdate : Packet
     {
         public override void write(Stream str)
         {

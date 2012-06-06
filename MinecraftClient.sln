@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mogre", "Mogre\Mogre.csproj", "{0953C39C-0720-4B01-B018-8BD783698A36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial", "mogre2\Tutorial.csproj", "{BDBBE75A-62AB-4416-ACC8-E493E9D0FD17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +44,26 @@ Global
 		{2FBC032E-DEBA-420A-86ED-D30693938B89}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{2FBC032E-DEBA-420A-86ED-D30693938B89}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2FBC032E-DEBA-420A-86ED-D30693938B89}.Release|x86.ActiveCfg = Release|Any CPU
+		{0953C39C-0720-4B01-B018-8BD783698A36}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{0953C39C-0720-4B01-B018-8BD783698A36}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{0953C39C-0720-4B01-B018-8BD783698A36}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{0953C39C-0720-4B01-B018-8BD783698A36}.Debug|x86.ActiveCfg = Debug|x86
+		{0953C39C-0720-4B01-B018-8BD783698A36}.Debug|x86.Build.0 = Debug|x86
+		{0953C39C-0720-4B01-B018-8BD783698A36}.Release|Any CPU.ActiveCfg = Release|x86
+		{0953C39C-0720-4B01-B018-8BD783698A36}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{0953C39C-0720-4B01-B018-8BD783698A36}.Release|Mixed Platforms.Build.0 = Release|x86
+		{0953C39C-0720-4B01-B018-8BD783698A36}.Release|x86.ActiveCfg = Release|x86
+		{0953C39C-0720-4B01-B018-8BD783698A36}.Release|x86.Build.0 = Release|x86
+		{BDBBE75A-62AB-4416-ACC8-E493E9D0FD17}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{BDBBE75A-62AB-4416-ACC8-E493E9D0FD17}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{BDBBE75A-62AB-4416-ACC8-E493E9D0FD17}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{BDBBE75A-62AB-4416-ACC8-E493E9D0FD17}.Debug|x86.ActiveCfg = Debug|x86
+		{BDBBE75A-62AB-4416-ACC8-E493E9D0FD17}.Debug|x86.Build.0 = Debug|x86
+		{BDBBE75A-62AB-4416-ACC8-E493E9D0FD17}.Release|Any CPU.ActiveCfg = Release|x86
+		{BDBBE75A-62AB-4416-ACC8-E493E9D0FD17}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{BDBBE75A-62AB-4416-ACC8-E493E9D0FD17}.Release|Mixed Platforms.Build.0 = Release|x86
+		{BDBBE75A-62AB-4416-ACC8-E493E9D0FD17}.Release|x86.ActiveCfg = Release|x86
+		{BDBBE75A-62AB-4416-ACC8-E493E9D0FD17}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

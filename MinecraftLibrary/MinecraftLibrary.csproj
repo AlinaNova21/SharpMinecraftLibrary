@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,9 +42,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chunk.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Packet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Zlib\CRC32.cs" />
+    <Compile Include="Zlib\Deflate.cs" />
+    <Compile Include="Zlib\DeflateStream.cs" />
+    <Compile Include="Zlib\GZipStream.cs" />
+    <Compile Include="Zlib\Inflate.cs" />
+    <Compile Include="Zlib\InfTree.cs" />
+    <Compile Include="Zlib\ParallelDeflateOutputStream.cs" />
+    <Compile Include="Zlib\Tree.cs" />
+    <Compile Include="Zlib\Zlib.cs" />
+    <Compile Include="Zlib\ZlibBaseStream.cs" />
+    <Compile Include="Zlib\ZlibCodec.cs" />
+    <Compile Include="Zlib\ZlibConstants.cs" />
+    <Compile Include="Zlib\ZlibStream.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Zlib\LICENSE.jzlib.txt" />
+    <Content Include="Zlib\License.zlib.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
