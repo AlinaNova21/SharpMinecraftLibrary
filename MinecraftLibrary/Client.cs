@@ -407,7 +407,6 @@ namespace MinecraftLibrary
         {
             packets.Enqueue(new Packet_KeepAlive() { ID = 0 });
         }
-        Dictionary<string, Chunk> chunks = new Dictionary<string, Chunk>();
         public void onPacketReceived(object sender, packetReceivedEventArgs e)
         {
             switch (e.ID)
@@ -481,60 +480,7 @@ namespace MinecraftLibrary
                     sendPacket(p);
                    output("Moved!",true);
                     break;
-                case 0x32:
-                    Packet_PreChunk c = (Packet_PreChunk)e.packet;
-                    if (c.mode)
-                    {
-                        if (!chunks.ContainsKey(c.x + "_" + c.z))
-                            chunks.Add(c.x + "_" + c.z, new Chunk());
-                    }
-                    else
-                        if (chunks.ContainsKey(c.x + "_" + c.z))
-                            chunks.Remove(c.x + "_" + c.z);
-                    break;
-                case 0x33:
-                    Packet_MapChunk mc = (Packet_MapChunk)e.packet;
-                    int cx, cz;
-                    cx = mc.x;
-                    cz = mc.z;
-                    string key = cx + "_" + cz;
-                    //output("Chunk: " + key, true);
-                    if (!chunks.ContainsKey(key))
-                    {
-                        chunks.Add(key, new Chunk());
-                        //output("Chunk had to be added! " + key, true);
-                    }
-                    chunks[key].update(mc);
-
-                    byte[] cubic_chunk_data = new byte[4096];
-                    byte[] cubic_chunk_data2=new byte[4096*16];
-                    //Loop over 16x16x16 chunks in the 16x256x16 column
-                    int ii=-1;
-                     for (int i=0;i<16;i++) {
-                       //If the bitmask indicates this chunk has been sent...
-                       ii = ii + 1;
-                        //Read data...
-                        //Array.ConstrainedCopy(data.chunkData, 4096 * ii, cubic_chunk_data, 0, 4096);
-                        //io.Read(cubic_chunk_data,0,4096); //2048 for the other arrays, where you'll need to split the data
-
-                        for (int j = 0; j < cubic_chunk_data.Length; j++)
-                        {
-                            int bx = j & 0x0F;
-                            int by = i * 16 + j >> 8;
-                            int bz = (j & 0xF0) >> 4;
-                            if (chunks[key].blocks[bx, by, bz] == null)
-                                chunks[key].blocks[bx, by, bz] = new Block(bx, by, bz, 0, 0);
-                            cubic_chunk_data[j] = (byte)chunks[key].blocks[bx, by, bz].ID;
-                        }
-                        Array.Copy(cubic_chunk_data, 0,cubic_chunk_data2, 4096 * ii,4096);
-                     }
-                    System.IO.File.WriteAllBytes(@"chunks\" + key + "_bm_"+mc.groundUC.ToString()+".bin",BitConverter.GetBytes(256));
-                    System.IO.File.WriteAllBytes(@"chunks\" + key + ".bin", cubic_chunk_data2);
-                    //for (int y = 0; y < 128; y++)
-                    //    for (int x = 0; x < 16; x++)
-                    //        for (int z = 0; z < 16; z++)
-
-                    break;
+               
                 case 255:
                     //Console.WriteLine("Kicked: " + ((Packet_Kick)e.packet).dataString);
                     output("Kicked: " + ((Packet_Kick)e.packet).dataString, true);
