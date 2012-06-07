@@ -34,7 +34,8 @@ namespace Mogre.Tutorials
             switch (e.ID)
             {
                 case 0x0D:
-                    //moveCamera((float)mc.x, (float)mc.y, (float)mc.z);
+                    Packet_PlayerPosAndLook p = (Packet_PlayerPosAndLook)e.packet;
+                    moveCamera((float)p.x, (float)p.y, (float)p.z);
                     break;
                 case 8:
                     Packet_UpdateHealth h = (Packet_UpdateHealth)e.packet;
@@ -108,6 +109,12 @@ namespace Mogre.Tutorials
                     //        for (int z = 0; z < 16; z++)
 
                     break;
+                case 0x34:
+                    Packet_MultiBlockChange mb = (Packet_MultiBlockChange)e.packet;
+                    chunks[mb.x + "_" + mb.z].update(mb);
+                    renderChunk(chunks[mb.x + "_" + mb.z]);
+                    break;
+
             }
         }
         public Client mc = new Client();
@@ -127,8 +134,8 @@ namespace Mogre.Tutorials
             mc.name = Console.ReadLine();
             mc.output2 = writeDebug;
             //mc.connect("127.0.0.1", 25564); //SMPROXY
-            mc.connect("127.0.0.1", 25565); //LOCAL
-            //mc.connect("37.59.228.108", 25565); //mcags.com
+            //mc.connect("127.0.0.1", 25565); //LOCAL
+            mc.connect("37.59.228.108", 25565); //mcags.com
 
             
             string tmp = "";

@@ -1104,6 +1104,11 @@ namespace MinecraftLibrary
     //0x34 //!
     public class Packet_MultiBlockChange : Packet
     {
+        public int x;
+        public int z;
+        public short count;
+        public int[] rawdata;
+
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1111,21 +1116,13 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             // TODO: Add variables (0x34 MultiBlockChange)
-            readInt(str);
-            readInt(str);
-            int cnt = readShort(str);
-            for (int i = 0; i < cnt; i++)
-            {
-                readShort(str);
-            }
-            for (int i = 0; i < cnt; i++)
-            {
-                readSByte(str);
-            }
-            for (int i = 0; i < cnt; i++)
-            {
-                readSByte(str);
-            }
+            x=readInt(str);
+            z=readInt(str);
+            int count = readShort(str);
+            rawdata=new int[count];
+            int ds = readInt(str);
+            for (int i = 0; i < count; i++)
+                rawdata[i] = readInt(str);
         }
     }
     //0x35

@@ -60,6 +60,22 @@ namespace MinecraftLibrary
         //public int y; s
         public int z;
         public Block[, ,] blocks = new Block[16, 256, 16];
+        public void update(Packet_MultiBlockChange data)
+        {
+            int[] d = data.rawdata;
+            foreach(int bl in d)
+            {
+                int metadata,x,y,z,bid;
+                metadata=bl & 0x3;
+                bid=(bl & 0xFFF0) >> 4;
+                y=(bl & 0xFF0000) >> 16;
+                z=(bl & 0xF000000) >> 24;
+                x=(int)(bl & (uint)0xF0000000) >> 28;
+                //Block b=blocks[x,y,z];
+                //b.metaData = (short)metadata;
+                //b.ID = (short)bid;
+            }
+        }
         public void update(Packet_MapChunk data)
         {
             x = data.x;
