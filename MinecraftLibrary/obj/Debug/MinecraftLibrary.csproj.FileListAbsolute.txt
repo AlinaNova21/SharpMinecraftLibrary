@@ -16,12 +16,6 @@ C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftLibrary\obj\Debug\Min
 C:\programming\projects\NET\SharpMinecraftLibrary\MinecraftLibrary\obj\Debug\MinecraftLibrary.pdb
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\MinecraftLibrary.dll
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\MinecraftLibrary.pdb
-C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\ICSharpCode.SharpZipLib.dll
-C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\IKVM.OpenJDK.Core.dll
-C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\Ionic.Zip.dll
-C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\IKVM.Runtime.dll
-C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\IKVM.OpenJDK.Util.dll
-C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftLibrary\bin\Debug\Chraft.pdb
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftLibrary\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftLibrary\obj\Debug\MinecraftLibrary.dll
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftLibrary\obj\Debug\MinecraftLibrary.pdb
