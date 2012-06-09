@@ -1,345 +1,484 @@
-13:40:21: Creating resource group General
-13:40:21: Creating resource group Internal
-13:40:21: Creating resource group Autodetect
-13:40:21: SceneManagerFactory for type 'DefaultSceneManager' registered.
-13:40:21: Registering ResourceManager for type Material
-13:40:21: Registering ResourceManager for type Mesh
-13:40:21: Registering ResourceManager for type Skeleton
-13:40:21: MovableObjectFactory for type 'ParticleSystem' registered.
-13:40:21: OverlayElementFactory for type Panel registered.
-13:40:21: OverlayElementFactory for type BorderPanel registered.
-13:40:21: OverlayElementFactory for type TextArea registered.
-13:40:21: Registering ResourceManager for type Font
-13:40:21: ArchiveFactory for archive type FileSystem registered.
-13:40:21: ArchiveFactory for archive type Zip registered.
-13:40:21: DDS codec registering
-13:40:21: FreeImage version: 3.13.1
-13:40:21: This program uses FreeImage, a free, open source image library supporting all common bitmap formats. See http://freeimage.sourceforge.net for details
-13:40:21: Supported formats: bmp,ico,jpg,jif,jpeg,jpe,jng,koa,iff,lbm,mng,pbm,pbm,pcd,pcx,pgm,pgm,png,ppm,ppm,ras,tga,targa,tif,tiff,wap,wbmp,wbm,psd,cut,xbm,xpm,gif,hdr,g3,sgi,exr,j2k,j2c,jp2,pfm,pct,pict,pic,bay,bmq,cr2,crw,cs1,dc2,dcr,dng,erf,fff,hdr,k25,kdc,mdc,mos,mrw,nef,orf,pef,pxn,raf,raw,rdc,sr2,srf,arw,3fr,cine,ia,kc2,mef,nrw,qtk,rw2,sti,drf,dsc,ptx,cap,iiq,rwz
-13:40:21: PVRTC codec registering
-13:40:21: Registering ResourceManager for type HighLevelGpuProgram
-13:40:21: Registering ResourceManager for type Compositor
-13:40:21: MovableObjectFactory for type 'Entity' registered.
-13:40:21: MovableObjectFactory for type 'Light' registered.
-13:40:21: MovableObjectFactory for type 'BillboardSet' registered.
-13:40:21: MovableObjectFactory for type 'ManualObject' registered.
-13:40:21: MovableObjectFactory for type 'BillboardChain' registered.
-13:40:21: MovableObjectFactory for type 'RibbonTrail' registered.
-13:40:21: Loading library .\RenderSystem_Direct3D9
-13:40:21: Installing plugin: D3D9 RenderSystem
-13:40:21: D3D9 : Direct3D9 Rendering Subsystem created.
-13:40:21: D3D9: Driver Detection Starts
-13:40:21: D3D9: Driver Detection Ends
-13:40:21: Plugin successfully installed
-13:40:21: Loading library .\RenderSystem_GL
-13:40:21: Installing plugin: GL RenderSystem
-13:40:21: OpenGL Rendering Subsystem created.
-13:40:21: Plugin successfully installed
-13:40:21: Loading library .\Plugin_OctreeSceneManager
-13:40:21: Installing plugin: Octree & Terrain Scene Manager
-13:40:21: Plugin successfully installed
-13:40:21: *-*-* OGRE Initialising
-13:40:21: *-*-* Version 1.7.1 (Cthugha)
-13:40:21: D3D9 : RenderSystem Option: Allow NVPerfHUD = No
-13:40:21: D3D9 : RenderSystem Option: FSAA = 0
-13:40:21: D3D9 : RenderSystem Option: Floating-point mode = Fastest
-13:40:21: D3D9 : RenderSystem Option: Full Screen = No
-13:40:21: D3D9 : RenderSystem Option: Rendering Device = Monitor-1-RDPDD Chained DD
-13:40:21: D3D9 : RenderSystem Option: Resource Creation Policy = Create on all devices
-13:40:21: D3D9 : RenderSystem Option: VSync = No
-13:40:21: D3D9 : RenderSystem Option: VSync Interval = 1
-13:40:21: D3D9 : RenderSystem Option: Video Mode = 800 x 600 @ 32-bit colour
-13:40:21: D3D9 : RenderSystem Option: sRGB Gamma Conversion = No
-13:40:34: CPU Identifier & Features
-13:40:34: -------------------------
-13:40:34:  *   CPU ID: GenuineIntel: Pentium(R) Dual-Core  CPU      E5500  @ 2.80GHz
-13:40:34:  *      SSE: yes
-13:40:34:  *     SSE2: yes
-13:40:34:  *     SSE3: yes
-13:40:34:  *      MMX: yes
-13:40:34:  *   MMXEXT: yes
-13:40:34:  *    3DNOW: no
-13:40:34:  * 3DNOWEXT: no
-13:40:34:  *     CMOV: yes
-13:40:34:  *      TSC: yes
-13:40:34:  *      FPU: yes
-13:40:34:  *      PRO: yes
-13:40:34:  *       HT: no
-13:40:34: -------------------------
-13:40:34: D3D9 : Subsystem Initialising
-13:40:34: Registering ResourceManager for type Texture
-13:40:34: Registering ResourceManager for type GpuProgram
-13:40:34: D3D9RenderSystem::_createRenderWindow "TutorialApplication Render Window", 800x600 windowed  miscParams: FSAA=0 FSAAHint= colourDepth=32 gamma=false monitorIndex=0 useNVPerfHUD=false vsync=false vsyncInterval=1 
-13:40:35: D3D9 : Created D3D9 Rendering Window 'TutorialApplication Render Window' : 800x600, 32bpp
-13:40:35: D3D9 : WARNING - disabling VSync in windowed mode can cause timing issues at lower frame rates, turn VSync on if you observe this problem.
-13:40:35: D3D9: Vertex texture format supported - PF_L8
-13:40:35: D3D9: Vertex texture format supported - PF_L16
-13:40:35: D3D9: Vertex texture format supported - PF_A8
-13:40:35: D3D9: Vertex texture format supported - PF_A4L4
-13:40:35: D3D9: Vertex texture format supported - PF_BYTE_LA
-13:40:35: D3D9: Vertex texture format supported - PF_R5G6B5
-13:40:35: D3D9: Vertex texture format supported - PF_B5G6R5
-13:40:35: D3D9: Vertex texture format supported - PF_A4R4G4B4
-13:40:35: D3D9: Vertex texture format supported - PF_A1R5G5B5
-13:40:35: D3D9: Vertex texture format supported - PF_A8R8G8B8
-13:40:35: D3D9: Vertex texture format supported - PF_B8G8R8A8
-13:40:35: D3D9: Vertex texture format supported - PF_A2R10G10B10
-13:40:35: D3D9: Vertex texture format supported - PF_A2B10G10R10
-13:40:35: D3D9: Vertex texture format supported - PF_DXT1
-13:40:35: D3D9: Vertex texture format supported - PF_DXT2
-13:40:35: D3D9: Vertex texture format supported - PF_DXT3
-13:40:35: D3D9: Vertex texture format supported - PF_DXT4
-13:40:35: D3D9: Vertex texture format supported - PF_DXT5
-13:40:35: D3D9: Vertex texture format supported - PF_FLOAT16_RGB
-13:40:35: D3D9: Vertex texture format supported - PF_FLOAT16_RGBA
-13:40:35: D3D9: Vertex texture format supported - PF_FLOAT32_RGB
-13:40:35: D3D9: Vertex texture format supported - PF_FLOAT32_RGBA
-13:40:35: D3D9: Vertex texture format supported - PF_X8R8G8B8
-13:40:35: D3D9: Vertex texture format supported - PF_X8B8G8R8
-13:40:35: D3D9: Vertex texture format supported - PF_R8G8B8A8
-13:40:35: D3D9: Vertex texture format supported - PF_DEPTH
-13:40:35: D3D9: Vertex texture format supported - PF_SHORT_RGBA
-13:40:35: D3D9: Vertex texture format supported - PF_FLOAT16_R
-13:40:35: D3D9: Vertex texture format supported - PF_FLOAT32_R
-13:40:35: D3D9: Vertex texture format supported - PF_SHORT_GR
-13:40:35: D3D9: Vertex texture format supported - PF_FLOAT16_GR
-13:40:35: D3D9: Vertex texture format supported - PF_FLOAT32_GR
-13:40:35: D3D9: Vertex texture format supported - PF_SHORT_RGB
-13:40:35: D3D9: Vertex texture format supported - PF_PVRTC_RGB2
-13:40:35: D3D9: Vertex texture format supported - PF_PVRTC_RGBA2
-13:40:35: D3D9: Vertex texture format supported - PF_PVRTC_RGB4
-13:40:35: D3D9: Vertex texture format supported - PF_PVRTC_RGBA4
-13:40:35: RenderSystem capabilities
-13:40:35: -------------------------
-13:40:35: RenderSystem Name: Direct3D9 Rendering Subsystem
-13:40:35: GPU Vendor: unknown
-13:40:35: Device Name: Monitor-1-RDPDD Chained DD
-13:40:35: Driver Version: 8.17.10.1124
-13:40:35:  * Fixed function pipeline: yes
-13:40:35:  * Hardware generation of mipmaps: yes
-13:40:35:  * Texture blending: yes
-13:40:35:  * Anisotropic texture filtering: yes
-13:40:35:  * Dot product texture operation: yes
-13:40:35:  * Cube mapping: yes
-13:40:35:  * Hardware stencil buffer: yes
-13:40:35:    - Stencil depth: 8
-13:40:35:    - Two sided stencil support: yes
-13:40:35:    - Wrap stencil values: yes
-13:40:35:  * Hardware vertex / index buffers: yes
-13:40:35:  * Vertex programs: yes
-13:40:35:  * Number of floating-point constants for vertex programs: 256
-13:40:35:  * Number of integer constants for vertex programs: 16
-13:40:35:  * Number of boolean constants for vertex programs: 16
-13:40:35:  * Fragment programs: yes
-13:40:35:  * Number of floating-point constants for fragment programs: 224
-13:40:35:  * Number of integer constants for fragment programs: 16
-13:40:35:  * Number of boolean constants for fragment programs: 16
-13:40:35:  * Geometry programs: no
-13:40:35:  * Number of floating-point constants for geometry programs: 0
-13:40:35:  * Number of integer constants for geometry programs: 0
-13:40:35:  * Number of boolean constants for geometry programs: 0
-13:40:35:  * Supported Shader Profiles: hlsl ps_1_1 ps_1_2 ps_1_3 ps_1_4 ps_2_0 ps_2_a ps_2_b ps_2_x ps_3_0 vs_1_1 vs_2_0 vs_2_a vs_2_x vs_3_0
-13:40:35:  * Texture Compression: yes
-13:40:35:    - DXT: yes
-13:40:35:    - VTC: no
-13:40:35:    - PVRTC: no
-13:40:35:  * Scissor Rectangle: yes
-13:40:35:  * Hardware Occlusion Query: yes
-13:40:35:  * User clip planes: yes
-13:40:35:  * VET_UBYTE4 vertex element type: yes
-13:40:35:  * Infinite far plane projection: yes
-13:40:35:  * Hardware render-to-texture: yes
-13:40:35:  * Floating point textures: yes
-13:40:35:  * Non-power-of-two textures: yes
-13:40:35:  * Volume textures: yes
-13:40:35:  * Multiple Render Targets: 4
-13:40:35:    - With different bit depths: yes
-13:40:35:  * Point Sprites: yes
-13:40:35:  * Extended point parameters: yes
-13:40:35:  * Max Point Size: 10
-13:40:35:  * Vertex texture fetch: yes
-13:40:35:  * Number of world matrices: 0
-13:40:35:  * Number of texture units: 8
-13:40:35:  * Stencil buffer depth: 8
-13:40:35:  * Number of vertex blend matrices: 0
-13:40:35:    - Max vertex textures: 4
-13:40:35:    - Vertex textures shared: no
-13:40:35:  * Render to Vertex Buffer : no
-13:40:35:  * DirectX per stage constants: yes
-13:40:35: ***************************************
-13:40:35: *** D3D9 : Subsystem Initialised OK ***
-13:40:35: ***************************************
-13:40:35: DefaultWorkQueue('Root') initialising on thread main.
-13:40:35: Particle Renderer Type 'billboard' registered
-13:40:35: SceneManagerFactory for type 'OctreeSceneManager' registered.
-13:40:35: SceneManagerFactory for type 'TerrainSceneManager' registered.
-13:40:35: Creating resource group Bootstrap
-13:40:35: Added resource location '../../Media/packs/OgreCore.zip' of type 'Zip' to resource group 'Bootstrap'
-13:40:35: Added resource location '../../Media' of type 'FileSystem' to resource group 'General'
-13:40:35: Added resource location '../../Media/fonts' of type 'FileSystem' to resource group 'General'
-13:40:35: Added resource location '../../Media/materials/programs' of type 'FileSystem' to resource group 'General'
-13:40:35: Added resource location '../../Media/materials/scripts' of type 'FileSystem' to resource group 'General'
-13:40:35: Added resource location '../../Media/materials/textures' of type 'FileSystem' to resource group 'General'
-13:40:35: Added resource location '../../Media/models' of type 'FileSystem' to resource group 'General'
-13:40:35: Added resource location '../../Media/packs/cubemap.zip' of type 'Zip' to resource group 'General'
-13:40:35: Added resource location '../../Media/packs/skybox.zip' of type 'Zip' to resource group 'General'
-13:40:35: Parsing scripts for resource group Autodetect
-13:40:35: Finished parsing scripts for resource group Autodetect
-13:40:35: Parsing scripts for resource group Bootstrap
-13:40:35: Parsing script OgreCore.material
-13:40:35: Parsing script OgreProfiler.material
-13:40:35: Parsing script Ogre.fontdef
-13:40:35: Parsing script OgreDebugPanel.overlay
-13:40:35: Texture: New_Ogre_Border_Center.png: Loading 1 faces(PF_A8R8G8B8,256x128x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,256x128x1.
-13:40:35: Texture: New_Ogre_Border.png: Loading 1 faces(PF_A8R8G8B8,256x256x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,256x256x1.
-13:40:35: Texture: New_Ogre_Border_Break.png: Loading 1 faces(PF_A8R8G8B8,32x32x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,32x32x1.
-13:40:35: Texture: ogretext.png: Loading 1 faces(PF_A8R8G8B8,256x128x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,256x128x1.
-13:40:35: Parsing script OgreLoadingPanel.overlay
-13:40:35: Finished parsing scripts for resource group Bootstrap
-13:40:35: Parsing scripts for resource group General
-13:40:35: Parsing script Examples.program
-13:40:35: Parsing script StdQuad_vp.program
-13:40:35: Parsing script BlackAndWhite.material
-13:40:35: Parsing script Bloom.material
-13:40:35: Parsing script DepthShadowmap.material
-13:40:35: Parsing script DOF.material
-13:40:35: Compiler error: object name expected in DOF.material(55)
-13:40:35: Parsing script Embossed.material
-13:40:35: Parsing script Example-DynTex.material
-13:40:35: Parsing script Example-Water.material
-13:40:35: Parsing script Example.material
-13:40:35: Parsing script Examples-Advanced.material
-13:40:35: Parsing script facial.material
-13:40:35: Parsing script Glass.material
-13:40:35: Parsing script hdr.material
-13:40:35: Parsing script HeatVision.material
-13:40:35: Parsing script Hurt.material
-13:40:35: Parsing script instancing.material
-13:40:35: Parsing script Invert.material
-13:40:35: Parsing script Laplace.material
-13:40:35: Parsing script MotionBlur.material
-13:40:35: Parsing script Ocean.material
-13:40:35: Parsing script OffsetMapping.material
-13:40:35: Parsing script Ogre.material
-13:40:35: Parsing script OgreNewt_Example.material
-13:40:35: Compiler error: unknown error in OgreNewt_Example.material(8): token "#ambient" is not recognized
-13:40:35: Parsing script OldMovie.material
-13:40:35: Parsing script OldTV.material
-13:40:35: Parsing script Posterize.material
-13:40:35: Parsing script red.material
-13:40:35: Parsing script RZR-002.material
-13:40:35: Parsing script SharpenEdges.material
-13:40:36: Parsing script smoke.material
-13:40:36: Parsing script Tiling.material
-13:40:36: Parsing script VarianceShadowmap.material
-13:40:36: Parsing script Examples.compositor
-13:40:36: Finished parsing scripts for resource group General
-13:40:36: Parsing scripts for resource group Internal
-13:40:36: Finished parsing scripts for resource group Internal
-13:40:36: Material BoxColor was requested with isManual=true, but this is not applicable for materials; the flag has been reset to false
-13:40:36: *** Initializing OIS ***
-13:40:36: Font BlueHighwayusing texture size 512x512
-13:40:36: Info: Freetype returned null for character 127 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 128 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 129 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 130 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 131 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 132 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 133 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 134 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 135 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 136 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 137 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 138 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 139 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 140 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 141 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 142 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 143 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 144 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 145 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 146 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 147 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 148 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 149 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 150 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 151 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 152 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 153 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 154 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 155 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 156 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 157 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 158 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 159 in font BlueHighway
-13:40:36: Info: Freetype returned null for character 160 in font BlueHighway
-13:40:36: Texture: BlueHighwayTexture: Loading 1 faces(PF_BYTE_LA,512x512x1) with 0 generated mipmaps from Image. Internal format is PF_BYTE_LA,512x512x1.
-13:40:45: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_126_-131 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:45: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_125_-131 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:46: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_126_-132 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:47: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_125_-132 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:48: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_126_-130 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:48: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_125_-130 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:49: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_127_-131 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:50: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_124_-131 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:51: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_127_-132 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:51: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_124_-132 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:52: Texture: sphax.jpg: Loading 1 faces(PF_R8G8B8,2048x2048x1) with  hardware generated mipmaps from Image. Internal format is PF_X8R8G8B8,2048x2048x1.
-13:40:52: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_126_-133 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:53: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_125_-133 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:54: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_127_-130 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:56: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_124_-130 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:57: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_127_-133 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:57: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_124_-133 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:58: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_126_-129 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:40:59: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_125_-129 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:00: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_128_-131 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:00: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_128_-132 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:01: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_123_-131 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:02: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_123_-132 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:03: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_126_-134 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:03: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_125_-134 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:04: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_127_-129 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:05: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_124_-129 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:06: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_128_-130 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:06: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_123_-130 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:07: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_128_-133 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:08: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_123_-133 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:09: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_127_-134 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:09: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_124_-134 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:10: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_126_-128 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:11: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_125_-128 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:12: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_128_-129 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:12: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_123_-129 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:13: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_129_-131 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:14: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_129_-132 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:15: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_122_-131 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:15: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_122_-132 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:16: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_128_-134 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:17: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_127_-128 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:18: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_123_-134 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:19: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_124_-128 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:19: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_126_-135 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:20: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_125_-135 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:21: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_129_-130 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:21: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_122_-130 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:22: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_129_-133 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:23: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_122_-133 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:24: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_127_-135 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:25: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_124_-135 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:25: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_128_-128 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:26: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_129_-129 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:27: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_123_-128 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:27: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_122_-129 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:28: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_129_-134 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:29: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_126_-127 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:30: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_125_-127 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:30: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_128_-135 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:31: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_122_-134 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:32: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_123_-135 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:33: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_130_-131 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:33: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_130_-132 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:34: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_121_-131 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:35: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_121_-132 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:36: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_127_-127 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
-13:41:36: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_124_-127 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:28:39: Creating resource group General
+09:28:39: Creating resource group Internal
+09:28:39: Creating resource group Autodetect
+09:28:39: SceneManagerFactory for type 'DefaultSceneManager' registered.
+09:28:39: Registering ResourceManager for type Material
+09:28:39: Registering ResourceManager for type Mesh
+09:28:39: Registering ResourceManager for type Skeleton
+09:28:39: MovableObjectFactory for type 'ParticleSystem' registered.
+09:28:39: OverlayElementFactory for type Panel registered.
+09:28:39: OverlayElementFactory for type BorderPanel registered.
+09:28:39: OverlayElementFactory for type TextArea registered.
+09:28:39: Registering ResourceManager for type Font
+09:28:39: ArchiveFactory for archive type FileSystem registered.
+09:28:39: ArchiveFactory for archive type Zip registered.
+09:28:39: DDS codec registering
+09:28:39: FreeImage version: 3.13.1
+09:28:39: This program uses FreeImage, a free, open source image library supporting all common bitmap formats. See http://freeimage.sourceforge.net for details
+09:28:39: Supported formats: bmp,ico,jpg,jif,jpeg,jpe,jng,koa,iff,lbm,mng,pbm,pbm,pcd,pcx,pgm,pgm,png,ppm,ppm,ras,tga,targa,tif,tiff,wap,wbmp,wbm,psd,cut,xbm,xpm,gif,hdr,g3,sgi,exr,j2k,j2c,jp2,pfm,pct,pict,pic,bay,bmq,cr2,crw,cs1,dc2,dcr,dng,erf,fff,hdr,k25,kdc,mdc,mos,mrw,nef,orf,pef,pxn,raf,raw,rdc,sr2,srf,arw,3fr,cine,ia,kc2,mef,nrw,qtk,rw2,sti,drf,dsc,ptx,cap,iiq,rwz
+09:28:39: PVRTC codec registering
+09:28:39: Registering ResourceManager for type HighLevelGpuProgram
+09:28:39: Registering ResourceManager for type Compositor
+09:28:39: MovableObjectFactory for type 'Entity' registered.
+09:28:39: MovableObjectFactory for type 'Light' registered.
+09:28:39: MovableObjectFactory for type 'BillboardSet' registered.
+09:28:39: MovableObjectFactory for type 'ManualObject' registered.
+09:28:39: MovableObjectFactory for type 'BillboardChain' registered.
+09:28:39: MovableObjectFactory for type 'RibbonTrail' registered.
+09:28:39: Loading library .\RenderSystem_Direct3D9
+09:28:39: Installing plugin: D3D9 RenderSystem
+09:28:39: D3D9 : Direct3D9 Rendering Subsystem created.
+09:28:39: D3D9: Driver Detection Starts
+09:28:39: D3D9: Driver Detection Ends
+09:28:39: Plugin successfully installed
+09:28:39: Loading library .\RenderSystem_GL
+09:28:39: Installing plugin: GL RenderSystem
+09:28:39: OpenGL Rendering Subsystem created.
+09:28:39: Plugin successfully installed
+09:28:39: Loading library .\Plugin_OctreeSceneManager
+09:28:39: Installing plugin: Octree & Terrain Scene Manager
+09:28:39: Plugin successfully installed
+09:28:39: *-*-* OGRE Initialising
+09:28:39: *-*-* Version 1.7.1 (Cthugha)
+09:28:39: D3D9 : RenderSystem Option: Allow NVPerfHUD = No
+09:28:39: D3D9 : RenderSystem Option: FSAA = 0
+09:28:39: D3D9 : RenderSystem Option: Floating-point mode = Fastest
+09:28:39: D3D9 : RenderSystem Option: Full Screen = No
+09:28:39: D3D9 : RenderSystem Option: Rendering Device = Monitor-1-Mobile Intel(R) 4 Series Express Chipset Family (Microsoft Corporation - WDDM 1.1)
+09:28:39: D3D9 : RenderSystem Option: Resource Creation Policy = Create on all devices
+09:28:39: D3D9 : RenderSystem Option: VSync = No
+09:28:39: D3D9 : RenderSystem Option: VSync Interval = 1
+09:28:39: D3D9 : RenderSystem Option: Video Mode = 800 x 600 @ 32-bit colour
+09:28:39: D3D9 : RenderSystem Option: sRGB Gamma Conversion = No
+09:28:42: CPU Identifier & Features
+09:28:42: -------------------------
+09:28:42:  *   CPU ID: GenuineIntel: Pentium(R) Dual-Core CPU       T4500  @ 2.30GHz
+09:28:42:  *      SSE: yes
+09:28:42:  *     SSE2: yes
+09:28:42:  *     SSE3: yes
+09:28:42:  *      MMX: yes
+09:28:42:  *   MMXEXT: yes
+09:28:42:  *    3DNOW: no
+09:28:42:  * 3DNOWEXT: no
+09:28:42:  *     CMOV: yes
+09:28:42:  *      TSC: yes
+09:28:42:  *      FPU: yes
+09:28:42:  *      PRO: yes
+09:28:42:  *       HT: no
+09:28:42: -------------------------
+09:28:42: D3D9 : Subsystem Initialising
+09:28:42: Registering ResourceManager for type Texture
+09:28:42: Registering ResourceManager for type GpuProgram
+09:28:42: D3D9RenderSystem::_createRenderWindow "TutorialApplication Render Window", 800x600 windowed  miscParams: FSAA=0 FSAAHint= colourDepth=32 gamma=false monitorIndex=0 useNVPerfHUD=false vsync=false vsyncInterval=1 
+09:28:42: D3D9 : Created D3D9 Rendering Window 'TutorialApplication Render Window' : 800x600, 32bpp
+09:28:42: D3D9 : WARNING - disabling VSync in windowed mode can cause timing issues at lower frame rates, turn VSync on if you observe this problem.
+09:28:42: D3D9: Vertex texture format supported - PF_L8
+09:28:42: D3D9: Vertex texture format supported - PF_L16
+09:28:42: D3D9: Vertex texture format supported - PF_A8
+09:28:42: D3D9: Vertex texture format supported - PF_A4L4
+09:28:42: D3D9: Vertex texture format supported - PF_BYTE_LA
+09:28:42: D3D9: Vertex texture format supported - PF_R5G6B5
+09:28:42: D3D9: Vertex texture format supported - PF_B5G6R5
+09:28:42: D3D9: Vertex texture format supported - PF_A4R4G4B4
+09:28:42: D3D9: Vertex texture format supported - PF_A1R5G5B5
+09:28:42: D3D9: Vertex texture format supported - PF_A8R8G8B8
+09:28:42: D3D9: Vertex texture format supported - PF_B8G8R8A8
+09:28:42: D3D9: Vertex texture format supported - PF_A2R10G10B10
+09:28:42: D3D9: Vertex texture format supported - PF_A2B10G10R10
+09:28:42: D3D9: Vertex texture format supported - PF_DXT1
+09:28:42: D3D9: Vertex texture format supported - PF_DXT2
+09:28:42: D3D9: Vertex texture format supported - PF_DXT3
+09:28:42: D3D9: Vertex texture format supported - PF_DXT4
+09:28:42: D3D9: Vertex texture format supported - PF_DXT5
+09:28:42: D3D9: Vertex texture format supported - PF_FLOAT16_RGB
+09:28:42: D3D9: Vertex texture format supported - PF_FLOAT16_RGBA
+09:28:42: D3D9: Vertex texture format supported - PF_FLOAT32_RGB
+09:28:42: D3D9: Vertex texture format supported - PF_FLOAT32_RGBA
+09:28:42: D3D9: Vertex texture format supported - PF_X8R8G8B8
+09:28:42: D3D9: Vertex texture format supported - PF_R8G8B8A8
+09:28:42: D3D9: Vertex texture format supported - PF_DEPTH
+09:28:42: D3D9: Vertex texture format supported - PF_SHORT_RGBA
+09:28:42: D3D9: Vertex texture format supported - PF_FLOAT16_R
+09:28:42: D3D9: Vertex texture format supported - PF_FLOAT32_R
+09:28:42: D3D9: Vertex texture format supported - PF_SHORT_GR
+09:28:42: D3D9: Vertex texture format supported - PF_FLOAT16_GR
+09:28:42: D3D9: Vertex texture format supported - PF_FLOAT32_GR
+09:28:42: D3D9: Vertex texture format supported - PF_SHORT_RGB
+09:28:42: D3D9: Vertex texture format supported - PF_PVRTC_RGB2
+09:28:42: D3D9: Vertex texture format supported - PF_PVRTC_RGBA2
+09:28:42: D3D9: Vertex texture format supported - PF_PVRTC_RGB4
+09:28:42: D3D9: Vertex texture format supported - PF_PVRTC_RGBA4
+09:28:42: RenderSystem capabilities
+09:28:42: -------------------------
+09:28:42: RenderSystem Name: Direct3D9 Rendering Subsystem
+09:28:42: GPU Vendor: intel
+09:28:42: Device Name: Monitor-1-Mobile Intel(R) 4 Series Express Chipset Family (Microsoft Corporation - WDDM 1.1)
+09:28:42: Driver Version: 8.15.10.2702
+09:28:42:  * Fixed function pipeline: yes
+09:28:42:  * Hardware generation of mipmaps: yes
+09:28:42:  * Texture blending: yes
+09:28:42:  * Anisotropic texture filtering: yes
+09:28:42:  * Dot product texture operation: yes
+09:28:42:  * Cube mapping: yes
+09:28:42:  * Hardware stencil buffer: yes
+09:28:42:    - Stencil depth: 8
+09:28:42:    - Two sided stencil support: yes
+09:28:42:    - Wrap stencil values: yes
+09:28:42:  * Hardware vertex / index buffers: yes
+09:28:42:  * Vertex programs: yes
+09:28:42:  * Number of floating-point constants for vertex programs: 256
+09:28:42:  * Number of integer constants for vertex programs: 16
+09:28:42:  * Number of boolean constants for vertex programs: 16
+09:28:42:  * Fragment programs: yes
+09:28:42:  * Number of floating-point constants for fragment programs: 224
+09:28:42:  * Number of integer constants for fragment programs: 16
+09:28:42:  * Number of boolean constants for fragment programs: 16
+09:28:42:  * Geometry programs: no
+09:28:42:  * Number of floating-point constants for geometry programs: 0
+09:28:42:  * Number of integer constants for geometry programs: 0
+09:28:42:  * Number of boolean constants for geometry programs: 0
+09:28:42:  * Supported Shader Profiles: hlsl ps_1_1 ps_1_2 ps_1_3 ps_1_4 ps_2_0 ps_2_a ps_2_b ps_2_x ps_3_0 vs_1_1 vs_2_0 vs_2_a vs_2_x vs_3_0
+09:28:42:  * Texture Compression: yes
+09:28:42:    - DXT: yes
+09:28:42:    - VTC: no
+09:28:42:    - PVRTC: no
+09:28:42:  * Scissor Rectangle: yes
+09:28:42:  * Hardware Occlusion Query: yes
+09:28:42:  * User clip planes: yes
+09:28:42:  * VET_UBYTE4 vertex element type: yes
+09:28:42:  * Infinite far plane projection: yes
+09:28:42:  * Hardware render-to-texture: yes
+09:28:42:  * Floating point textures: yes
+09:28:42:  * Non-power-of-two textures: yes
+09:28:42:  * Volume textures: yes
+09:28:42:  * Multiple Render Targets: 4
+09:28:42:    - With different bit depths: yes
+09:28:42:  * Point Sprites: yes
+09:28:42:  * Extended point parameters: yes
+09:28:42:  * Max Point Size: 10
+09:28:42:  * Vertex texture fetch: yes
+09:28:42:  * Number of world matrices: 0
+09:28:42:  * Number of texture units: 8
+09:28:42:  * Stencil buffer depth: 8
+09:28:42:  * Number of vertex blend matrices: 0
+09:28:42:    - Max vertex textures: 4
+09:28:42:    - Vertex textures shared: no
+09:28:42:  * Render to Vertex Buffer : no
+09:28:42:  * DirectX per stage constants: yes
+09:28:42: ***************************************
+09:28:42: *** D3D9 : Subsystem Initialised OK ***
+09:28:42: ***************************************
+09:28:42: DefaultWorkQueue('Root') initialising on thread main.
+09:28:42: Particle Renderer Type 'billboard' registered
+09:28:42: SceneManagerFactory for type 'OctreeSceneManager' registered.
+09:28:42: SceneManagerFactory for type 'TerrainSceneManager' registered.
+09:28:42: Creating resource group Bootstrap
+09:28:42: Added resource location '../../Media/packs/OgreCore.zip' of type 'Zip' to resource group 'Bootstrap'
+09:28:42: Added resource location '../../Media' of type 'FileSystem' to resource group 'General'
+09:28:42: Added resource location '../../Media/fonts' of type 'FileSystem' to resource group 'General'
+09:28:42: Added resource location '../../Media/materials/programs' of type 'FileSystem' to resource group 'General'
+09:28:42: Added resource location '../../Media/materials/scripts' of type 'FileSystem' to resource group 'General'
+09:28:42: Added resource location '../../Media/materials/textures' of type 'FileSystem' to resource group 'General'
+09:28:42: Added resource location '../../Media/models' of type 'FileSystem' to resource group 'General'
+09:28:42: Added resource location '../../Media/packs/cubemap.zip' of type 'Zip' to resource group 'General'
+09:28:42: Added resource location '../../Media/packs/skybox.zip' of type 'Zip' to resource group 'General'
+09:28:42: Parsing scripts for resource group Autodetect
+09:28:42: Finished parsing scripts for resource group Autodetect
+09:28:42: Parsing scripts for resource group Bootstrap
+09:28:42: Parsing script OgreCore.material
+09:28:42: Parsing script OgreProfiler.material
+09:28:42: Parsing script Ogre.fontdef
+09:28:42: Parsing script OgreDebugPanel.overlay
+09:28:42: Texture: New_Ogre_Border_Center.png: Loading 1 faces(PF_A8R8G8B8,256x128x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,256x128x1.
+09:28:42: Texture: New_Ogre_Border.png: Loading 1 faces(PF_A8R8G8B8,256x256x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,256x256x1.
+09:28:42: Texture: New_Ogre_Border_Break.png: Loading 1 faces(PF_A8R8G8B8,32x32x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,32x32x1.
+09:28:42: Texture: ogretext.png: Loading 1 faces(PF_A8R8G8B8,256x128x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,256x128x1.
+09:28:42: Parsing script OgreLoadingPanel.overlay
+09:28:42: Finished parsing scripts for resource group Bootstrap
+09:28:42: Parsing scripts for resource group General
+09:28:42: Parsing script Examples.program
+09:28:42: Parsing script StdQuad_vp.program
+09:28:42: Parsing script BlackAndWhite.material
+09:28:42: Parsing script Bloom.material
+09:28:42: Parsing script DepthShadowmap.material
+09:28:42: Parsing script DOF.material
+09:28:42: Compiler error: object name expected in DOF.material(55)
+09:28:42: Parsing script Embossed.material
+09:28:42: Parsing script Example-DynTex.material
+09:28:42: Parsing script Example-Water.material
+09:28:42: Parsing script Example.material
+09:28:42: Parsing script Examples-Advanced.material
+09:28:42: Parsing script facial.material
+09:28:42: Parsing script Glass.material
+09:28:42: Parsing script hdr.material
+09:28:42: Parsing script HeatVision.material
+09:28:42: Parsing script Hurt.material
+09:28:42: Parsing script instancing.material
+09:28:42: Parsing script Invert.material
+09:28:42: Parsing script Laplace.material
+09:28:42: Parsing script MotionBlur.material
+09:28:42: Parsing script Ocean.material
+09:28:42: Parsing script OffsetMapping.material
+09:28:42: Parsing script Ogre.material
+09:28:42: Parsing script OgreNewt_Example.material
+09:28:42: Compiler error: unknown error in OgreNewt_Example.material(8): token "#ambient" is not recognized
+09:28:42: Parsing script OldMovie.material
+09:28:42: Parsing script OldTV.material
+09:28:42: Parsing script Posterize.material
+09:28:42: Parsing script red.material
+09:28:42: Parsing script RZR-002.material
+09:28:42: Parsing script SharpenEdges.material
+09:28:42: Parsing script smoke.material
+09:28:42: Parsing script Tiling.material
+09:28:42: Parsing script VarianceShadowmap.material
+09:28:42: Parsing script Examples.compositor
+09:28:42: Finished parsing scripts for resource group General
+09:28:42: Parsing scripts for resource group Internal
+09:28:42: Finished parsing scripts for resource group Internal
+09:28:42: Material BoxColor was requested with isManual=true, but this is not applicable for materials; the flag has been reset to false
+09:28:43: *** Initializing OIS ***
+09:28:43: Font BlueHighwayusing texture size 512x512
+09:28:43: Info: Freetype returned null for character 127 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 128 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 129 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 130 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 131 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 132 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 133 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 134 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 135 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 136 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 137 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 138 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 139 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 140 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 141 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 142 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 143 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 144 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 145 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 146 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 147 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 148 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 149 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 150 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 151 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 152 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 153 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 154 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 155 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 156 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 157 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 158 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 159 in font BlueHighway
+09:28:43: Info: Freetype returned null for character 160 in font BlueHighway
+09:28:43: Texture: BlueHighwayTexture: Loading 1 faces(PF_BYTE_LA,512x512x1) with 0 generated mipmaps from Image. Internal format is PF_BYTE_LA,512x512x1.
+09:28:52: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_125_-132 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:28:53: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_126_-132 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:28:53: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_125_-131 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:28:54: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_126_-131 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:28:55: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_125_-133 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:28:55: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_124_-132 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:28:56: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_126_-133 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:28:57: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_124_-131 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:28:58: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_115_-122 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:28:59: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:28:59: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:00: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:01: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_106_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:01: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-102 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:02: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:03: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_106_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:04: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-102 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:05: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_106_-102 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:05: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-105 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:06: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_103_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:07: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_107_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:08: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-101 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:08: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-105 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:09: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_103_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:10: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_106_-105 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:10: Texture: sphax.jpg: Loading 1 faces(PF_R8G8B8,2048x2048x1) with  hardware generated mipmaps from Image. Internal format is PF_X8R8G8B8,2048x2048x1.
+09:29:11: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_103_-102 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:11: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_107_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:12: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-101 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:13: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_107_-102 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:14: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_106_-101 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:14: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_103_-105 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:15: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_107_-105 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:16: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_103_-101 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:17: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-106 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:18: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_102_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:18: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_107_-101 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:19: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-106 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:20: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_102_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:21: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_108_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:22: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-100 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:22: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_106_-106 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:23: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_102_-102 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:24: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_108_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:24: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-100 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:25: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_108_-102 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:26: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_106_-100 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:27: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_103_-106 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:27: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_102_-105 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:28: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_107_-106 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:29: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_102_-101 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:30: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_108_-105 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:31: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_103_-100 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:31: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_108_-101 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:32: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_107_-100 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:33: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-107 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:34: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_101_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:34: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-107 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:35: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_101_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:36: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_106_-107 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:37: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_101_-102 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:37: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_109_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:38: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-99 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:39: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_102_-106 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:40: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_109_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:41: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-99 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:41: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_109_-102 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:42: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_106_-99 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:43: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_108_-106 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:44: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_102_-100 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:44: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_103_-107 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:45: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_101_-105 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:46: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_108_-100 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:47: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_107_-107 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:47: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_101_-101 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:49: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_109_-105 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:49: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_103_-99 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:50: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_109_-101 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:50: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_107_-99 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:51: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_102_-107 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:52: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_101_-106 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:53: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-108 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:53: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_100_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:54: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_108_-107 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:55: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_101_-100 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:56: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-108 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:57: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_100_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:57: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_109_-106 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:58: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_102_-99 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:29:59: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_106_-108 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:00: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_100_-102 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:00: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_110_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:01: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-98 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:02: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_109_-100 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:03: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_108_-99 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:03: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_110_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:04: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-98 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:05: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_110_-102 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:06: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_106_-98 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:06: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_103_-108 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:07: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_100_-105 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:08: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_107_-108 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:09: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_100_-101 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:10: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_110_-105 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:10: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_103_-98 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:11: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_110_-101 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:12: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_107_-98 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:13: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_101_-107 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:13: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_109_-107 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:14: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_101_-99 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:15: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_102_-108 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:16: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_100_-106 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:16: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_109_-99 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:17: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_108_-108 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:18: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_100_-100 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:19: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_110_-106 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:19: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_102_-98 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:20: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-109 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:21: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_99_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:22: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_110_-100 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:23: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_108_-98 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:23: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-109 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:24: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_99_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:25: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_106_-109 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:26: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_99_-102 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:26: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_111_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:27: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-97 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:28: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_111_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:29: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-97 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:29: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_111_-102 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:30: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_106_-97 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:31: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_103_-109 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:32: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_99_-105 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:32: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_107_-109 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:33: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_99_-101 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:34: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_101_-108 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:35: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_100_-107 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:36: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_111_-105 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:36: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_103_-97 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:37: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_109_-108 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:38: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_100_-99 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:39: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_110_-107 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:39: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_101_-98 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:40: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_111_-101 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:41: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_107_-97 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:42: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_110_-99 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:42: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_109_-98 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:43: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_102_-109 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:44: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_99_-106 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:45: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_108_-109 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:46: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_99_-100 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:46: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_111_-106 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:47: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_102_-97 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:48: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_111_-100 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:49: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_108_-97 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:49: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-110 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:50: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_98_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:51: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_100_-108 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:52: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-110 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:52: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_98_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:53: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_106_-110 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:54: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_98_-102 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:55: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_110_-108 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:55: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_100_-98 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:56: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_112_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:57: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-96 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:58: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_101_-109 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:59: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_99_-107 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:30:59: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_112_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:00: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-96 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:01: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_112_-102 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:02: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_106_-96 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:02: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_103_-110 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:03: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_98_-105 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:04: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_109_-109 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:05: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_110_-98 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:05: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_99_-99 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:06: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_107_-110 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:07: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_98_-101 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:08: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_111_-107 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:08: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_101_-97 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:09: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_111_-99 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:10: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_109_-97 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:11: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_112_-105 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:11: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_103_-96 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:12: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_112_-101 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:13: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_107_-96 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:14: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_102_-110 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:14: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_98_-106 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:15: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_108_-110 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:16: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_98_-100 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:17: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_112_-106 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:18: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_102_-96 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:18: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_100_-109 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:19: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_99_-108 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:20: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_112_-100 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:21: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_108_-96 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:21: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_110_-109 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:22: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_99_-98 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:23: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_111_-108 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:24: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_100_-97 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:24: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_105_-111 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:25: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_97_-103 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:26: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_111_-98 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:27: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_110_-97 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:28: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_101_-110 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:28: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_98_-107 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:29: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_104_-111 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)
+09:31:30: OGRE EXCEPTION(5:ItemIdentityException): Child node named Chunk_97_-104 does not exist. in Node::getChild at ..\..\ogre\OgreMain\src\OgreNode.cpp (line 733)

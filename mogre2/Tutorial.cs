@@ -119,6 +119,7 @@ namespace Mogre.Tutorials
         }
         public Client mc = new Client();
         static Dictionary<string, Chunk> chunks = new Dictionary<string, Chunk>();
+        static Dictionary<string, SceneNode> chunksm = new Dictionary<string,SceneNode>();
         public static Tutorial t=new Tutorial();
         public static void Main()
         {
@@ -126,8 +127,30 @@ namespace Mogre.Tutorials
             {
                 t.Go();
             });
+            
             Client mc = t.mc;
             renderThread.Start();
+            /*Console.ReadLine();
+            for (int zz = 0; zz < 16; zz++)
+                for (int xx = 0; xx < 16; xx++)
+                {
+                    Chunk c = new Chunk();
+                    c.x = xx;
+                    c.z = zz;
+                    for (int z = 0; z < 16; ++z)
+                        for (int y = 0; y < 256; ++y)
+                            for (int x = 0; x < 16; ++x)
+                            {
+                                short bid;
+                                if (Math.RangeRandom(0, 100) < 50)
+                                    bid = 0;
+                                else
+                                    bid = (short)Math.RangeRandom(0, 100);
+                                c.blocks[x, y, z] = new Block(x, y, z, bid, 0);
+                            }
+                    t.renderChunk(c);
+                }
+            return;*/
             mc.packetReceived += t.packetHandler;
             wl("Welcome to SharpMCLibrary");
             w("Please enter a name:");
@@ -175,7 +198,7 @@ namespace Mogre.Tutorials
             tex.NumMipmaps=4;
             tex.TextureAnisotropy=1;
             tex.SetTextureFiltering(FilterOptions.FO_POINT, FilterOptions.FO_POINT, FilterOptions.FO_POINT);
-
+           
             /*
             foreach (string file in System.IO.Directory.GetFiles("chunks", "*_bm_true.bin"))
             {
@@ -209,16 +232,17 @@ namespace Mogre.Tutorials
             string chunk = "Chunk_" + c.x + "_" + c.z;
             SceneNode root = (SceneNode)mSceneMgr.RootSceneNode;
             SceneNode cn;
-            try
+            if(chunksm.ContainsKey(chunk))
             {
                 cn = (SceneNode)root.GetChild(chunk);
-            }
-            catch (Exception ex)
-            {
+                mSceneMgr.DestroyManualObject("MeshManChunk" + c.x + "_" + c.z);
+                cn.RemoveAndDestroyAllChildren();
+            }else{
                 cn = mSceneMgr.RootSceneNode.CreateChildSceneNode(chunk);
                 cn.SetPosition(c.x * 16, 0, c.z * 16);
+                chunksm.Add(chunk,cn);
             }
-            cn.RemoveAndDestroyAllChildren();
+            
             cn.AttachObject(chunkMesh(c));
         }
 
@@ -256,8 +280,7 @@ namespace Mogre.Tutorials
         ManualObject chunkMesh(Chunk c)
         {
             Mogre.ManualObject MeshChunk = mSceneMgr.CreateManualObject("MeshManChunk" + c.x + "_" + c.z);
-
-   
+               
 	        MeshChunk.Begin("BoxColor",RenderOperation.OperationTypes.OT_TRIANGLE_LIST);
       
 	        uint iVertex = 0;

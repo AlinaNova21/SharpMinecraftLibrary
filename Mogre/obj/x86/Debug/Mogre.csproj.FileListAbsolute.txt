@@ -3,3 +3,4 @@ C:\programming\projects\NET\sharpMinecraftLibrary\Mogre\bin\Debug\Mogre.pdb
 C:\programming\projects\NET\sharpMinecraftLibrary\Mogre\bin\Debug\Mogre.dll
 C:\programming\projects\NET\sharpMinecraftLibrary\Mogre\obj\x86\Debug\Mogre.exe
 C:\programming\projects\NET\sharpMinecraftLibrary\Mogre\obj\x86\Debug\Mogre.pdb
+C:\programming\projects\NET\sharpMinecraftLibrary\Mogre\obj\x86\Debug\Mogre.csprojResolveAssemblyReference.cache

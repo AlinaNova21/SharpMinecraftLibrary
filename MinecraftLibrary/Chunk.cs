@@ -195,11 +195,10 @@ namespace MinecraftLibrary
             int ii=-1;
              for (int i=0;i<16;i++) {
                //If the bitmask indicates this chunk has been sent...
-               if ((data.primaryBM & 1 << i) > 0) {
+               if ((data.primaryBM & (1 << i)) != 0) {
                    ii = ii + 1;
                    //Read data...
                    Array.ConstrainedCopy(data.chunkData, 4096 * ii, cubic_chunk_data, 0, 4096);
-                   //io.Read(cubic_chunk_data,0,4096); //2048 for the other arrays, where you'll need to split the data
 
                    for (int j = 0; j < cubic_chunk_data.Length; j++)
                    {
@@ -210,7 +209,7 @@ namespace MinecraftLibrary
                        //int by = i * 16 + j >> 8;
                        //int bz = data.z * 16 + (j & 0xF0) >> 4;
                        int bx = j & 0x0F;
-                       int by = i * 16 + j >> 8;
+                       int by = (i * 16) + (j >> 8);
                        int bz = (j & 0xF0) >> 4;
                        short bid = cubic_chunk_data[j];
 

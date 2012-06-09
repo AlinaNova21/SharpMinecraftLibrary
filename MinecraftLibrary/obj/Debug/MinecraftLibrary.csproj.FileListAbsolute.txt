@@ -19,4 +19,3 @@ C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftLibrary\bin\Deb
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftLibrary\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftLibrary\obj\Debug\MinecraftLibrary.dll
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\MinecraftLibrary\obj\Debug\MinecraftLibrary.pdb
-C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftLibrary\obj\Debug\MinecraftLibrary.csprojResolveAssemblyReference.cache
