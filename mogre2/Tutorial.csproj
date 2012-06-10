@@ -48,7 +48,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Mogre.Tutorials.Tutorial</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CameraMan.cs" />
     <Compile Include="Tutorial.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -91,12 +95,19 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="YamlSerializer, Version=0.9.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\YamlSerializer.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MinecraftLibrary\MinecraftLibrary.csproj">
       <Project>{2FBC032E-DEBA-420A-86ED-D30693938B89}</Project>
       <Name>MinecraftLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="YamlSerializer.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

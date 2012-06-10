@@ -1,12 +1,6 @@
-C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\Tutorial.exe.config
-C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\Tutorial.exe
-C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\Tutorial.pdb
 C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\MinecraftLibrary.dll
 C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\MinecraftLibrary.pdb
-C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\Mogre.xml
 C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\obj\x86\Debug\Tutorial.csprojResolveAssemblyReference.cache
-C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\obj\x86\Debug\Tutorial.exe
-C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\obj\x86\Debug\Tutorial.pdb
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\mogre2\bin\Debug\Tutorial.exe.config
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\mogre2\obj\x86\Debug\Tutorial.exe
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\mogre2\obj\x86\Debug\Tutorial.pdb
@@ -16,3 +10,9 @@ C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\mogre2\bin\Debug\Minecra
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\mogre2\bin\Debug\MinecraftLibrary.pdb
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\mogre2\bin\Debug\Mogre.xml
 C:\Users\Shane\Documents\gitrepos\SharpMinecraftLibrary\mogre2\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\MinecraftClient.exe.config
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\MinecraftClient.exe
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\MinecraftClient.pdb
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\obj\x86\Debug\MinecraftClient.exe
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\obj\x86\Debug\MinecraftClient.pdb
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Debug\YamlSerializer.dll

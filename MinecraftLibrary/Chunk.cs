@@ -27,7 +27,7 @@ namespace MinecraftLibrary
         private Point getTextCoord()
         {
             Dictionary<int, Point> t = new Dictionary<int, Point>();
-                t.Add(1, new Point(1, 0));
+                t.Add(1, new Point(1, 0)); 
                 t.Add(2, new Point(0, 0));
                 t.Add(3, new Point(3, 0));
                 t.Add(4, new Point(0, 1));
@@ -39,6 +39,7 @@ namespace MinecraftLibrary
                 t.Add(15, new Point(0, 2));
                 t.Add(16, new Point(2, 2));
                 t.Add(17, new Point(5, 1));
+                t.Add(18, new Point(2, 4));
                 t.Add(19, new Point(3, 0));
                 t.Add(20, new Point(1, 3));
                 t.Add(21, new Point(0, 11));
@@ -57,8 +58,8 @@ namespace MinecraftLibrary
                 t.Add(34, new Point(11, 7)); //Piston Activated - Isn't On Terrain.png
                 t.Add(35, new Point(4, 0));
                 //t.Add(36, new Point(0, 0)); //Block Moved By Piston
-                t.Add(37, new Point(13, 0));
-                t.Add(38, new Point(14, 0));
+                t.Add(37, new Point(12, 0));
+                t.Add(38, new Point(13, 0));
                 t.Add(39, new Point(13, 1));
                 t.Add(40, new Point(12, 1));
                 t.Add(41, new Point(7, 1));
@@ -151,6 +152,13 @@ namespace MinecraftLibrary
                 return t[ID];
             return new Point();
         }
+        public bool isTransparent()
+        {
+            bool ret=false;
+            if (ID == 50)
+                ret = true;
+            return ret;
+        }
         public float U()
         {
             float ret = 0;
@@ -170,6 +178,17 @@ namespace MinecraftLibrary
         //public int y; s
         public int z;
         public Block[, ,] blocks = new Block[16, 256, 16];
+
+        public Chunk()
+        {
+            for (int z = 0; z < 16; ++z)
+                for (int y = 0; y < 256; ++y)
+                    for (int x = 0; x < 16; ++x)
+                    {
+                     blocks[x, y, z] = new Block(x, y, z, 0, 0);
+                    }
+        }
+
         public void update(Packet_MultiBlockChange data)
         {
             int[] d = data.rawdata;

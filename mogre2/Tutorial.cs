@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Threading;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Yaml;
+using MOIS;
 
 
 
@@ -35,7 +37,7 @@ namespace Mogre.Tutorials
             {
                 case 0x0D:
                     Packet_PlayerPosAndLook p = (Packet_PlayerPosAndLook)e.packet;
-                    moveCamera((float)p.x, (float)p.y, (float)p.z);
+                    moveCamera((float)p.x, (float)p.y+3f, (float)p.z);
                     break;
                 case 8:
                     Packet_UpdateHealth h = (Packet_UpdateHealth)e.packet;
@@ -75,54 +77,58 @@ namespace Mogre.Tutorials
                         //output("Chunk had to be added! " + key, true);
                     }
                     chunks[key].update(mch);
-                    renderChunk(chunks[key]);
-                    /*
-                    byte[] cubic_chunk_data = new byte[4096];
-                    byte[] cubic_chunk_data2 = new byte[4096 * 16];
-                    //Loop over 16x16x16 chunks in the 16x256x16 column
-                    int ii = -1;
-                    for (int i = 0; i < 16; i++)
-                    {
-                        //If the bitmask indicates this chunk has been sent...
-                        ii = ii + 1;
-                        //Read data...
-                        //Array.ConstrainedCopy(data.chunkData, 4096 * ii, cubic_chunk_data, 0, 4096);
-                        //io.Read(cubic_chunk_data,0,4096); //2048 for the other arrays, where you'll need to split the data
-
-                        for (int j = 0; j < cubic_chunk_data.Length; j++)
-                        {
-                            int bx = j & 0x0F;
-                            int by = i * 16 + j >> 8;
-                            int bz = (j & 0xF0) >> 4;
-                            if (chunks[key].blocks[bx, by, bz] == null)
-                                chunks[key].blocks[bx, by, bz] = new Block(bx, by, bz, 0, 0);
-                            cubic_chunk_data[j] = (byte)chunks[key].blocks[bx, by, bz].ID;
-                        }
-                        Array.Copy(cubic_chunk_data, 0, cubic_chunk_data2, 4096 * ii, 4096);
-                    }
-                     */
-                    
-                    //System.IO.File.WriteAllBytes(@"chunks\" + key + "_bm_" + mch.groundUC.ToString() + ".bin", BitConverter.GetBytes(256));
-                    //System.IO.File.WriteAllBytes(@"chunks\" + key + ".bin", cubic_chunk_data2);
-                    //for (int y = 0; y < 128; y++)
-                    //    for (int x = 0; x < 16; x++)
-                    //        for (int z = 0; z < 16; z++)
-
+                    QueueChunk(chunks[key]);
                     break;
                 case 0x34:
                     Packet_MultiBlockChange mb = (Packet_MultiBlockChange)e.packet;
                     chunks[mb.x + "_" + mb.z].update(mb);
-                    renderChunk(chunks[mb.x + "_" + mb.z]);
+                    QueueChunk(chunks[mb.x + "_" + mb.z]);
                     break;
-
             }
+        }
+        public void QueueChunk(Chunk c)
+        {
+            lock(chunkq)
+                chunkq.Enqueue(c);
+            
         }
         public Client mc = new Client();
         static Dictionary<string, Chunk> chunks = new Dictionary<string, Chunk>();
         static Dictionary<string, SceneNode> chunksm = new Dictionary<string,SceneNode>();
-        public static Tutorial t=new Tutorial();
+        static Queue<Chunk> chunkq = new Queue<Chunk>();
+
+        public static Tutorial t= new Tutorial();
+
+        public static void outputNode(YamlNode node,string ind="")
+        {
+            Console.WriteLine(ind+"NODE:\n{0}", ind+node.Tag);
+            if (node.GetType() == typeof(YamlMapping))
+                foreach (YamlNode n in ((YamlMapping)node).Keys)
+                {
+                    outputNode(n,ind+"-");
+                }
+            else if (node.GetType() == typeof(YamlScalar))
+                Console.WriteLine("{0}\n", ind+((YamlScalar)node));
+        }
         public static void Main()
         {
+            /*
+            //Yaml.Node n = Yaml.Node.FromFile("minecraft.yaml");
+            //Console.WriteLine(n);
+            //Console.ReadLine();
+            YamlMapping ns = (YamlMapping)YamlNode.FromYamlFile("minecraft.yaml")[0];
+            outputNode(ns);
+
+            YamlSequence m;
+            YamlNode n;
+            ns.TryGetValue("blocks", out n);
+            m = (YamlSequence)n;
+            foreach(YamlNode i in m)
+                foreach (YamlNode ii in ((YamlMapping)i).Values)
+                    Console.WriteLine(ii.Tag);
+
+            Console.ReadLine();
+            return;*/
             Thread renderThread = new Thread(() =>
             {
                 t.Go();
@@ -130,27 +136,6 @@ namespace Mogre.Tutorials
             
             Client mc = t.mc;
             renderThread.Start();
-            /*Console.ReadLine();
-            for (int zz = 0; zz < 16; zz++)
-                for (int xx = 0; xx < 16; xx++)
-                {
-                    Chunk c = new Chunk();
-                    c.x = xx;
-                    c.z = zz;
-                    for (int z = 0; z < 16; ++z)
-                        for (int y = 0; y < 256; ++y)
-                            for (int x = 0; x < 16; ++x)
-                            {
-                                short bid;
-                                if (Math.RangeRandom(0, 100) < 50)
-                                    bid = 0;
-                                else
-                                    bid = (short)Math.RangeRandom(0, 100);
-                                c.blocks[x, y, z] = new Block(x, y, z, bid, 0);
-                            }
-                    t.renderChunk(c);
-                }
-            return;*/
             mc.packetReceived += t.packetHandler;
             wl("Welcome to SharpMCLibrary");
             w("Please enter a name:");
@@ -183,7 +168,7 @@ namespace Mogre.Tutorials
             }
             mc.disconnect();
         }
-
+        CameraMan mCamMan;
         protected override void CreateScene()
         {
             mSceneMgr.AmbientLight = new ColourValue(1, 1, 1);
@@ -195,37 +180,78 @@ namespace Mogre.Tutorials
 	        Pass pass = tech.GetPass(0);
 	        TextureUnitState tex = pass.CreateTextureUnitState();
             tex.SetTextureName("sphax.jpg",TextureType.TEX_TYPE_2D);
-            tex.NumMipmaps=4;
-            tex.TextureAnisotropy=1;
+            tex.NumMipmaps=0;
+            tex.TextureAnisotropy=0;
             tex.SetTextureFiltering(FilterOptions.FO_POINT, FilterOptions.FO_POINT, FilterOptions.FO_POINT);
-           
-            /*
-            foreach (string file in System.IO.Directory.GetFiles("chunks", "*_bm_true.bin"))
+            //pass.DepthWriteEnabled=false;
+            //pass.SetSceneBlending(SceneBlendType.SBT_TRANSPARENT_ALPHA);
+            //pass.CullingMode = CullingMode.CULL_NONE;
+            //mCamMan = new Tutorials.CameraMan(mCamera,mc);
+            //mCameraMan = null;
+            mCamera.SetPosition((float)mc.x, (float)mc.y, (float)mc.z);
+            mCamera.Pitch(new Degree(mc.pitch).ValueRadians);
+            mCamera.Yaw(new Degree(mc.yaw).ValueRadians);
+            oldCamPos = mCamera.Position;
+        }
+        Vector3 oldCamPos;
+        Quaternion oldCamOr;
+        float camPosCnt = 0;
+        protected override void UpdateScene(FrameEvent evt)
+        {
+            base.UpdateScene(evt);
+        }
+
+        bool ProcessChunks(FrameEvent evt)
+        {
+            lock (chunkq)
+                while (chunkq.Count > 0)
+                    renderChunk(chunkq.Dequeue());
+            return true;
+        }
+        bool ProcessCamera(FrameEvent evt)
+        {
+            //camPosCnt += evt.timeSinceLastFrame;
+            if (false) //camPosCnt > .5f && (!mCamera.Orientation.Equals(oldCamOr) || !mCamera.Position.PositionEquals(oldCamPos)))
             {
-                int x = int.Parse(file.Split('\\')[1].Split('_')[0]);
-                int z = int.Parse(file.Split('\\')[1].Split('_')[1]);
-
-                Chunk c = new Chunk();
-                c.update(new Packet_MapChunk()
+                //Console.WriteLine(oldCamPos.ToString());
+                //Console.WriteLine(mCamera.Position.ToString());
+                camPosCnt = 0;
+                oldCamPos = mCamera.Position;
+                oldCamOr = mCamera.Orientation;
+                mc.x = oldCamPos.x;
+                mc.y = oldCamPos.y - 3;// -2;
+                mc.z = oldCamPos.z;
+                mc.stance = mc.y + 1;
+                mc.pitch = oldCamOr.Pitch.ValueDegrees;
+                if (mc.pitch > 50)
+                    mc.pitch = 50;
+                if (mc.pitch < -90)
+                    mc.pitch = -90;
+                mc.yaw = 180 + 360 - oldCamOr.Yaw.ValueDegrees;
+                mc.sendPacket(new Packet_PlayerPosAndLook()
                 {
-                    x=x,z=z,
-                    primaryBM = BitConverter.ToInt16(System.IO.File.ReadAllBytes(@"chunks\"+x.ToString()+"_"+z.ToString()+"_bm_True.bin"), 0),
-                    chunkData = System.IO.File.ReadAllBytes(@"chunks\" + x.ToString() + "_" + z.ToString() + ".bin")
+                    x = mc.x,
+                    y = mc.y,//-2f,
+                    z = mc.z,
+                    pitch = mc.pitch,//mCamera.Orientation.Pitch.ValueDegrees,
+                    yaw = mc.yaw,
+                    stance = mc.stance
                 });
-                SceneNode cn = mSceneMgr.CreateSceneNode("Chunk_" + x + "_" + z);
-                cn.SetPosition(x * 16, 0, z * 16);
-                cn.AttachObject(chunkMesh(c));
-                //-15,160"
-                cn.Position+=new Vector3(15, 0, -160);
-                mSceneMgr.RootSceneNode.AddChild(cn);
-            }*/
+            }
+            return true;
+        }
 
-            mCamera.SetPosition(15, 0, -160);
+        protected override void CreateFrameListeners()
+        {
+            base.CreateFrameListeners();
+            mRoot.FrameRenderingQueued += new FrameListener.FrameRenderingQueuedHandler(ProcessCamera);
+            mRoot.FrameRenderingQueued += new FrameListener.FrameRenderingQueuedHandler(ProcessChunks);
         }
 
         public void moveCamera(float x,float y, float z)
         {
             mCamera.SetPosition(x, y, z);
+            oldCamPos = mCamera.Position;
         }
         public void renderChunk(Chunk c)
         {
@@ -308,34 +334,37 @@ namespace Mogre.Tutorials
 
                         Block1 = new Block(x, y, z, 0, 0);
 				        if (x > 0) Block1 = c.blocks[x-1,y,z];
+                        //if (x == 0) Block1 = chunks[(c.x - 1) + "_" + c.z].blocks[15, y, z];
 
                         if (Block1.ID == 0)
 				        {
-					        MeshChunk.Position(x, y,   z+1);	MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(U1, V2);
-					        MeshChunk.Position(x, y+1, z+1);	MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(U2, V2);
-					        MeshChunk.Position(x, y+1, z);		MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(U2, V1);
-					        MeshChunk.Position(x, y,   z);		MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(U1, V1);
+					        MeshChunk.Position(x, y,   z+1);	MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(U2, V2);
+					        MeshChunk.Position(x, y+1, z+1);	MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(U2, V1);
+					        MeshChunk.Position(x, y+1, z);		MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(U1, V1);
+					        MeshChunk.Position(x, y,   z);		MeshChunk.Normal(-1,0,0);	MeshChunk.TextureCoord(U1, V2);
  
-					        MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
-					        MeshChunk.Triangle(iVertex+2, iVertex+3, iVertex);
+					        //MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
+					        //MeshChunk.Triangle(iVertex+2, iVertex+3, iVertex);
+                            MeshChunk.Quad(iVertex, iVertex + 1, iVertex + 2, iVertex + 3);
 
 					        iVertex += 4;
 				        }
 
                         //x+1
                         Block1 = new Block(x, y, z, 0, 0);
-                        if (x < 16 - 1) Block1 = c.blocks[x + 1, y, z];
-                        if (Block1 == null) Block1 = new Block(x, y, z, 0, 0);
+                        if (x < 15) Block1 = c.blocks[x + 1, y, z];
+                        //if (x == 15) Block1 = chunks[(c.x + 1) + "_" + c.z].blocks[0, y, z];
 
                         if (Block1.ID == 0)
 				        {
-					        MeshChunk.Position(x+1, y,   z);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(U1, V2);
-					        MeshChunk.Position(x+1, y+1, z);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(U2, V2);
-					        MeshChunk.Position(x+1, y+1, z+1);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(U2, V1);
-					        MeshChunk.Position(x+1, y,   z+1);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(U1, V1);
- 
-					        MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
-                            MeshChunk.Triangle(iVertex + 2, iVertex + 3, iVertex);
+					        MeshChunk.Position(x+1, y,   z);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(U2, V2);
+					        MeshChunk.Position(x+1, y+1, z);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(U2, V1);
+					        MeshChunk.Position(x+1, y+1, z+1);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(U1, V1);
+					        MeshChunk.Position(x+1, y,   z+1);	MeshChunk.Normal(1,0,0); MeshChunk.TextureCoord(U1, V2);
+
+                            //MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
+                            //MeshChunk.Triangle(iVertex+2, iVertex+3, iVertex);
+                            MeshChunk.Quad(iVertex, iVertex + 1, iVertex + 2, iVertex + 3);
  
 					        iVertex += 4;
 				        }
@@ -343,7 +372,8 @@ namespace Mogre.Tutorials
                         //y-1
                         Block1 = new Block(x, y, z, 0, 0);
                         if (y > 0) Block1 = c.blocks[x, y - 1, z];
-                        if (Block1 == null) Block1 = new Block(x, y, z, 0, 0);
+
+                        //if (Block1 == null) Block1 = new Block(x, y, z, 0, 0);
 
                         if (Block1.ID == 0)
 				        {
@@ -352,8 +382,9 @@ namespace Mogre.Tutorials
 					        MeshChunk.Position(x+1, y, z+1);	MeshChunk.Normal(0,-1,0); MeshChunk.TextureCoord(U2,V1);
 					        MeshChunk.Position(x,   y, z+1);	MeshChunk.Normal(0,-1,0); MeshChunk.TextureCoord(U1,V1);
 
-					        MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
-                            MeshChunk.Triangle(iVertex + 2, iVertex + 3, iVertex);
+                            //MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
+                            //MeshChunk.Triangle(iVertex+2, iVertex+3, iVertex);
+                            MeshChunk.Quad(iVertex, iVertex + 1, iVertex + 2, iVertex + 3);
  
 					        iVertex += 4;
 				        }
@@ -362,7 +393,7 @@ namespace Mogre.Tutorials
                         //y+1
                         Block1 = new Block(x, y, z, 0, 0);
                         if (y < 256 - 1) Block1 = c.blocks[x, y + 1, z];
-                        if (Block1 == null) Block1 = new Block(x, y, z, 0, 0);
+                        //if (Block1 == null) Block1 = new Block(x, y, z, 0, 0);
 
                         if (Block1.ID == 0)
 				        {
@@ -370,9 +401,10 @@ namespace Mogre.Tutorials
 					        MeshChunk.Position(x+1, y+1, z+1);		MeshChunk.Normal(0,1,0); MeshChunk.TextureCoord(U2, V2);
 					        MeshChunk.Position(x+1, y+1, z);		MeshChunk.Normal(0,1,0); MeshChunk.TextureCoord(U2,V1);
 					        MeshChunk.Position(x,   y+1, z);		MeshChunk.Normal(0,1,0); MeshChunk.TextureCoord(U1,V1);
- 
-					        MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
-                            MeshChunk.Triangle(iVertex + 2, iVertex + 3, iVertex);
+
+                            //MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
+                            //MeshChunk.Triangle(iVertex+2, iVertex+3, iVertex);
+                            MeshChunk.Quad(iVertex, iVertex + 1, iVertex + 2, iVertex + 3); 
  
 					        iVertex += 4;
 				        }
@@ -380,26 +412,29 @@ namespace Mogre.Tutorials
                         //z-1
                         Block1 = new Block(x, y, z, 0, 0);
                         if (z > 0) Block1 = c.blocks[x, y, z - 1];
-                        if (Block1 == null) Block1 = new Block(x, y, z, 0, 0);
+                        //if (x == 0) Block1 = chunks[c.x + "_" + (c.z - 1)].blocks[x, y, 15];
+                        //if (Block1 == null) Block1 = new Block(x, y, z, 0, 0);
 
                         if (Block1.ID == 0)
 				        {
-					        MeshChunk.Position(x,   y+1, z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(U1, V2);
-					        MeshChunk.Position(x+1, y+1, z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(U2, V2);
-					        MeshChunk.Position(x+1, y,   z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(U2,V1);
-					        MeshChunk.Position(x,   y,   z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(U1,V1);
- 
-					        MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
-                            MeshChunk.Triangle(iVertex + 2, iVertex + 3, iVertex);
- 
+					        MeshChunk.Position(x,   y+1, z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(U2, V1);
+					        MeshChunk.Position(x+1, y+1, z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(U1, V1);
+					        MeshChunk.Position(x+1, y,   z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(U1, V2);
+					        MeshChunk.Position(x,   y,   z);		MeshChunk.Normal(0,0,-1); MeshChunk.TextureCoord(U2, V2);
+
+                            //MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
+                            //MeshChunk.Triangle(iVertex+2, iVertex+3, iVertex);
+                            MeshChunk.Quad(iVertex, iVertex + 1, iVertex + 2, iVertex + 3);
 					        iVertex += 4;
 				        }
  
  
 					        //z+1
                         Block1 = new Block(x,y,z,0,0);
-                        if (z < 16 - 1) Block1 = c.blocks[x, y, z + 1];
-                        if (Block1 == null) Block1 = new Block(x, y, z, 0, 0);
+                        if (z < 15) Block1 = c.blocks[x, y, z + 1];
+                        //if (x == 15) Block1 = chunks[c.x+"_"+(c.z + 1)].blocks[x, y, 0];
+
+                        //if (Block1 == null) Block1 = new Block(x, y, z, 0, 0);
 
                         if (Block1.ID == 0)
 				        {
@@ -407,9 +442,10 @@ namespace Mogre.Tutorials
 					        MeshChunk.Position(x+1, y,   z+1);		MeshChunk.Normal(0,0,1); MeshChunk.TextureCoord(U2, V2);
 					        MeshChunk.Position(x+1, y+1, z+1);		MeshChunk.Normal(0,0,1); MeshChunk.TextureCoord(U2,V1);
 					        MeshChunk.Position(x,   y+1, z+1);		MeshChunk.Normal(0,0,1); MeshChunk.TextureCoord(U1,V1);
- 
-					        MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
-                            MeshChunk.Triangle(iVertex + 2, iVertex + 3, iVertex);
+
+                            //MeshChunk.Triangle(iVertex, iVertex+1, iVertex+2);
+                            //MeshChunk.Triangle(iVertex+2, iVertex+3, iVertex);
+                            MeshChunk.Quad(iVertex, iVertex + 1, iVertex + 2, iVertex + 3);
  
 					        iVertex += 4;
 				        }
@@ -420,5 +456,117 @@ namespace Mogre.Tutorials
 	        MeshChunk.End();
             return MeshChunk;
         }
+        /*
+        protected override bool OnKeyPressed(KeyEvent evt)
+        {
+            switch (evt.key)
+            {
+                case KeyCode.KC_W:
+                case KeyCode.KC_UP:
+                    mCamMan.GoingForward = true;
+                    break;
+
+                case KeyCode.KC_S:
+                case KeyCode.KC_DOWN:
+                    mCamMan.GoingBack = true;
+                    break;
+
+                case KeyCode.KC_A:
+                case KeyCode.KC_LEFT:
+                    mCamMan.GoingLeft = true;
+                    break;
+
+                case KeyCode.KC_D:
+                case KeyCode.KC_RIGHT:
+                    mCamMan.GoingRight = true;
+                    break;
+
+                case KeyCode.KC_E:
+                case KeyCode.KC_PGUP:
+                    mCamMan.GoingUp = true;
+                    break;
+
+                case KeyCode.KC_Q:
+                case KeyCode.KC_PGDOWN:
+                    mCamMan.GoingDown = true;
+                    break;
+
+                case KeyCode.KC_LSHIFT:
+                case KeyCode.KC_RSHIFT:
+                    mCamMan.FastMove = true;
+                    break;
+
+                case KeyCode.KC_T:
+                    CycleTextureFilteringMode();
+                    break;
+
+                case KeyCode.KC_R:
+                    //CyclePolygonMode();
+                    break;
+
+                case KeyCode.KC_F5:
+                    ReloadAllTextures();
+                    break;
+
+                case KeyCode.KC_SYSRQ:
+                    TakeScreenshot();
+                    break;
+
+                case KeyCode.KC_ESCAPE:
+                    Shutdown();
+                    break;
+            }
+
+            return true;
+        }
+
+        protected override bool OnKeyReleased(KeyEvent evt)
+        {
+            switch (evt.key)
+            {
+                case KeyCode.KC_W:
+                case KeyCode.KC_UP:
+                    mCamMan.GoingForward = false;
+                    break;
+
+                case KeyCode.KC_S:
+                case KeyCode.KC_DOWN:
+                    mCamMan.GoingBack = false;
+                    break;
+
+                case KeyCode.KC_A:
+                case KeyCode.KC_LEFT:
+                    mCamMan.GoingLeft = false;
+                    break;
+
+                case KeyCode.KC_D:
+                case KeyCode.KC_RIGHT:
+                    mCamMan.GoingRight = false;
+                    break;
+
+                case KeyCode.KC_E:
+                case KeyCode.KC_PGUP:
+                    mCamMan.GoingUp = false;
+                    break;
+
+                case KeyCode.KC_Q:
+                case KeyCode.KC_PGDOWN:
+                    mCamMan.GoingDown = false;
+                    break;
+
+                case KeyCode.KC_LSHIFT:
+                case KeyCode.KC_RSHIFT:
+                    mCamMan.FastMove = false;
+                    break;
+            }
+
+            return true;
+        }
+
+        protected override bool OnMouseMoved(MouseEvent evt)
+        {
+            mCamMan.MouseMovement(evt.state.X.rel, evt.state.Y.rel);
+            return true;
+        }*/
     }
 }

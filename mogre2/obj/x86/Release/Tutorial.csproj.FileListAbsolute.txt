@@ -9,3 +9,4 @@ C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Release\MinecraftCl
 C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Release\MinecraftClient.pdb
 C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\obj\x86\Release\MinecraftClient.exe
 C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\obj\x86\Release\MinecraftClient.pdb
+C:\programming\projects\NET\sharpMinecraftLibrary\mogre2\bin\Release\YamlSerializer.dll
