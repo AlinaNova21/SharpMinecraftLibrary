@@ -25,6 +25,7 @@ namespace MinecraftLibrary
         public string pass = "";
         bool running = true;
         bool loggedin = false;
+        string sessionid = "";
         NetworkStream str;
         TcpClient client = new TcpClient();
         Queue<Packet> packets = new Queue<Packet>();
@@ -123,7 +124,18 @@ namespace MinecraftLibrary
                 //Thread.Sleep(10);
             }
         }
+        public bool Verify()
+        {
+            WebClient wc = new WebClient();
+            string loginstring = wc.DownloadString(string.Format("https://login.minecraft.net/?user={0}&password={1}&version={2}", name, pass, Protocol));
+            Console.WriteLine(loginstring);
+            if (!loginstring.Contains(":")) { return false; }
+            string[] loginarray = loginstring.Split(':');
+            name = loginarray[2];
+            sessionid = loginarray[3];
 
+            return true;
+        }
         public void output(string data, Boolean show = false)
         {
             output2(data, show);
@@ -217,7 +229,7 @@ namespace MinecraftLibrary
             packetHandlerThread.Start();
 
             Packet_Handshake packet = new Packet_Handshake();
-            packet.dataString = name;// +";" + address + ":" + port;
+            packet.dataString = name + ";" + address + ":" + port;
             packets.Enqueue(packet);            
 
         }
@@ -257,7 +269,8 @@ namespace MinecraftLibrary
                     break;
                 case 2:
                     output("Beginning Login...", true);
-                    packets.Enqueue(new Packet_Login() { username = name, protocol = Protocol });
+                    string serverid = ((Packet_Handshake)e.packet).dataString;
+                    packets.Enqueue(new Packet_Login() { username = name, protocol = Protocol, serverid = serverid, sessionid = sessionid });
                     break;
                 case 3:
                     Dictionary<char, ConsoleColor> cc = new Dictionary<char, ConsoleColor>();
