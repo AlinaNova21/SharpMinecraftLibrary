@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Ionic.Zlib;
+using System.Net;
 
 namespace MinecraftLibrary
 {
@@ -199,7 +200,8 @@ namespace MinecraftLibrary
     {
         public int protocol;
         public string username;
-
+        public string sessionid;
+        public string serverid;
 
 
         public int eID;
@@ -219,6 +221,9 @@ namespace MinecraftLibrary
 
         public override void write(Stream str)
         {
+            WebClient wc = new WebClient();
+            string answer = wc.DownloadString(string.Format("http://session.minecraft.net/game/joinserver.jsp?user={0}&sessionId={1}&serverId={2}", username, sessionid, serverid));
+            if (answer != "OK") { Console.WriteLine("Answer: " + answer); throw new Exception("invalid answer D:<"); }
             writeByte(str, 0x01);
             writeInt(str, protocol);
             writeString(str, username);
