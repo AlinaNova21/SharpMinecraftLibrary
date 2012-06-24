@@ -3,3 +3,8 @@ C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftLibrary\bin\Release\M
 C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.dll
 C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.pdb
 C:\programming\projects\NET\sharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Wouter Gerarts\Documents\GitHub\SharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Wouter Gerarts\Documents\GitHub\SharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.dll
+C:\Users\Wouter Gerarts\Documents\GitHub\SharpMinecraftLibrary\MinecraftLibrary\bin\Release\MinecraftLibrary.dll
+C:\Users\Wouter Gerarts\Documents\GitHub\SharpMinecraftLibrary\MinecraftLibrary\bin\Release\MinecraftLibrary.pdb
+C:\Users\Wouter Gerarts\Documents\GitHub\SharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.pdb
