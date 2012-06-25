@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,35 +12,37 @@ namespace MinecraftLibrary
 {
     public class Client
     {
-        const int Protocol = 29; 
-        public double x=0;
+        const int Protocol = 29;
+        const int launcherVersion = 13;
+        public double x = 0;
         public double y = 0;
         public double stance = 0;
         public double z = 0;
-        public float yaw = 0;
         public float pitch = 0;
-        public bool onGround=false;
+        public float yaw = 0;
+        public bool onGround = false;
         public Action<string, Boolean> output2;
         public string name = "";
         public string pass = "";
-        bool running = true;
         bool loggedin = false;
         string sessionid = "";
         NetworkStream str;
         TcpClient client = new TcpClient();
         Queue<Packet> packets = new Queue<Packet>();
         Queue<byte> dataIn = new Queue<byte>();
-        Dictionary<byte, Type> customPackets = new Dictionary<byte, Type>();
+        Dictionary<PacketType, Type> customPackets = new Dictionary<PacketType, Type>();
+
         public class packetReceivedEventArgs : EventArgs
         {
             public packetReceivedEventArgs(Packet pack, int ID)
             {
                 this.packet = pack;
-                this.ID = ID;
+                this.Type = (PacketType)ID;
             }
             public Packet packet;
-            public int ID;
+            public PacketType Type;
         }
+
         public delegate void packetReceivedEventHandler(object sender, packetReceivedEventArgs e);
         public event packetReceivedEventHandler packetReceived;
         void packetSender()
@@ -52,12 +54,13 @@ namespace MinecraftLibrary
                 p.x = x;
                 p.y = y;
                 p.z = z;
-                p.stance =stance;
+                p.stance = stance;
                 p.pitch = pitch;
                 p.yaw = yaw;
                 sendPacket(p);
             }
         }
+
         void packetReceiver()
         {
             byte[] tmp = new byte[1];
@@ -76,6 +79,7 @@ namespace MinecraftLibrary
                 }
             }
         }
+
         void packetHandler()
         {
             bool debug = false;
@@ -95,21 +99,16 @@ namespace MinecraftLibrary
                 {
                     MemoryStream tmps = new MemoryStream();
                     pack.write(tmps);
-                    //str.Write(data, 0, data.Length)
                     tmps.WriteTo(str);
-                    //output(BitConverter.ToString(tmps.ToArray()));
                     tmps.Close();
                     str.Flush();
-                    //output("OUT: " + pack.GetType().ToString().Split('_')[1]);
                 }
                 packet = null;
                 str.Read(tmp, 0, 1);
-                if (packet == null && customPackets.ContainsKey(tmp[0]))
+                if (packet == null && customPackets.ContainsKey((PacketType)tmp[0]))
                 {
-                    packet = (Packet)customPackets[tmp[0]].GetConstructor(Type.EmptyTypes).Invoke(null);
+                    packet = (Packet)customPackets[(PacketType)tmp[0]].GetConstructor(Type.EmptyTypes).Invoke(null);
                 }
-
-                //output("IN: " +  BitConverter.ToString(tmp));
                 if (packet != null)
                 {
                     if (debug)
@@ -121,13 +120,13 @@ namespace MinecraftLibrary
                 {
                     throw new InvalidDataException("Unhandled Packet! " + BitConverter.ToString(tmp, 0));
                 }
-                //Thread.Sleep(10);
             }
         }
+
         public bool Verify()
         {
             WebClient wc = new WebClient();
-            string loginstring = wc.DownloadString(string.Format("https://login.minecraft.net/?user={0}&password={1}&version={2}", name, pass, Protocol));
+            string loginstring = wc.DownloadString(string.Format("https://login.minecraft.net/?user={0}&password={1}&version={2}", name, pass, launcherVersion));
             Console.WriteLine(loginstring);
             if (!loginstring.Contains(":")) { return false; }
             string[] loginarray = loginstring.Split(':');
@@ -136,6 +135,7 @@ namespace MinecraftLibrary
 
             return true;
         }
+
         public void output(string data, Boolean show = false)
         {
             output2(data, show);
@@ -143,71 +143,72 @@ namespace MinecraftLibrary
 
         public void connect(string address, int port)
         {
-            registerPacket(0x00, typeof(Packet_KeepAlive));
-            registerPacket(0x01, typeof(Packet_Login));
-            registerPacket(0x02, typeof(Packet_Handshake));
-            registerPacket(0x03, typeof(Packet_Chat));
-            registerPacket(0x04, typeof(Packet_Time));
-            registerPacket(0x05, typeof(Packet_EntityEquipment));
-            registerPacket(0x06, typeof(Packet_SpawnPosition));
-            registerPacket(0x07, typeof(Packet_UseEntity));
-            registerPacket(0x08, typeof(Packet_UpdateHealth));
-            registerPacket(0x09, typeof(Packet_Respawn));
-            registerPacket(0x0A, typeof(Packet_Player));
-            registerPacket(0x0B, typeof(Packet_PlayerPos));
-            registerPacket(0x0C, typeof(Packet_PlayerLook));
-            registerPacket(0x0D, typeof(Packet_PlayerPosAndLook));
-            registerPacket(0x0E, typeof(Packet_PlayerDigging));
-            registerPacket(0x11, typeof(Packet_UseBed));
-            registerPacket(0x12, typeof(Packet_Animation));
-            registerPacket(0x13, typeof(Packet_EntityAction));
-            registerPacket(0x14, typeof(Packet_NamedEntitySpawn));
-            registerPacket(0x15, typeof(Packet_PickupSpawn));
-            registerPacket(0x16, typeof(Packet_CollectItem));
-            registerPacket(0x17, typeof(Packet_AddObjVehicle));
-            registerPacket(0x18, typeof(Packet_MobSpawn));
-            registerPacket(0x19, typeof(Packet_EntityPainting));
-            registerPacket(0x1A, typeof(Packet_ExpOrb));
-            registerPacket(0x1C, typeof(Packet_EntityVel));
-            registerPacket(0x1D, typeof(Packet_DestroyEntity));
-            registerPacket(0x1E, typeof(Packet_Entity));
-            registerPacket(0x1F, typeof(Packet_EntityRelativeMove));
-            registerPacket(0x20, typeof(Packet_EntityLook));
-            registerPacket(0x21, typeof(Packet_EntityLookAndRelativeMove));
-            registerPacket(0x22, typeof(Packet_EntityTeleport));
-            registerPacket(0x23, typeof(Packet_EntityHeadLook));
-            registerPacket(0x26, typeof(Packet_EntityStatus));
-            registerPacket(0x27, typeof(Packet_AttachEntity));
-            registerPacket(0x28, typeof(Packet_EntityMetadata));
-            registerPacket(0x29, typeof(Packet_EntityEffect));
-            registerPacket(0x2A, typeof(Packet_RemoveEntityEffect));
-            registerPacket(0x2B, typeof(Packet_Experience));
-            registerPacket(0x32, typeof(Packet_PreChunk));
-            registerPacket(0x33, typeof(Packet_MapChunk));
-            registerPacket(0x34, typeof(Packet_MultiBlockChange));
-            registerPacket(0x35, typeof(Packet_BlockChange));
-            registerPacket(0x36, typeof(Packet_BlockAction));
-            registerPacket(0x3C, typeof(Packet_Explosion));
-            registerPacket(0x3D, typeof(Packet_SoundEffect));
-            registerPacket(0x46, typeof(Packet_NewOrInvalidState));
-            registerPacket(0x47, typeof(Packet_Thunder));
-            registerPacket(0x64, typeof(Packet_OpenWnd));
-            registerPacket(0x65, typeof(Packet_CloseWnd));
-            registerPacket(0x66, typeof(Packet_WndClick));
-            registerPacket(0x67, typeof(Packet_SetSlot));
-            registerPacket(0x68, typeof(Packet_WndItems));
-            registerPacket(0x69, typeof(Packet_UpdateWndProp));
-            registerPacket(0x6A, typeof(Packet_Transaction));
-            registerPacket(0x6B, typeof(Packet_CreativeInventoryAction));
-            registerPacket(0x82, typeof(Packet_UpdateSign));
-            registerPacket(0x83, typeof(Packet_ItemData));
-            registerPacket(0x84, typeof(Packet_EntityTileUpdate));
-            registerPacket(0xC8, typeof(Packet_IncStatistic));
-            registerPacket(0xC9, typeof(Packet_PlayerListItem));
-            registerPacket(0xCA, typeof(Packet_PlayerAbilities));
-            registerPacket(0xFA, typeof(Packet_PluginMessage));
-            //registerPacket(0xFE, typeof(Packet_ServerListPing));
-            registerPacket(0xFF, typeof(Packet_Kick));
+            registerPacket(PacketType.KeepAlive, typeof(Packet_KeepAlive));
+            registerPacket(PacketType.Login, typeof(Packet_Login));
+            registerPacket(PacketType.Handshake, typeof(Packet_Handshake));
+            registerPacket(PacketType.Chat, typeof(Packet_Chat));
+            registerPacket(PacketType.Time, typeof(Packet_Time));
+            registerPacket(PacketType.EntityEquipment, typeof(Packet_EntityEquipment));
+            registerPacket(PacketType.SpawnPosition, typeof(Packet_SpawnPosition));
+            registerPacket(PacketType.UseEntity, typeof(Packet_UseEntity));
+            registerPacket(PacketType.UpdateHealth, typeof(Packet_UpdateHealth));
+            registerPacket(PacketType.Respawn, typeof(Packet_Respawn));
+            registerPacket(PacketType.Player, typeof(Packet_Player));
+            registerPacket(PacketType.PlayerPos, typeof(Packet_PlayerPos));
+            registerPacket(PacketType.PlayerLook, typeof(Packet_PlayerLook));
+            registerPacket(PacketType.PlayerPosAndLook, typeof(Packet_PlayerPosAndLook));
+            registerPacket(PacketType.PlayerDigging, typeof(Packet_PlayerDigging));
+            registerPacket(PacketType.UseBed, typeof(Packet_UseBed));
+            registerPacket(PacketType.Animation, typeof(Packet_Animation));
+            registerPacket(PacketType.EntityAction, typeof(Packet_EntityAction));
+            registerPacket(PacketType.NamedEntitySpawn, typeof(Packet_NamedEntitySpawn));
+            registerPacket(PacketType.PickupSpawn, typeof(Packet_PickupSpawn));
+            registerPacket(PacketType.CollectItem, typeof(Packet_CollectItem));
+            registerPacket(PacketType.AddObjVehicle, typeof(Packet_AddObjVehicle));
+            registerPacket(PacketType.MobSpawn, typeof(Packet_MobSpawn));
+            registerPacket(PacketType.EntityPainting, typeof(Packet_EntityPainting));
+            registerPacket(PacketType.ExpOrb, typeof(Packet_ExpOrb));
+            registerPacket(PacketType.EntityVel, typeof(Packet_EntityVel));
+            registerPacket(PacketType.DestroyEntity, typeof(Packet_DestroyEntity));
+            registerPacket(PacketType.Entity, typeof(Packet_Entity));
+            registerPacket(PacketType.EntityRelativeMove, typeof(Packet_EntityRelativeMove));
+            registerPacket(PacketType.EntityLook, typeof(Packet_EntityLook));
+            registerPacket(PacketType.EntityLookAndRelativeMove, typeof(Packet_EntityLookAndRelativeMove));
+            registerPacket(PacketType.EntityTeleport, typeof(Packet_EntityTeleport));
+            registerPacket(PacketType.EntityHeadLook, typeof(Packet_EntityHeadLook));
+            registerPacket(PacketType.EntityStatus, typeof(Packet_EntityStatus));
+            registerPacket(PacketType.AttachEntity, typeof(Packet_AttachEntity));
+            registerPacket(PacketType.EntityMetadata, typeof(Packet_EntityMetadata));
+            registerPacket(PacketType.EntityEffect, typeof(Packet_EntityEffect));
+            registerPacket(PacketType.RemoveEntityEffect, typeof(Packet_RemoveEntityEffect));
+            registerPacket(PacketType.Experience, typeof(Packet_Experience));
+            registerPacket(PacketType.PreChunk, typeof(Packet_PreChunk));
+            registerPacket(PacketType.MapChunk, typeof(Packet_MapChunk));
+            registerPacket(PacketType.MultiBlockChange, typeof(Packet_MultiBlockChange));
+            registerPacket(PacketType.BlockChange, typeof(Packet_BlockChange));
+            registerPacket(PacketType.BlockAction, typeof(Packet_BlockAction));
+            registerPacket(PacketType.Explosion, typeof(Packet_Explosion));
+            registerPacket(PacketType.SoundEffect, typeof(Packet_SoundEffect));
+            registerPacket(PacketType.NewOrInvalidState, typeof(Packet_NewOrInvalidState));
+            registerPacket(PacketType.Thunder, typeof(Packet_Thunder));
+            registerPacket(PacketType.OpenWnd, typeof(Packet_OpenWnd));
+            registerPacket(PacketType.CloseWnd, typeof(Packet_CloseWnd));
+            registerPacket(PacketType.WndClick, typeof(Packet_WndClick));
+            registerPacket(PacketType.SetSlot, typeof(Packet_SetSlot));
+            registerPacket(PacketType.WndItems, typeof(Packet_WndItems));
+            registerPacket(PacketType.UpdateWndProp, typeof(Packet_UpdateWndProp));
+            registerPacket(PacketType.Transaction, typeof(Packet_Transaction));
+            registerPacket(PacketType.CreativeInventoryAction, typeof(Packet_CreativeInventoryAction));
+            registerPacket(PacketType.UpdateSign, typeof(Packet_UpdateSign));
+            registerPacket(PacketType.ItemData, typeof(Packet_ItemData));
+            registerPacket(PacketType.EntityTileUpdate, typeof(Packet_EntityTileUpdate));
+            registerPacket(PacketType.IncStatistic, typeof(Packet_IncStatistic));
+            registerPacket(PacketType.PlayerListItem, typeof(Packet_PlayerListItem));
+            registerPacket(PacketType.PlayerAbilities, typeof(Packet_PlayerAbilities));
+            registerPacket(PacketType.PluginMessage, typeof(Packet_PluginMessage));
+            //registerPacket(PacketType.ServerListPing, typeof(Packet_ServerListPing));
+            registerPacket(PacketType.Kick, typeof(Packet_Kick));
+
             //PacketMap.Initialize();
             if (File.Exists("Out.bin"))
                 File.Delete("Out.bin");
@@ -227,9 +228,10 @@ namespace MinecraftLibrary
 
             Packet_Handshake packet = new Packet_Handshake();
             packet.dataString = name + ";" + address + ":" + port;
-            packets.Enqueue(packet);            
+            packets.Enqueue(packet);
 
         }
+
         public void disconnect()
         {
             sendPacket(new Packet_Kick() { dataString = "Closing" });
@@ -237,39 +239,39 @@ namespace MinecraftLibrary
                 Thread.Sleep(100);
             client.Close();
         }
+
         public void sendPacket(Packet pack)
         {
-            if(loggedin)
-                lock(packets)
+            if (loggedin)
+                lock (packets)
                     packets.Enqueue(pack);
         }
+
         public void keepAlive(object state)
         {
             packets.Enqueue(new Packet_KeepAlive() { ID = 0 });
         }
+
         public void onPacketReceived(object sender, packetReceivedEventArgs e)
         {
-            switch (e.ID)
+            switch (e.Type)
             {
-                case 0:
-                    //output("Keep Alive");
+                case PacketType.KeepAlive:
                     packets.Enqueue(e.packet);
                     break;
-                case 1:
+                case PacketType.Login:
                     output("Login success!", true);
-                    //Timer tmp=new Timer(keepAlive, null, 100, 100);
-                    // packets.Enqueue(new Packet_Chat() {dataString="/login *PassordRemoved*" });
                     loggedin = true;
                     Thread packetSenderThread = new Thread(new ThreadStart(packetSender));
                     packetSenderThread.Name = "PacketSender";
                     packetSenderThread.Start();
                     break;
-                case 2:
+                case PacketType.Handshake:
                     output("Beginning Login...", true);
                     string serverid = ((Packet_Handshake)e.packet).dataString;
                     packets.Enqueue(new Packet_Login() { username = name, protocol = Protocol, serverid = serverid, sessionid = sessionid });
                     break;
-                case 3:
+                case PacketType.Chat:
                     Dictionary<char, ConsoleColor> cc = new Dictionary<char, ConsoleColor>();
                     cc.Add('0', ConsoleColor.Black);
                     cc.Add('1', ConsoleColor.DarkBlue);
@@ -298,7 +300,7 @@ namespace MinecraftLibrary
                         if (tmp[0] == (char)65533)
                         {
                             sr.Read(tmp, 0, 1);
-                            if(cc.ContainsKey(tmp[0]))
+                            if (cc.ContainsKey(tmp[0]))
                                 Console.ForegroundColor = cc[tmp[0]];
                             else
                                 Console.Write(tmp[0]);
@@ -311,27 +313,24 @@ namespace MinecraftLibrary
                     Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.White;
                     break;
-                case 0x0D:
+                case PacketType.PlayerPosAndLook:
                     Packet_PlayerPosAndLook p = (Packet_PlayerPosAndLook)e.packet;
                     this.x = p.x;
                     this.y = p.y;
                     this.z = p.z;
                     this.stance = p.stance;
-                    this.pitch=p.pitch;
+                    this.pitch = p.pitch;
                     this.yaw = p.yaw;
                     sendPacket(p);
-                   output("Moved!",true);
+                    output("Moved!", true);
                     break;
-               
-                case 255:
-                    //Console.WriteLine("Kicked: " + ((Packet_Kick)e.packet).dataString);
+                case PacketType.Kick:
                     output("Kicked: " + ((Packet_Kick)e.packet).dataString, true);
                     break;
             }
-            //Console.WriteLine(BitConverter.ToString(new byte[]{(byte)e.ID},0));
         }
 
-        public void registerPacket(byte id, Type packet)
+        public void registerPacket(PacketType id, Type packet)
         {
             if (customPackets.ContainsKey(id))
             {
@@ -430,4 +429,3 @@ namespace MinecraftLibrary
         }
     }
 }
-
