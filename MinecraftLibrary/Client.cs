@@ -30,7 +30,7 @@ namespace MinecraftLibrary
         TcpClient client = new TcpClient();
         Queue<Packet> packets = new Queue<Packet>();
         Queue<byte> dataIn = new Queue<byte>();
-        Dictionary<PacketType, Type> customPacketType = new Dictionary<PacketType, Type>();
+        Dictionary<PacketType, Type> customPackets = new Dictionary<PacketType, Type>();
 
         public class packetReceivedEventArgs : EventArgs
         {
@@ -105,9 +105,9 @@ namespace MinecraftLibrary
                 }
                 packet = null;
                 str.Read(tmp, 0, 1);
-                if (packet == null && customPacketType.ContainsKey((PacketType)tmp[0]))
+                if (packet == null && customPackets.ContainsKey((PacketType)tmp[0]))
                 {
-                    packet = (Packet)customPacketType[(PacketType)tmp[0]].GetConstructor(Type.EmptyTypes).Invoke(null);
+                    packet = (Packet)customPackets[(PacketType)tmp[0]].GetConstructor(Type.EmptyTypes).Invoke(null);
                 }
                 if (packet != null)
                 {
@@ -332,7 +332,7 @@ namespace MinecraftLibrary
 
         public void registerPacket(PacketType id, Type packet)
         {
-            if (customPacketType.ContainsKey(id))
+            if (customPackets.ContainsKey(id))
             {
                 throw new InvalidOperationException("Packet ID already registered");
             }
@@ -342,7 +342,7 @@ namespace MinecraftLibrary
             }
             else
             {
-                customPacketType.Add(id, packet);
+                customPackets.Add(id, packet);
             }
         }
     }
