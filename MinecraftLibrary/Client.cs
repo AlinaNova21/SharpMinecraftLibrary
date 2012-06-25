@@ -37,14 +37,14 @@ namespace MinecraftLibrary
             public packetReceivedEventArgs(Packet pack, int ID)
             {
                 this.packet = pack;
-                this.ID = ID;
+                this.Type = (PacketType)ID;
             }
             public Packet packet;
-            public int ID;
+            public PacketType Type;
         }
 
         public delegate void packetReceivedEventHandler(object sender, packetReceivedEventArgs e);
-        public event packetReceivedEventHandler packetReceived; 
+        public event packetReceivedEventHandler packetReceived;
         void packetSender()
         {
             while (client.Connected)
@@ -254,24 +254,24 @@ namespace MinecraftLibrary
 
         public void onPacketReceived(object sender, packetReceivedEventArgs e)
         {
-            switch (e.ID)
+            switch (e.Type)
             {
-                case 0:
+                case PacketType.KeepAlive:
                     packets.Enqueue(e.packet);
                     break;
-                case 1:
+                case PacketType.Login:
                     output("Login success!", true);
                     loggedin = true;
                     Thread packetSenderThread = new Thread(new ThreadStart(packetSender));
                     packetSenderThread.Name = "PacketSender";
                     packetSenderThread.Start();
                     break;
-                case 2:
+                case PacketType.Handshake:
                     output("Beginning Login...", true);
                     string serverid = ((Packet_Handshake)e.packet).dataString;
                     packets.Enqueue(new Packet_Login() { username = name, protocol = Protocol, serverid = serverid, sessionid = sessionid });
                     break;
-                case 3:
+                case PacketType.Chat:
                     Dictionary<char, ConsoleColor> cc = new Dictionary<char, ConsoleColor>();
                     cc.Add('0', ConsoleColor.Black);
                     cc.Add('1', ConsoleColor.DarkBlue);
@@ -313,7 +313,7 @@ namespace MinecraftLibrary
                     Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.White;
                     break;
-                case 0x0D:
+                case PacketType.PlayerPosAndLook:
                     Packet_PlayerPosAndLook p = (Packet_PlayerPosAndLook)e.packet;
                     this.x = p.x;
                     this.y = p.y;
@@ -324,7 +324,7 @@ namespace MinecraftLibrary
                     sendPacket(p);
                     output("Moved!", true);
                     break;
-                case 255:
+                case PacketType.Kick:
                     output("Kicked: " + ((Packet_Kick)e.packet).dataString, true);
                     break;
             }
