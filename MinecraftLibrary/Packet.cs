@@ -8,7 +8,76 @@ using System.Net;
 
 namespace MinecraftLibrary
 {
-    public class slot
+    public enum PacketType
+    {
+        KeepAlive = 0x00,
+        Login = 0x01,
+        Handshake = 0x02,
+        Chat = 0x03,
+        Time = 0x04,
+        EntityEquipment = 0x05,
+        SpawnPosition = 0x06,
+        UseEntity = 0x07,
+        UpdateHealth = 0x08,
+        Respawn = 0x09,
+        Player = 0x0A,
+        PlayerPos = 0x0B,
+        PlayerLook = 0x0C,
+        PlayerPosAndLook = 0x0D,
+        PlayerDigging = 0x0E,
+        UseBed = 0x11,
+        Animation = 0x12,
+        EntityAction = 0x13,
+        NamedEntitySpawn = 0x14,
+        PickupSpawn = 0x15,
+        CollectItem = 0x16,
+        AddObjVehicle = 0x17,
+        MobSpawn = 0x18,
+        EntityPainting = 0x19,
+        ExpOrb = 0x1A,
+        EntityVel = 0x1C,
+        DestroyEntity = 0x1D,
+        Entity = 0x1E,
+        EntityRelativeMove = 0x1F,
+        EntityLook = 0x20,
+        EntityLookAndRelativeMove = 0x21,
+        EntityTeleport = 0x22,
+        EntityHeadLook = 0x23,
+        EntityStatus = 0x26,
+        AttachEntity = 0x27,
+        EntityMetadata = 0x28,
+        EntityEffect = 0x29,
+        RemoveEntityEffect = 0x2A,
+        Experience = 0x2B,
+        PreChunk = 0x32,
+        MapChunk = 0x33,
+        MultiBlockChange = 0x34,
+        BlockChange = 0x35,
+        BlockAction = 0x36,
+        Explosion = 0x3C,
+        SoundEffect = 0x3D,
+        NewOrInvalidState = 0x46,
+        Thunder = 0x47,
+        OpenWnd = 0x64,
+        CloseWnd = 0x65,
+        WndClick = 0x66,
+        SetSlot = 0x67,
+        WndItems = 0x68,
+        UpdateWndProp = 0x69,
+        Transaction = 0x6A,
+        CreativeInventoryAction = 0x6B,
+        UpdateSign = 0x82,
+        ItemData = 0x83,
+        EntityTileUpdate = 0x84,
+        IncStatistic = 0xC8,
+        PlayerListItem = 0xC9,
+        PlayerAbilities = 0xCA,
+        PluginMessage = 0xFA,
+        ServerListPing = 0xFE,
+        Kick = 0xFF
+    }
+
+    public class Slot
     {
 
     }
@@ -156,7 +225,7 @@ namespace MinecraftLibrary
                 0x12E, 0x12F, 0x130, 0x131, //#CHAIN
                 0x132, 0x133, 0x134, 0x135, //#IRON
                 0x136, 0x137, 0x138, 0x139, //#DIAMOND
-                0x13A, 0x13B, 0x13C, 0x14D  //#GOLD};
+                0x13A, 0x13B, 0x13C, 0x14D  //#GOLD
             };
             short itemID = readShort(str);
             if (itemID != -1)
@@ -203,15 +272,6 @@ namespace MinecraftLibrary
         public int dim;
         public SByte difficulty;
         public byte maxPlayers;
-        //        public int eID;
-        //        public long seed;
-        //        public int mode;
-        //        public SByte dim;
-        //        public SByte difficulty;
-        //        public byte worldHeigth;
-        //        public byte maxPlayers;
-        //        public string levelType;
-
         public override void write(Stream str)
         {
             if (serverid != "-")
@@ -234,15 +294,13 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             eID = readInt(str);
-            readString(str);//unused
-            //seed = readLong(str); //no longer passed
+            readString(str);
             levelType = readString(str);
             mode = readInt(str);
             dim = readInt(str);
             difficulty = readSByte(str);
             readByte(str);
             maxPlayers = readByte(str);
-            //readByte(str);
         }
     }
     //0x02
