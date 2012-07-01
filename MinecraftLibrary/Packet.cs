@@ -328,18 +328,22 @@ namespace MinecraftLibrary
     //0x01
     public class Packet_Login : Packet
     {
-        public int protocol;
-        public string username;
-        public string sessionid;
-        public string serverid;
-        public int eID;
-        public string levelType;
-        public int mode;
-        public int dim;
-        public SByte difficulty;
-        public byte maxPlayers;
+        public int protocol { get; set; }
+        public string username { get; set; }
+        public string sessionid { get; set; }
+        public string serverid { get; set; }
+
+        public int eID { get; set; }
+        public string levelType { get; set; }
+        public int mode { get; set; }
+        public int dimension;
+        public SByte difficulty { get; set; }
+        //Currently not used
+        private byte worldHeight { get; set; }
+        public byte maxPlayers { get; set; }
         public override void write(Stream str)
         {
+            //TODO: Move this to somewhere else, packets should only parse messages
             if (serverid != "-")
             {
                 WebClient wc = new WebClient();
@@ -360,12 +364,12 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             eID = readInt(str);
-            readString(str);
+            username = readString(str); //Undocumented, but this is what the client does 
             levelType = readString(str);
             mode = readInt(str);
-            dim = readInt(str);
+            dimension = readInt(str);
             difficulty = readSByte(str);
-            readByte(str);
+            worldHeight = readByte(str);
             maxPlayers = readByte(str);
         }
     }
@@ -400,7 +404,7 @@ namespace MinecraftLibrary
     //0x04
     public class Packet_Time : Packet
     {
-        public long time;
+        public long time { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -413,10 +417,10 @@ namespace MinecraftLibrary
     //0x05
     public class Packet_EntityEquipment : Packet
     {
-        public int eID;
-        public short slot;
-        public short itemID;
-        public short damage;
+        public int eID { get; set; }
+        public short slot { get; set; }
+        public short itemID { get; set; }
+        public short damage { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -432,9 +436,9 @@ namespace MinecraftLibrary
     //0x06
     public class Packet_SpawnPosition : Packet
     {
-        public int x;
-        public int y;
-        public int z;
+        public int x { get; set; }
+        public int y { get; set; }
+        public int z { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -449,15 +453,15 @@ namespace MinecraftLibrary
     //0x07
     public class Packet_UseEntity : Packet
     {
-        public int user;
-        public int target;
-        public bool left;
+        public int user { get; set; }
+        public int target { get; set; }
+        public byte left { get; set; }
         public override void write(Stream str)
         {
             writeByte(str, 0x07);
             writeInt(str, user);
             writeInt(str, target);
-            writeBool(str, left);
+            writeByte(str, left);
         }
         public override void read(Stream str)
         {
@@ -467,9 +471,9 @@ namespace MinecraftLibrary
     //0x08
     public class Packet_UpdateHealth : Packet
     {
-        public short health;
-        public short food;
-        public float saturation;
+        public short health { get; set; }
+        public short food { get; set; }
+        public float saturation { get; set; }
 
         public override void write(Stream str)
         {
@@ -485,15 +489,15 @@ namespace MinecraftLibrary
     //0x09
     public class Packet_Respawn : Packet
     {
-        public int dim;
-        public byte difficulty;
-        public byte creative;
-        public short worldHeight;
-        public string levelType;
+        public int dimension { get; set; }
+        public byte difficulty { get; set; }
+        public byte creative { get; set; }
+        public short worldHeight { get; set; }
+        public string levelType { get; set; }
         public override void write(Stream str)
         {
             writeByte(str, 0x09);
-            writeInt(str, dim);
+            writeInt(str, dimension);
             writeByte(str, difficulty);
             writeByte(str, creative);
             writeShort(str, worldHeight);
@@ -501,7 +505,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            dim = readInt(str);
+            dimension = readInt(str);
             difficulty = readByte(str);
             creative = readByte(str);
             worldHeight = readShort(str);
@@ -511,7 +515,7 @@ namespace MinecraftLibrary
     //0x0A
     public class Packet_Player : Packet
     {
-        public bool onGround;
+        public bool onGround { get; set; }
         public override void write(Stream str)
         {
             writeByte(str, 0x0A);
@@ -525,11 +529,11 @@ namespace MinecraftLibrary
     //0x0B
     public class Packet_PlayerPos : Packet
     {
-        public double x;
-        public double y;
-        public double stance;
-        public double z;
-        public bool onGround;
+        public double x { get; set; }
+        public double y { get; set; }
+        public double stance { get; set; }
+        public double z { get; set; }
+        public bool onGround { get; set; }
         public override void write(Stream str)
         {
             writeByte(str, 0x0B);
@@ -547,9 +551,9 @@ namespace MinecraftLibrary
     //0x0C
     public class Packet_PlayerLook : Packet
     {
-        public float yaw;
-        public float pitch;
-        public bool onGround;
+        public float yaw { get; set; }
+        public float pitch { get; set; }
+        public bool onGround { get; set; }
         public override void write(Stream str)
         {
             writeByte(str, 0x0C);
@@ -565,13 +569,13 @@ namespace MinecraftLibrary
     //0x0D
     public class Packet_PlayerPosAndLook : Packet
     {
-        public double x;
-        public double y;
-        public double stance;
-        public double z;
-        public float yaw;
-        public float pitch;
-        public bool onGround;
+        public double x { get; set; }
+        public double y { get; set; }
+        public double stance { get; set; }
+        public double z { get; set; }
+        public float yaw { get; set; }
+        public float pitch { get; set; }
+        public bool onGround { get; set; }
 
         public override void write(Stream str)
         {
@@ -599,11 +603,11 @@ namespace MinecraftLibrary
     //0x0E
     public class Packet_PlayerDigging : Packet
     {
-        public DigStatus status;
-        public int x;
-        public byte y;
-        public int z;
-        public Face face;
+        public DigStatus status { get; set; }
+        public int x { get; set; }
+        public byte y { get; set; }
+        public int z { get; set; }
+        public Face face { get; set; }
 
         public override void write(Stream str)
         {
@@ -623,11 +627,11 @@ namespace MinecraftLibrary
     //0x0F
     public class Packet_PlayerBlockPlacement : Packet
     {
-        public int x;
-        public sbyte y;
-        public int z;
-        public Face direction;
-        public int held;
+        public int x { get; set; }
+        public sbyte y { get; set; }
+        public int z { get; set; }
+        public Face direction { get; set; }
+        public int held { get; set; }
 
         public override void write(Stream str)
         {
@@ -647,7 +651,7 @@ namespace MinecraftLibrary
     //0x10
     public class Packet_HoldingChange : Packet
     {
-        public short slotID;
+        public short slotID { get; set; }
         public override void write(Stream str)
         {
             writeByte(str, 0x0F);
@@ -662,11 +666,11 @@ namespace MinecraftLibrary
     //0x11
     public class Packet_UseBed : Packet
     {
-        public int eID;
-        public sbyte inBed;
-        public int x;
-        public sbyte y;
-        public int z;
+        public int eID { get; set; }
+        public sbyte inBed { get; set; }
+        public int x { get; set; }
+        public sbyte y { get; set; }
+        public int z { get; set; }
 
         public override void write(Stream str)
         {
@@ -685,8 +689,8 @@ namespace MinecraftLibrary
     //0x12
     public class Packet_Animation : Packet
     {
-        public int eID;
-        public Animation animation;
+        public int eID { get; set; }
+        public Animation animation { get; set; }
 
         public override void write(Stream str)
         {
@@ -703,8 +707,8 @@ namespace MinecraftLibrary
     //0x13
     public class Packet_EntityAction : Packet
     {
-        public int eID;
-        public MobAction mobAction;
+        public int eID { get; set; }
+        public MobAction mobAction { get; set; }
 
         public override void write(Stream str)
         {
@@ -721,14 +725,14 @@ namespace MinecraftLibrary
     //0x14
     public class Packet_NamedEntitySpawn : Packet
     {
-        public int eID;
-        public string name;
-        public int x;
-        public int y;
-        public int z;
-        public Byte rotation;
-        public Byte pitch;
-        public short item;
+        public int eID { get; set; }
+        public string name { get; set; }
+        public int x { get; set; }
+        public int y { get; set; }
+        public int z { get; set; }
+        public Byte rotation { get; set; }
+        public Byte pitch { get; set; }
+        public short item { get; set; }
 
         public override void write(Stream str)
         {
@@ -750,16 +754,16 @@ namespace MinecraftLibrary
     //0x15
     public class Packet_PickupSpawn : Packet
     {
-        public int eID;
-        public short item;
-        public byte count;
-        public short damage;
-        public int x;
-        public int y;
-        public int z;
-        public byte rotation;
-        public byte pitch;
-        public byte roll;
+        public int eID { get; set; }
+        public short item { get; set; }
+        public byte count { get; set; }
+        public short damage { get; set; }
+        public int x { get; set; }
+        public int y { get; set; }
+        public int z { get; set; }
+        public byte rotation { get; set; }
+        public byte pitch { get; set; }
+        public byte roll { get; set; }
 
         public override void write(Stream str)
         {
@@ -783,8 +787,8 @@ namespace MinecraftLibrary
     //0x16
     public class Packet_CollectItem : Packet
     {
-        public int itemEID;
-        public int playerEID;
+        public int itemEID { get; set; }
+        public int playerEID { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -799,14 +803,15 @@ namespace MinecraftLibrary
     //0x17
     public class Packet_AddObjVehicle : Packet
     {
-        public int eID;
-        public byte type;
-        public int x;
-        public int y;
-        public int z;
-        public int fbeID;
-        public short unknown;
-
+        public int eID { get; set; }
+        public byte type { get; set; }
+        public int x { get; set; }
+        public int y { get; set; }
+        public int z { get; set; }
+        public int fbeID { get; set; }
+        public short speedX { get; set; }
+        public short speedY { get; set; }
+        public short speedZ { get; set; }
 
         public override void write(Stream str)
         {
@@ -823,23 +828,23 @@ namespace MinecraftLibrary
             fbeID = readInt(str);
             if (fbeID > 0)
             {
-                readShort(str);
-                readShort(str);
-                readShort(str);
+                speedX = readShort(str);
+                speedY = readShort(str);
+                speedZ = readShort(str);
             }
         }
     }
     //0x18
     public class Packet_MobSpawn : Packet
     {
-        public int eID;
-        public sbyte type;
-        public int x;
-        public int y;
-        public int z;
-        public byte yaw;
-        public byte pitch;
-        public byte hyaw;
+        public int eID { get; set; }
+        public sbyte type { get; set; }
+        public int x { get; set; }
+        public int y { get; set; }
+        public int z { get; set; }
+        public byte yaw { get; set; }
+        public byte pitch { get; set; }
+        public byte hyaw { get; set; }
 
         public override void write(Stream str)
         {
@@ -896,12 +901,12 @@ namespace MinecraftLibrary
     //0x19
     public class Packet_EntityPainting : Packet
     {
-        public int eID;
-        public string name;
-        public int x;
-        public int y;
-        public int z;
-        public int dir;
+        public int eID { get; set; }
+        public string name { get; set; }
+        public int x { get; set; }
+        public int y { get; set; }
+        public int z { get; set; }
+        public int dir { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -919,11 +924,11 @@ namespace MinecraftLibrary
     //0x1A
     public class Packet_ExpOrb : Packet
     {
-        public int eID;
-        public int x;
-        public int y;
-        public int z;
-        public short count;
+        public int eID { get; set; }
+        public int x { get; set; }
+        public int y { get; set; }
+        public int z { get; set; }
+        public short count { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -940,10 +945,10 @@ namespace MinecraftLibrary
     //0x1C
     public class Packet_EntityVel : Packet
     {
-        public int eID;
-        public short vX;
-        public short vY;
-        public short vZ;
+        public int eID { get; set; }
+        public short vX { get; set; }
+        public short vY { get; set; }
+        public short vZ { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -959,7 +964,7 @@ namespace MinecraftLibrary
     //0x1D
     public class Packet_DestroyEntity : Packet
     {
-        public int eID;
+        public int eID { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -972,7 +977,7 @@ namespace MinecraftLibrary
     //0x1E
     public class Packet_Entity : Packet
     {
-        public int eID;
+        public int eID { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -985,10 +990,10 @@ namespace MinecraftLibrary
     //0x1F
     public class Packet_EntityRelativeMove : Packet
     {
-        public int eID;
-        public byte dX;
-        public byte dY;
-        public byte dZ;
+        public int eID { get; set; }
+        public byte dX { get; set; }
+        public byte dY { get; set; }
+        public byte dZ { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1004,9 +1009,9 @@ namespace MinecraftLibrary
     //0x20
     public class Packet_EntityLook : Packet
     {
-        public int eID;
-        public byte yaw;
-        public byte pitch;
+        public int eID { get; set; }
+        public byte yaw { get; set; }
+        public byte pitch { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1021,12 +1026,12 @@ namespace MinecraftLibrary
     //0x21
     public class Packet_EntityLookAndRelativeMove : Packet
     {
-        public int eID;
-        public int dX;
-        public int dY;
-        public int dZ;
-        public byte yaw;
-        public byte pitch;
+        public int eID { get; set; }
+        public int dX { get; set; }
+        public int dY { get; set; }
+        public int dZ { get; set; }
+        public byte yaw { get; set; }
+        public byte pitch { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1044,12 +1049,12 @@ namespace MinecraftLibrary
     //0x22
     public class Packet_EntityTeleport : Packet
     {
-        public int eID;
-        public int x;
-        public int y;
-        public int z;
-        public byte yaw;
-        public byte pitch;
+        public int eID { get; set; }
+        public int x { get; set; }
+        public int y { get; set; }
+        public int z { get; set; }
+        public byte yaw { get; set; }
+        public byte pitch { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1067,8 +1072,8 @@ namespace MinecraftLibrary
     //0x23
     public class Packet_EntityHeadLook : Packet
     {
-        public int eID;
-        public int headYaw;
+        public int eID { get; set; }
+        public int headYaw { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1082,8 +1087,8 @@ namespace MinecraftLibrary
     //0x26
     public class Packet_EntityStatus : Packet
     {
-        public int eID;
-        public EntityStatus eStatus;
+        public int eID { get; set; }
+        public EntityStatus eStatus { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1097,8 +1102,8 @@ namespace MinecraftLibrary
     //0x27
     public class Packet_AttachEntity : Packet
     {
-        public int eID;
-        public int vehicleID;
+        public int eID { get; set; }
+        public int vehicleID { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1113,7 +1118,7 @@ namespace MinecraftLibrary
     public class Packet_EntityMetadata : Packet
     {
         // TODO: Add more variables (0x28 EntityMetadata)
-        public int eID;
+        public int eID { get; set; }
 
         public override void write(Stream str)
         {
@@ -1163,10 +1168,10 @@ namespace MinecraftLibrary
     //0x29
     public class Packet_EntityEffect : Packet
     {
-        public int eID;
-        public byte effectID;
-        public byte amplifier;
-        public short duration;
+        public int eID { get; set; }
+        public byte effectID { get; set; }
+        public byte amplifier { get; set; }
+        public short duration { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1182,8 +1187,8 @@ namespace MinecraftLibrary
     //0x2A
     public class Packet_RemoveEntityEffect : Packet
     {
-        public int eID;
-        public byte effectID;
+        public int eID { get; set; }
+        public byte effectID { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1197,9 +1202,9 @@ namespace MinecraftLibrary
     //0x2B
     public class Packet_Experience : Packet
     {
-        public float xpBar;
-        public short level;
-        public short totalxp;
+        public float xpBar { get; set; }
+        public short level { get; set; }
+        public short totalxp { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1214,9 +1219,9 @@ namespace MinecraftLibrary
     //0x32
     public class Packet_PreChunk : Packet
     {
-        public int x;
-        public int z;
-        public bool mode;
+        public int x { get; set; }
+        public int z { get; set; }
+        public bool mode { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1231,14 +1236,14 @@ namespace MinecraftLibrary
     //0x33  //!
     public class Packet_MapChunk : Packet
     {
-        public int x;
-        public int z;
-        public bool groundUC;
-        public short primaryBM;
-        public short addBM;
-        public int size;
-        public byte[] data;
-        private byte[] rawData = null;
+        public int x { get; set; }
+        public int z { get; set; }
+        public bool groundUC { get; set; }
+        public short primaryBM { get; set; }
+        public short addBM { get; set; }
+        public int size { get; set; }
+        public byte[] data { get; set; }
+        private byte[] rawData { get; set; }
         public byte[] chunkData
         {
             get
@@ -1273,10 +1278,10 @@ namespace MinecraftLibrary
     //0x34 //!
     public class Packet_MultiBlockChange : Packet
     {
-        public int x;
-        public int z;
-        public short count;
-        public int[] rawdata;
+        public int x { get; set; }
+        public int z { get; set; }
+        public short count { get; set; }
+        public int[] rawdata { get; set; }
 
         public override void write(Stream str)
         {
@@ -1296,11 +1301,11 @@ namespace MinecraftLibrary
     //0x35
     public class Packet_BlockChange : Packet
     {
-        public int x;
-        public short y;
-        public int z;
-        public byte type;
-        public byte metadata;
+        public int x { get; set; }
+        public short y { get; set; }
+        public int z { get; set; }
+        public byte type { get; set; }
+        public byte metadata { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1317,11 +1322,11 @@ namespace MinecraftLibrary
     //0x36?
     public class Packet_BlockAction : Packet
     {
-        public int x;
-        public short y;
-        public int z;
-        public byte byte1;
-        public byte byte2;
+        public int x { get; set; }
+        public short y { get; set; }
+        public int z { get; set; }
+        public byte byte1 { get; set; }
+        public byte byte2 { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1338,11 +1343,11 @@ namespace MinecraftLibrary
     //0x3C
     public class Packet_Explosion : Packet
     {
-        public double x;
-        public double y;
-        public double z;
-        public float radius;
-        public int recordcount;
+        public double x { get; set; }
+        public double y { get; set; }
+        public double z { get; set; }
+        public float radius { get; set; }
+        public int recordcount { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1367,11 +1372,11 @@ namespace MinecraftLibrary
     //0x3D
     public class Packet_SoundEffect : Packet
     {
-        public int effectID;
-        public int x;
-        public byte y;
-        public int z;
-        public int data;
+        public int effectID { get; set; }
+        public int x { get; set; }
+        public byte y { get; set; }
+        public int z { get; set; }
+        public int data { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1402,8 +1407,8 @@ namespace MinecraftLibrary
     //0x46
     public class Packet_GameStateChange : Packet
     {
-        public ChangeGameStateReason reason;
-        public byte gamemode;
+        public ChangeGameStateReason reason { get; set; }
+        public byte gamemode { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1418,10 +1423,11 @@ namespace MinecraftLibrary
     //0x47
     public class Packet_Thunder : Packet
     {
-        public int eID;
-        public int x;
-        public int y;
-        public int z;
+        public int eID { get; set; }
+        public int isLightningBolt { get; set; }
+        public int x { get; set; }
+        public int y { get; set; }
+        public int z { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1429,7 +1435,7 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             eID = readInt(str);
-            readBool(str); //always true
+            isLightningBolt = readByte(str); //always true
             x = readInt(str);
             y = readInt(str);
             z = readInt(str);
@@ -1438,10 +1444,10 @@ namespace MinecraftLibrary
     //0x64
     public class Packet_OpenWnd : Packet
     {
-        public byte wndID;
-        public byte invtype;
-        public string wndtitle;
-        public byte slotcount;
+        public byte wndID { get; set; }
+        public byte invtype { get; set; }
+        public string wndtitle { get; set; }
+        public byte slotcount { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1457,7 +1463,7 @@ namespace MinecraftLibrary
     //0x65
     public class Packet_CloseWnd : Packet
     {
-        public byte wndID;
+        public byte wndID { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1470,11 +1476,11 @@ namespace MinecraftLibrary
     //0x66
     public class Packet_WndClick : Packet
     {
-        public sbyte wndID;
-        public short slot;
-        public sbyte rightClick;
-        public short actionNumber;
-        public bool shift;
+        public sbyte wndID { get; set; }
+        public short slot { get; set; }
+        public sbyte rightClick { get; set; }
+        public short actionNumber { get; set; }
+        public bool shift { get; set; }
         public override void write(Stream str)
         {
             writeSByte(str, wndID);
@@ -1491,8 +1497,8 @@ namespace MinecraftLibrary
     //0x67
     public class Packet_SetSlot : Packet
     {
-        sbyte wndID;
-        short slot;
+        sbyte wndID { get; set; }
+        short slot { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1508,8 +1514,8 @@ namespace MinecraftLibrary
     //0x68
     public class Packet_WndItems : Packet
     {
-        byte wndID;
-        short count;
+        byte wndID { get; set; }
+        short count { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1528,9 +1534,9 @@ namespace MinecraftLibrary
     //0x69
     public class Packet_UpdateWndProp : Packet
     {
-        byte wndID;
-        short property;
-        short value;
+        byte wndID { get; set; }
+        short property { get; set; }
+        short value { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1545,9 +1551,9 @@ namespace MinecraftLibrary
     //0x6A
     public class Packet_Transaction : Packet
     {
-        public sbyte wndID;
-        public short actionNumber;
-        public bool accepted;
+        public sbyte wndID { get; set; }
+        public short actionNumber { get; set; }
+        public bool accepted { get; set; }
         public override void write(Stream str)
         {
             writeSByte(str, wndID);
@@ -1564,7 +1570,7 @@ namespace MinecraftLibrary
     //0x6B
     public class Packet_CreativeInventoryAction : Packet
     {
-        public short slot;
+        public short slot { get; set; }
         //TODO: Implement write 0x6B CreativeInventoryAction (Needs Slot data object to be implemented first)
         public override void write(Stream str)
         {
@@ -1579,8 +1585,8 @@ namespace MinecraftLibrary
     //0x6C
     public class Packet_EnchantItem : Packet
     {
-        public sbyte wndID;
-        public sbyte enchantment;
+        public sbyte wndID { get; set; }
+        public sbyte enchantment { get; set; }
         public override void write(Stream str)
         {
             writeSByte(str, wndID);
@@ -1594,13 +1600,13 @@ namespace MinecraftLibrary
     //0x82
     public class Packet_UpdateSign : Packet
     {
-        public int x;
-        public short y;
-        public int z;
-        public string text1;
-        public string text2;
-        public string text3;
-        public string text4;
+        public int x { get; set; }
+        public short y { get; set; }
+        public int z { get; set; }
+        public string text1 { get; set; }
+        public string text2 { get; set; }
+        public string text3 { get; set; }
+        public string text4 { get; set; }
 
         public override void write(Stream str)
         {
@@ -1620,10 +1626,10 @@ namespace MinecraftLibrary
     //0x83
     public class Packet_ItemData : Packet
     {
-        public short type;
-        public short ID;
-        public byte textlength;
-        public byte[] text;
+        public short type { get; set; }
+        public short ID { get; set; }
+        public byte textlength { get; set; }
+        public byte[] text { get; set; }
 
         public override void write(Stream str)
         {
@@ -1640,13 +1646,13 @@ namespace MinecraftLibrary
     //0x84
     public class Packet_EntityTileUpdate : Packet
     {
-        public int x;
-        public short y;
-        public int z;
-        public byte action;
-        public int custom1;
-        public int custom2;
-        public int custom3;
+        public int x { get; set; }
+        public short y { get; set; }
+        public int z { get; set; }
+        public byte action { get; set; }
+        public int custom1 { get; set; }
+        public int custom2 { get; set; }
+        public int custom3 { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1665,8 +1671,8 @@ namespace MinecraftLibrary
     //0xC8
     public class Packet_IncStatistic : Packet
     {
-        public int statisticID;
-        public byte amount;
+        public int statisticID { get; set; }
+        public byte amount { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1680,10 +1686,10 @@ namespace MinecraftLibrary
     //0xCA
     public class Packet_PlayerAbilities : Packet
     {
-        public bool invulnerability;
-        public bool isFlying;
-        public bool canFly;
-        public bool instantDestroy;
+        public bool invulnerability { get; set; }
+        public bool isFlying { get; set; }
+        public bool canFly { get; set; }
+        public bool instantDestroy { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1699,9 +1705,9 @@ namespace MinecraftLibrary
     //0xFA
     public class Packet_PluginMessage : Packet
     {
-        string channel;
-        short length;
-        byte[] data;
+        string channel { get; set; }
+        short length { get; set; }
+        byte[] data { get; set; }
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1717,9 +1723,9 @@ namespace MinecraftLibrary
     //0xC9
     public class Packet_PlayerListItem : Packet
     {
-        public string name;
-        public bool online;
-        public short ping;
+        public string name { get; set; }
+        public bool online { get; set; }
+        public short ping { get; set; }
 
         public override void write(Stream str)
         {
