@@ -77,10 +77,78 @@ namespace MinecraftLibrary
         Kick = 0xFF
     }
 
-    public class Slot
+    public enum DigStatus
     {
-
+        StartedDigging = 0,
+        FinishedDigging = 2,
+        DropItem = 4,
+        ShootArrowOrFinishEating = 5
     }
+
+    public enum Face
+    {
+        Bottom = 0,
+        Top = 1,
+        East = 2,
+        West = 3,
+        North = 4,
+        South = 5
+    }
+
+    public enum Animation
+    {
+        No_animation = 0,
+        SwingArm = 1,
+        DamageAnimation = 2,
+        LeaveBed = 3,
+        EatFood = 5,
+        UnknownAnimation = 102,
+        Crouch = 104,
+        Uncrouch = 105
+    }
+
+    public enum MobAction
+    {
+        Crouch = 1,
+        Uncrouch = 2,
+        LeaveBed = 3,
+        StartSprinting = 4,
+        StopSprinting = 5,
+    }
+
+    public enum EntityStatus
+    {
+        EntityHurt = 2,
+        EntityDead = 3,
+        WolfTaming = 6,
+        WolfTamed = 7,
+        WolfShakingWaterOffItself = 8,
+        EatingAcceptedByServer = 9,
+        SheepEatingGrass = 10
+    }
+
+    public enum Direction
+    {
+        SouthEast = 0,
+        South = 1,
+        SouthWest = 2,
+        East = 3,
+        UpOrMiddle = 4,
+        West = 5,
+        NorthEast = 6,
+        North = 7,
+        NorthWest = 8
+    }
+
+    public enum ChangeGameStateReason
+    {
+        InvalidBed = 0,
+        BeginRaining = 1,
+        EndRaining = 2,
+        ChangeGameMode = 3,
+        EnterCredits = 4
+    }
+
     public abstract class Packet
     {
         public abstract void write(Stream str);
@@ -264,8 +332,6 @@ namespace MinecraftLibrary
         public string username;
         public string sessionid;
         public string serverid;
-
-
         public int eID;
         public string levelType;
         public int mode;
@@ -533,20 +599,20 @@ namespace MinecraftLibrary
     //0x0E
     public class Packet_PlayerDigging : Packet
     {
-        public sbyte status;
+        public DigStatus status;
         public int x;
         public byte y;
         public int z;
-        public byte face;
+        public Face face;
 
         public override void write(Stream str)
         {
             writeByte(str, 0x0E);
-            writeSByte(str, status);
+            writeSByte(str, (sbyte)status);
             writeInt(str, x);
             writeByte(str, y);
             writeInt(str, z);
-            writeByte(str, face);
+            writeByte(str, (byte)face);
         }
 
         public override void read(Stream str)
@@ -560,7 +626,7 @@ namespace MinecraftLibrary
         public int x;
         public sbyte y;
         public int z;
-        public sbyte direction;
+        public Face direction;
         public int held;
 
         public override void write(Stream str)
@@ -569,7 +635,7 @@ namespace MinecraftLibrary
             writeInt(str, x);
             writeSByte(str, y);
             writeInt(str, z);
-            writeSByte(str, direction);
+            writeSByte(str, (sbyte)direction);
             writeInt(str, held);
         }
 
@@ -620,36 +686,36 @@ namespace MinecraftLibrary
     public class Packet_Animation : Packet
     {
         public int eID;
-        public sbyte animation;
+        public Animation animation;
 
         public override void write(Stream str)
         {
             writeInt(str, eID);
-            writeSByte(str, animation);
+            writeSByte(str, (sbyte)animation);
         }
 
         public override void read(Stream str)
         {
             eID = readInt(str);
-            animation = readSByte(str);
+            animation = (Animation)readSByte(str);
         }
     }
     //0x13
     public class Packet_EntityAction : Packet
     {
         public int eID;
-        public sbyte actionID;
+        public MobAction mobAction;
 
         public override void write(Stream str)
         {
             writeInt(str, eID);
-            writeSByte(str, 0x0F);
+            writeSByte(str, (sbyte)mobAction);
         }
 
         public override void read(Stream str)
         {
             eID = readInt(str);
-            actionID = readSByte(str);
+            mobAction = (MobAction)readSByte(str);
         }
     }
     //0x14
@@ -831,7 +897,7 @@ namespace MinecraftLibrary
     public class Packet_EntityPainting : Packet
     {
         public int eID;
-        public string name; 
+        public string name;
         public int x;
         public int y;
         public int z;
@@ -1017,7 +1083,7 @@ namespace MinecraftLibrary
     public class Packet_EntityStatus : Packet
     {
         public int eID;
-        public byte eStatus;
+        public EntityStatus eStatus;
         public override void write(Stream str)
         {
             throw new NotImplementedException();
@@ -1025,7 +1091,7 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             eID = readInt(str);
-            eStatus = readByte(str); // Not SByte?
+            eStatus = (EntityStatus)readByte(str);
         }
     }
     //0x27
@@ -1108,8 +1174,8 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             eID = readInt(str);
-            effectID = readByte(str); 
-            amplifier = readByte(str); 
+            effectID = readByte(str);
+            amplifier = readByte(str);
             duration = readShort(str);
         }
     }
@@ -1125,7 +1191,7 @@ namespace MinecraftLibrary
         public override void read(Stream str)
         {
             eID = readInt(str);
-            effectID = readByte(str); 
+            effectID = readByte(str);
         }
     }
     //0x2B
@@ -1336,7 +1402,7 @@ namespace MinecraftLibrary
     //0x46
     public class Packet_GameStateChange : Packet
     {
-        public byte reason;
+        public ChangeGameStateReason reason;
         public byte gamemode;
         public override void write(Stream str)
         {
@@ -1344,7 +1410,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            reason = readByte(str);
+            reason = (ChangeGameStateReason)readByte(str);
             gamemode = readByte(str);
         }
     }
@@ -1382,7 +1448,7 @@ namespace MinecraftLibrary
         }
         public override void read(Stream str)
         {
-            wndID = readByte(str); 
+            wndID = readByte(str);
             invtype = readByte(str);
             wndtitle = readString(str);
             slotcount = readByte(str);
