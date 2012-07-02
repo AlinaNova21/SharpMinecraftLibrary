@@ -22,3 +22,15 @@ C:\Users\Wouter Gerarts\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\o
 C:\Users\Wouter Gerarts\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.Form1.resources
 C:\Users\Wouter Gerarts\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.Resources.resources
 C:\Users\Wouter Gerarts\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.vbproj.GenerateResource.Cache
+C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.exe
+C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.xml
+C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.pdb
+C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.vbprojResolveAssemblyReference.cache
+C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.Form1.resources
+C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.Resources.resources
+C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.vbproj.GenerateResource.Cache
+C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftClient.exe
+C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftClient.pdb
+C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftClient.xml
+C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftLibrary.dll
+C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftLibrary.pdb
