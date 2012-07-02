@@ -347,7 +347,7 @@ namespace MinecraftLibrary
             if (ServerID != "-")
             {
                 WebClient wc = new WebClient();
-                string answer = wc.DownloadString(string.Format("http://session.mine craft.net/game/joinserver.jsp?user={0}&sessionId={1}&serverId={2}", Username, SessionID, ServerID));
+                string answer = wc.DownloadString(string.Format("http://session.minecraft.net/game/joinserver.jsp?user={0}&sessionId={1}&serverId={2}", Username, SessionID, ServerID));
                 if (answer != "OK") { Console.WriteLine("Answer: " + answer); throw new Exception("invalid answer D:<"); }
             }
 

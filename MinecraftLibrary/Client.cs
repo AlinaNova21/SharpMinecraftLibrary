@@ -234,7 +234,7 @@ namespace MinecraftLibrary
 
         public void disconnect()
         {
-            sendPacket(new Packet_Kick() { dataString = "Closing" });
+            sendPacket(new Packet_Kick() { Reason = "Closing" });
             while (packets.Count > 0)
                 Thread.Sleep(100);
             client.Close();
@@ -325,7 +325,7 @@ namespace MinecraftLibrary
                     output("Moved!", true);
                     break;
                 case PacketType.Kick:
-                    output("Kicked: " + ((Packet_Kick)e.packet).dataString, true);
+                    output("Kicked: " + ((Packet_Kick)e.packet).Reason, true);
                     break;
             }
         }
