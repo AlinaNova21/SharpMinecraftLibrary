@@ -13,7 +13,7 @@ namespace MinecraftLibrary
     public class Client
     {
         const int Protocol = 29;
-        const int launcherVersion = 13;
+        const int LauncherVersion = 13;
         public double x = 0;
         public double y = 0;
         public double stance = 0;
@@ -51,12 +51,12 @@ namespace MinecraftLibrary
             {
                 Thread.Sleep(750);
                 Packet_PlayerPosAndLook p = new Packet_PlayerPosAndLook();
-                p.x = x;
-                p.y = y;
-                p.z = z;
-                p.stance = stance;
-                p.pitch = pitch;
-                p.yaw = yaw;
+                p.X = x;
+                p.Y = y;
+                p.Z = z;
+                p.Stance = stance;
+                p.Pitch = pitch;
+                p.Yaw = yaw;
                 sendPacket(p);
             }
         }
@@ -98,7 +98,7 @@ namespace MinecraftLibrary
                 if (p)
                 {
                     MemoryStream tmps = new MemoryStream();
-                    pack.write(tmps);
+                    pack.Write(tmps);
                     tmps.WriteTo(str);
                     tmps.Close();
                     str.Flush();
@@ -113,7 +113,7 @@ namespace MinecraftLibrary
                 {
                     if (debug)
                         output("Packet: " + packet.GetType().ToString().Split('_')[1]);
-                    packet.read(str);
+                    packet.Read(str);
                     packetReceived(this, new packetReceivedEventArgs(packet, (int)tmp[0]));
                 }
                 else
@@ -126,7 +126,7 @@ namespace MinecraftLibrary
         public bool Verify()
         {
             WebClient wc = new WebClient();
-            string loginstring = wc.DownloadString(string.Format("https://login.minecraft.net/?user={0}&password={1}&version={2}", name, pass, launcherVersion));
+            string loginstring = wc.DownloadString(string.Format("https://login.minecraft.net/?user={0}&password={1}&version={2}", name, pass, LauncherVersion));
             Console.WriteLine(loginstring);
             if (!loginstring.Contains(":")) { return false; }
             string[] loginarray = loginstring.Split(':');
@@ -153,7 +153,7 @@ namespace MinecraftLibrary
             registerPacket(PacketType.UseEntity, typeof(Packet_UseEntity));
             registerPacket(PacketType.UpdateHealth, typeof(Packet_UpdateHealth));
             registerPacket(PacketType.Respawn, typeof(Packet_Respawn));
-            registerPacket(PacketType.Player, typeof(Packet_Player));
+            registerPacket(PacketType.Flying, typeof(Packet_Flying));
             registerPacket(PacketType.PlayerPos, typeof(Packet_PlayerPos));
             registerPacket(PacketType.PlayerLook, typeof(Packet_PlayerLook));
             registerPacket(PacketType.PlayerPosAndLook, typeof(Packet_PlayerPosAndLook));
@@ -227,14 +227,14 @@ namespace MinecraftLibrary
             packetHandlerThread.Start();
 
             Packet_Handshake packet = new Packet_Handshake();
-            packet.dataString = name + ";" + address + ":" + port;
+            packet.Username = name;
+            packet.Host = address + ":" + port;
             packets.Enqueue(packet);
-
         }
 
         public void disconnect()
         {
-            sendPacket(new Packet_Kick() { dataString = "Closing" });
+            sendPacket(new Packet_Kick() { Reason = "Closing" });
             while (packets.Count > 0)
                 Thread.Sleep(100);
             client.Close();
@@ -268,8 +268,8 @@ namespace MinecraftLibrary
                     break;
                 case PacketType.Handshake:
                     output("Beginning Login...", true);
-                    string serverid = ((Packet_Handshake)e.packet).dataString;
-                    packets.Enqueue(new Packet_Login() { username = name, protocol = Protocol, serverid = serverid, sessionid = sessionid });
+                    string serverid = ((Packet_Handshake)e.packet).ServerID;
+                    packets.Enqueue(new Packet_Login() { Username = name, ProtocolVersion = Protocol, ServerID = serverid, SessionID = sessionid });
                     break;
                 case PacketType.Chat:
                     Dictionary<char, ConsoleColor> cc = new Dictionary<char, ConsoleColor>();
@@ -290,7 +290,7 @@ namespace MinecraftLibrary
                     cc.Add('e', ConsoleColor.Yellow);
                     cc.Add('f', ConsoleColor.White);
 
-                    string msg = ((Packet_Chat)e.packet).dataString;
+                    string msg = ((Packet_Chat)e.packet).Message;
                     output(msg);
                     StreamReader sr = new StreamReader(new MemoryStream(Encoding.Default.GetBytes(msg)));
                     char[] tmp = new char[1];
@@ -315,17 +315,17 @@ namespace MinecraftLibrary
                     break;
                 case PacketType.PlayerPosAndLook:
                     Packet_PlayerPosAndLook p = (Packet_PlayerPosAndLook)e.packet;
-                    this.x = p.x;
-                    this.y = p.y;
-                    this.z = p.z;
-                    this.stance = p.stance;
-                    this.pitch = p.pitch;
-                    this.yaw = p.yaw;
+                    this.x = p.X;
+                    this.y = p.Y;
+                    this.z = p.Z;
+                    this.stance = p.Stance;
+                    this.pitch = p.Pitch;
+                    this.yaw = p.Yaw;
                     sendPacket(p);
                     output("Moved!", true);
                     break;
                 case PacketType.Kick:
-                    output("Kicked: " + ((Packet_Kick)e.packet).dataString, true);
+                    output("Kicked: " + ((Packet_Kick)e.packet).Reason, true);
                     break;
             }
         }

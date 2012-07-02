@@ -30,9 +30,9 @@ Public Class Form1
             Console.WriteLine("Health Update: {0} {1}", h.health, h.food)
             If h.health <= 0 Then
                 Dim r As New MinecraftLibrary.Packet_Respawn()
-                r.dim = 0
+                r.dimension = 0
                 r.difficulty = &H1
-                r.creative = &H0
+                r.Gamemode = &H0
                 r.levelType = "default"
                 r.worldHeight = 256
                 mc.sendPacket(r)
@@ -67,15 +67,15 @@ Public Class Form1
             If tmp.StartsWith(":") Then
                 If tmp = ":respawn" Then
                     Dim r As New MinecraftLibrary.Packet_Respawn()
-                    r.dim = 0
-                    r.difficulty = &H1
-                    r.creative = &H0
-                    r.levelType = "default"
-                    r.worldHeight = 256
+                    r.Dimension = 0
+                    r.Difficulty = &H1
+                    r.Gamemode = &H0
+                    r.LevelType = "default"
+                    r.WorldHeight = 256
                     mc.sendPacket(r)
                 End If
             Else
-                mc.sendPacket(New MinecraftLibrary.Packet_Chat() With {.dataString = tmp})
+                mc.sendPacket(New MinecraftLibrary.Packet_Chat() With {.Message = tmp})
             End If
         End While
         mc.disconnect()
