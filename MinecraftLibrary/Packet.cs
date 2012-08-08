@@ -637,8 +637,7 @@ namespace MinecraftLibrary
             throw new NotImplementedException();
         }
     }
-    //0x0D
-    public class Packet_PlayerPosAndLook : Packet_Player
+<    public class Packet_PlayerPosAndLook : Packet_Player
     {
         public override void Write()
         {
@@ -1407,6 +1406,25 @@ namespace MinecraftLibrary
             Byte2 = Byte;
         }
     }
+    //0x37
+    public class Packet_BlockBreakingAnimation : Packet
+    {
+        public int EID { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Z { get; set; }
+        public override void Write()
+        {
+            throw new NotImplementedException();
+        }
+        public override void Read()
+        {
+            EID = Int;
+            X = Int;
+            Y = Int;
+            Z = Int;
+        }
+    }
     //0x3C
     public class Packet_Explosion : Packet
     {
@@ -1457,18 +1475,27 @@ namespace MinecraftLibrary
             Data = Int;
         }
     }
-    //0x3E?
-    public class Packet_NewOrInvalidState : Packet
+    //0x3E
+    public class Packet_NamedSoundEffect : Packet
     {
+        public string SoundName { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Z { get; set; }
+        public float Volume { get; set; }
+        public byte Pitch { get; set; }
         public override void Write()
         {
             throw new NotImplementedException();
         }
         public override void Read()
         {
-            // TODO: Add variables (0x3E? NewOrInvalidState)
-            var n1=SByte;
-            var n2=SByte;
+            SoundName = String;
+            X = Int;
+            Y = Int;
+            Z = Int;
+            Volume = Float;
+            Pitch = Byte;
         }
     }
     //0x46
@@ -1783,6 +1810,38 @@ namespace MinecraftLibrary
             WalkSpeed = Byte;
         }
     }
+    //0xCB
+      public class Packet_TabComplete : Packet
+    {
+        public string Text { get; set; }
+        public override void Write()
+        {
+            String=(Text);
+        }
+        public override void Read()
+        {
+            Text = String;
+        }
+    }
+    //0xCC
+      public class Packet_LocaleandViewDistance : Packet
+    {
+        public string Locale { get; set; }
+        public byte ViewDistance { get; set; }
+        public byte ChatFlags { get; set; }
+        public byte Difficulty { get; set; }
+        public override void Write()
+        {
+            throw new NotImplementedException();
+        }
+        public override void Read()
+        {
+            Locale = String;
+            ViewDistance = Byte;
+            ChatFlags = Byte;
+            Difficulty = Byte;
+        }
+    }    
     //0xCD
     public class Packet_ClientStatus : Packet
     {

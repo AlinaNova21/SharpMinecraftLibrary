@@ -47,3 +47,6 @@ C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\obj\x86\Releas
 C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.exe
 C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.xml
 C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.pdb
+G:\github\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.exe
+G:\github\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.xml
+G:\github\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.pdb
