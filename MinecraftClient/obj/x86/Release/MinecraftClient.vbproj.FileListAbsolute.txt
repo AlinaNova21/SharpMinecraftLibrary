@@ -34,3 +34,16 @@ C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\bin\Relea
 C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftClient.xml
 C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftLibrary.dll
 C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftLibrary.pdb
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftClient.exe
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftClient.pdb
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftClient.xml
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftLibrary.dll
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftLibrary.pdb
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.Form1.resources
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.Resources.resources
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\GenerateResource.read.1.tlog
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\GenerateResource.write.1.tlog
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.exe
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.xml
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.pdb

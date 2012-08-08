@@ -72,11 +72,13 @@ namespace MinecraftLibrary
         IncStatistic = 0xC8,
         PlayerListItem = 0xC9,
         PlayerAbilities = 0xCA,
+        ClientStatus = 0xCD,
         PluginMessage = 0xFA,
+        EncryptionResponse = 0xFC,
+        EncryptionRequest = 0xFD,
         ServerListPing = 0xFE,
         Kick = 0xFF
     }
-
     public enum DigStatus
     {
         StartedDigging = 0,
@@ -84,7 +86,6 @@ namespace MinecraftLibrary
         DropItem = 4,
         ShootArrowOrFinishEating = 5
     }
-
     public enum Face
     {
         Bottom = 0,
@@ -94,7 +95,6 @@ namespace MinecraftLibrary
         North = 4,
         South = 5
     }
-
     public enum Animation
     {
         No_animation = 0,
@@ -106,7 +106,6 @@ namespace MinecraftLibrary
         Crouch = 104,
         Uncrouch = 105
     }
-
     public enum MobAction
     {
         Crouch = 1,
@@ -115,7 +114,6 @@ namespace MinecraftLibrary
         StartSprinting = 4,
         StopSprinting = 5,
     }
-
     public enum EntityStatus
     {
         EntityHurt = 2,
@@ -126,7 +124,6 @@ namespace MinecraftLibrary
         EatingAcceptedByServer = 9,
         SheepEatingGrass = 10
     }
-
     public enum Direction
     {
         SouthEast = 0,
@@ -139,7 +136,6 @@ namespace MinecraftLibrary
         North = 7,
         NorthWest = 8
     }
-
     public enum ChangeGameStateReason
     {
         InvalidBed = 0,
@@ -151,127 +147,131 @@ namespace MinecraftLibrary
 
     public abstract class Packet
     {
-        public abstract void Write(Stream str);
-        public abstract void Read(Stream str);
+        public abstract void Write();
+        public abstract void Read();
         protected byte[] reverse(byte[] data)
         {
             Array.Reverse(data);
             return data;
         }
-        protected byte[] ReadSTUB(Stream str, int len)
+        protected byte[] ReadSTUB( int len)
         {
             byte[] tmp = new byte[len];
             str.Read(tmp, 0, len);
             System.Diagnostics.Debug.WriteLine("STUBBED!");
             return tmp;
         }
-        protected byte[] ReadByteArray(Stream str, int len)
+        protected byte[] ReadByteArray(int len)
         {
             byte[] tmp = new byte[len];
             str.Read(tmp, 0, len);
             return tmp;
         }
-        protected bool ReadBool(Stream str)
+        protected void WriteByteArray(byte[] data, int len)
+        {
+            str.Write(data, 0, len);
+        }
+        protected bool ReadBool()
         {
             byte[] tmp = new byte[1];
             str.Read(tmp, 0, 1);
             return BitConverter.ToBoolean(tmp, 0);
         }
-        protected void WriteBool(Stream str, bool data)
+        protected void WriteBool(bool data)
         {
             byte[] tmp = reverse(BitConverter.GetBytes(data));
             str.Write(tmp, 0, tmp.Length);
         }
-        protected byte ReadByte(Stream str)
+        protected byte ReadByte()
         {
             byte[] tmp = new byte[1];
             str.Read(tmp, 0, 1);
             return tmp[0];
         }
-        protected void WriteByte(Stream str, byte data)
+        protected void WriteByte(byte data)
         {
             str.WriteByte(data);
         }
-        protected SByte ReadSByte(Stream str)
+        protected SByte ReadSByte()
         {
             byte[] tmp = new byte[1];
             str.Read(tmp, 0, 1);
             return (SByte)tmp[0];
         }
-        protected void WriteSByte(Stream str, SByte data)
+        protected void WriteSByte(SByte data)
         {
             str.WriteByte((byte)data);
         }
-        protected string ReadString(Stream str)
+        protected string ReadString()
         {
-            short len = ReadShort(str);
+            short len = Short;
             byte[] tmp = new byte[(len * 2)];
             str.Read(tmp, 0, len * 2);
             return UnicodeEncoding.BigEndianUnicode.GetString(tmp, 0, tmp.Length);
         }
-        protected void WriteString(Stream str, string data)
+        protected void WriteString(string data)
         {
-            WriteShort(str, (short)data.Length);
+            Short=((short)data.Length);
             byte[]name = ASCIIEncoding.BigEndianUnicode.GetBytes(data);
             str.Write(name, 0, name.Length);
         }
-        protected short ReadShort(Stream str)
+        protected short ReadShort()
         {
             byte[] tmp = new byte[2];
             str.Read(tmp, 0, 2);
             return BitConverter.ToInt16(reverse(tmp), 0);
         }
-        protected void WriteShort(Stream str, short data)
+        protected void WriteShort(short data)
         {
             byte[] tmp = reverse(BitConverter.GetBytes(data));
             str.Write(tmp, 0, tmp.Length);
         }
-        protected int ReadInt(Stream str)
+        protected int ReadInt()
         {
             byte[] tmp = new byte[4];
             str.Read(tmp, 0, 4);
             tmp = reverse(tmp);
             return BitConverter.ToInt32(tmp, 0);
         }
-        protected void WriteInt(Stream str, int data)
+        protected void WriteInt(int data)
         {
             byte[] tmp = reverse(BitConverter.GetBytes(data));
             str.Write(tmp, 0, tmp.Length);
         }
-        protected long ReadLong(Stream str)
+        protected long ReadLong()
         {
             byte[] tmp = new byte[8];
             str.Read(tmp, 0, 8);
             return BitConverter.ToInt64(reverse(tmp), 0);
         }
-        protected void WriteLong(Stream str, long data)
+        protected void WriteLong(long data)
         {
             byte[] tmp = reverse(BitConverter.GetBytes(data));
             str.Write(tmp, 0, tmp.Length);
         }
-        protected float ReadFloat(Stream str)
+        protected float ReadFloat()
         {
             byte[] tmp = new byte[4];
             str.Read(tmp, 0, 4);
             return BitConverter.ToSingle(reverse(tmp), 0);
         }
-        protected void WriteFloat(Stream str, float data)
+        protected void WriteFloat(float data)
         {
             byte[] tmp = reverse(BitConverter.GetBytes(data));
             str.Write(tmp, 0, tmp.Length);
         }
-        protected double ReadDouble(Stream str)
+        protected double ReadDouble()
         {
             byte[] tmp = new byte[8];
             str.Read(tmp, 0, 8);
             return BitConverter.ToDouble(reverse(tmp), 0);
         }
-        protected void WriteDouble(Stream str, double data)
+        protected void WriteDouble(double data)
         {
             byte[] tmp = reverse(BitConverter.GetBytes(data));
             str.Write(tmp, 0, tmp.Length);
         }
-        protected void ReadSlotData(Stream str)
+        protected void ReadSlotData()
         {
             short[] enchantable = {
                 0x103, //#Flint and steel
@@ -295,34 +295,91 @@ namespace MinecraftLibrary
                 0x136, 0x137, 0x138, 0x139, //#DIAMOND
                 0x13A, 0x13B, 0x13C, 0x14D  //#GOLD
             };
-            short itemID = ReadShort(str);
+            short itemID = Short;
             if (itemID != -1)
             {
-                sbyte cnt = ReadSByte(str);
-                short Damage = ReadShort(str);
+                sbyte cnt = SByte;
+                short Damage = Short;
                 if (enchantable.Contains(itemID))
                 {
-                    short tmp = ReadShort(str);
+                    short tmp = Short;
                     if (tmp != -1)
                     {
-                        ReadSTUB(str, tmp);
+                        ReadSTUB( tmp);
                     }
                 }
             }
+        }
+
+        protected Stream str;
+        public Stream Stream { get { return str; } set { str = value; } }
+        protected char Char
+        {
+            get { return (char)ReadByte(); }
+            set { WriteByte((byte)value); }
+        }
+        protected byte Byte
+        {
+            get { return ReadByte(); }
+            set { WriteByte( value); }
+        }
+        protected SByte SByte
+        {
+            get { return (SByte)Byte; }
+            set { Byte=(byte)value; }
+        }
+        protected byte[] Bytes
+        {
+            set { WriteByteArray(value,value.Length); }
+        }
+        protected short Short
+        {
+            get { return ReadShort(); }
+            set { WriteShort(value); }
+        }
+        protected int Int
+        {
+            get { return ReadInt(); }
+            set { WriteInt(value); }
+        }
+        protected long Long
+        {
+            get { return ReadLong(); }
+            set { WriteLong(value); }
+        }
+        protected bool Bool
+        {
+            get { return ReadBool(); }
+            set { WriteBool(value); }
+        }
+        protected float Float
+        {
+            get { return ReadFloat(); }
+            set { WriteFloat(value); }
+        }
+        protected double Double
+        {
+            get { return ReadDouble(); }
+            set { WriteDouble(value); }
+        }
+        protected string String
+        {
+            get { return ReadString(); }
+            set { WriteString(value); }
         }
     }
     //0x00
     public class Packet_KeepAlive : Packet
     {
         public int ID { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteByte(str, 0x00);
-            WriteInt(str, ID);
+            Byte=(0x00);
+            Int=(ID);
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            ID = ReadInt(str);
+            ID = Int;
         }
     }
     //0x01
@@ -341,7 +398,7 @@ namespace MinecraftLibrary
         //Currently not used
         private byte WorldHeight { get; set; }
         public byte MaxPlayers { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             //TODO: Move this to somewhere else, packets should only parse messages
             if (ServerID != "-")
@@ -351,43 +408,47 @@ namespace MinecraftLibrary
                 if (answer != "OK") { Console.WriteLine("Answer: " + answer); throw new Exception("invalid answer D:<"); }
             }
 
-            WriteByte(str, 0x01);
-            WriteInt(str, ProtocolVersion);
-            WriteString(str, Username);
-            WriteString(str, "");
-            WriteInt(str, 0);
-            WriteInt(str, 0);
-            WriteByte(str, 0x00);
-            WriteByte(str, 0x00);
-            WriteByte(str, 0x00);
+            Byte=(0x01);
+            Int=(ProtocolVersion);
+            String=(Username);
+            String=("");
+            Int=(0);
+            Int=(0);
+            Byte=(0x00);
+            Byte=(0x00);
+            Byte=(0x00);
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            Username = ReadString(str); 
-            LevelType = ReadString(str);
-            Gamemode = ReadInt(str);
-            Dimension = ReadInt(str);
-            Difficulty = ReadByte(str);
-            WorldHeight = ReadByte(str);
-            MaxPlayers = ReadByte(str);
+            EID = Int;
+            //Username = String; 
+            LevelType = String;
+            Gamemode = SByte;
+            Dimension = SByte;
+            Difficulty = Byte;
+            WorldHeight = Byte;
+            MaxPlayers = Byte;
         }
     }
     //0x02
     public class Packet_Handshake : Packet
     {
+        public byte ProtocolVersion { get; set; }
         public string Username { get; set; }
         public string Host { get; set; }
-        public string ServerID { get; set; }
-        public override void Write(Stream str)
+        public int Port { get; set; }
+        public override void Write()
         {
-            string UsernameAndHost = string.Format("{0};{1}", Username, Host);
-            WriteByte(str, 0x02);
-            WriteString(str, Username);
+            //string UsernameAndHost = string.Format("{0};{1}", Username, Host);
+            Byte=(0x02);
+            Byte=(ProtocolVersion);
+            String=(Username);
+            String=(Host);
+            Int=(Port);
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            ServerID = ReadString(str);
+            //ServerID = String;
         }
     }
     //0x03
@@ -395,29 +456,29 @@ namespace MinecraftLibrary
     {
         const int MaxPacketSize = 119;
         public string Message { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteByte(str, 0x03);
+            Byte=(0x03);
             if (Message.Length > MaxPacketSize)
                 Message = Message.Substring(0, MaxPacketSize);
-            WriteString(str, Message);
+            String=(Message);
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            Message = ReadString(str);
+            Message = String;
         }
     }
     //0x04
     public class Packet_Time : Packet
     {
         public long Time { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            Time = ReadLong(str);
+            Time = Long;
         }
     }
     //0x05
@@ -427,16 +488,16 @@ namespace MinecraftLibrary
         public short Slot { get; set; }
         public short ItemID { get; set; }
         public short ItemDamage { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            Slot = ReadShort(str);
-            ItemID = ReadShort(str);
-            ItemDamage = ReadShort(str);
+            EID = Int;
+            Slot = Short;
+            ItemID = Short;
+            ItemDamage = Short;
         }
     }
     //0x06
@@ -445,15 +506,15 @@ namespace MinecraftLibrary
         public int X { get; set; }
         public int Y { get; set; }
         public int Z { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            X = ReadInt(str);
-            Y = ReadInt(str);
-            Z = ReadInt(str);
+            X = Int;
+            Y = Int;
+            Z = Int;
         }
     }
     //0x07
@@ -462,14 +523,14 @@ namespace MinecraftLibrary
         public int User { get; set; }
         public int Target { get; set; }
         public byte IsLeftClick { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteByte(str, 0x07);
-            WriteInt(str, User);
-            WriteInt(str, Target);
-            WriteByte(str, IsLeftClick);
+            Byte=0x07;
+            Int=(User);
+            Int=(Target);
+            Byte=(IsLeftClick);
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
             throw new NotImplementedException();
         }
@@ -481,15 +542,15 @@ namespace MinecraftLibrary
         public short Food { get; set; }
         public float Saturation { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            Health = ReadShort(str);
-            Food = ReadShort(str);
-            Saturation = ReadFloat(str);
+            Health = Short;
+            Food = Short;
+            Saturation = Float;
         }
     }
     //0x09
@@ -500,22 +561,22 @@ namespace MinecraftLibrary
         public sbyte Gamemode { get; set; }
         public short WorldHeight { get; set; }
         public string LevelType { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteByte(str, 0x09);
-            WriteInt(str, Dimension);
-            WriteSByte(str, Difficulty);
-            WriteSByte(str, Gamemode);
-            WriteShort(str, WorldHeight);
-            WriteString(str, LevelType);
+            Byte=0x09;
+            Int=(Dimension);
+            SByte=(Difficulty);
+            SByte=(Gamemode);
+            Short=(WorldHeight);
+            String=(LevelType);
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            Dimension = ReadInt(str);
-            Difficulty = ReadSByte(str);
-            Gamemode = ReadSByte(str);
-            WorldHeight = ReadShort(str);
-            LevelType = ReadString(str);
+            Dimension = Int;
+            Difficulty = SByte;
+            Gamemode = SByte;
+            WorldHeight = Short;
+            LevelType = String;
         }
     }
     //The base for 0x0A to 0x0D
@@ -534,12 +595,12 @@ namespace MinecraftLibrary
     //0x0A
     public class Packet_Flying : Packet_Player
     {
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteByte(str, 0x0A);
-            WriteBool(str, OnGround);
+            Byte=0x0A;
+            Bool=(OnGround);
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
             throw new NotImplementedException();
         }
@@ -547,16 +608,16 @@ namespace MinecraftLibrary
     //0x0B
     public class Packet_PlayerPos : Packet_Player
     {
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteByte(str, 0x0B);
-            WriteDouble(str, X);
-            WriteDouble(str, Y);
-            WriteDouble(str, Stance);
-            WriteDouble(str, Z);
-            WriteBool(str, OnGround);
+            Byte=0x0B;
+            Double=(X);
+            Double=(Y);
+            Double=(Stance);
+            Double=(Z);
+            Bool=(OnGround);
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
             throw new NotImplementedException();
         }
@@ -564,14 +625,14 @@ namespace MinecraftLibrary
     //0x0C
     public class Packet_PlayerLook : Packet_Player
     {
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteByte(str, 0x0C);
-            WriteFloat(str, Yaw);
-            WriteFloat(str, Pitch);
-            WriteBool(str, OnGround);
+            Byte=0x0C;
+            Float=(Yaw);
+            Float=(Pitch);
+            Bool=(OnGround);
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
             throw new NotImplementedException();
         }
@@ -579,27 +640,27 @@ namespace MinecraftLibrary
     //0x0D
     public class Packet_PlayerPosAndLook : Packet_Player
     {
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteByte(str, 0x0D);
-            WriteDouble(str, X);
-            WriteDouble(str, Y);
-            WriteDouble(str, Stance);
-            WriteDouble(str, Z);
-            WriteFloat(str, Yaw);
-            WriteFloat(str, Pitch);
-            WriteBool(str, OnGround);
+            Byte=(0x0D);
+            Double=(X);
+            Double=(Y);
+            Double=(Stance);
+            Double=(Z);
+            Float=(Yaw);
+            Float=(Pitch);
+            Bool=(OnGround);
         }
 
-        public override void Read(Stream str)
+        public override void Read()
         {
-            X = ReadDouble(str);
-            Stance = ReadDouble(str);
-            Y = ReadDouble(str);
-            Z = ReadDouble(str);
-            Yaw = ReadFloat(str);
-            Pitch = ReadFloat(str);
-            OnGround = ReadBool(str);
+            X = Double;
+            Stance = Double;
+            Y = Double;
+            Z = Double;
+            Yaw = Float;
+            Pitch = Float;
+            OnGround = Bool;
         }
     }
     //0x0E
@@ -611,17 +672,17 @@ namespace MinecraftLibrary
         public int Z { get; set; }
         public Face Face { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteByte(str, 0x0E);
-            WriteSByte(str, (sbyte)DigStatus);
-            WriteInt(str, X);
-            WriteByte(str, Y);
-            WriteInt(str, Z);
-            WriteByte(str, (byte)Face);
+            Byte=(0x0E);
+            SByte=((sbyte)DigStatus);
+            Int=(X);
+            Byte=(Y);
+            Int=(Z);
+            Byte=((byte)Face);
         }
 
-        public override void Read(Stream str)
+        public override void Read()
         {
             throw new NotImplementedException();
         }
@@ -635,17 +696,17 @@ namespace MinecraftLibrary
         public Face Direction { get; set; }
         public int Held { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteByte(str, 0x0F);
-            WriteInt(str, X);
-            WriteSByte(str, Y);
-            WriteInt(str, Z);
-            WriteSByte(str, (sbyte)Direction);
-            WriteInt(str, Held);
+            Byte=(0x0F);
+            Int=(X);
+            SByte=(Y);
+            Int=(Z);
+            SByte=((sbyte)Direction);
+            Int=(Held);
         }
 
-        public override void Read(Stream str)
+        public override void Read()
         {
             throw new NotImplementedException();
         }
@@ -654,13 +715,13 @@ namespace MinecraftLibrary
     public class Packet_HoldingChange : Packet
     {
         public short SlotID { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteByte(str, 0x0F);
-            WriteShort(str, SlotID);
+            Byte=(0x0F);
+            Short=(SlotID);
 
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
             throw new NotImplementedException();
         }
@@ -674,18 +735,18 @@ namespace MinecraftLibrary
         public sbyte Y { get; set; }
         public int Z { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
 
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            InBed = ReadSByte(str);
-            X = ReadInt(str);
-            Y = ReadSByte(str);
-            Z = ReadInt(str);
+            EID = Int;
+            InBed = SByte;
+            X = Int;
+            Y = SByte;
+            Z = Int;
         }
     }
     //0x12
@@ -695,16 +756,16 @@ namespace MinecraftLibrary
             EID { get; set; }
         public Animation animation { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteInt(str, EID);
-            WriteSByte(str, (sbyte)animation);
+            Int=(EID);
+            SByte=((sbyte)animation);
         }
 
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            animation = (Animation)ReadSByte(str);
+            EID = Int;
+            animation = (Animation)SByte;
         }
     }
     //0x13
@@ -713,16 +774,16 @@ namespace MinecraftLibrary
         public int EID { get; set; }
         public MobAction mobAction { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteInt(str, EID);
-            WriteSByte(str, (sbyte)mobAction);
+            Int=(EID);
+            SByte=((sbyte)mobAction);
         }
 
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            mobAction = (MobAction)ReadSByte(str);
+            EID = Int;
+            mobAction = (MobAction)SByte;
         }
     }
     //0x14
@@ -737,21 +798,21 @@ namespace MinecraftLibrary
         public Byte Pitch { get; set; }
         public short Item { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
 
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            Name = ReadString(str);
-            X = ReadInt(str);
-            Y = ReadInt(str);
-            Z = ReadInt(str);
-            Rotation = ReadByte(str);
-            Pitch = ReadByte(str);
-            Item = ReadShort(str);
+            EID = Int;
+            Name = String;
+            X = Int;
+            Y = Int;
+            Z = Int;
+            Rotation = Byte;
+            Pitch = Byte;
+            Item = Short;
         }
     }
     //0x15
@@ -768,23 +829,23 @@ namespace MinecraftLibrary
         public byte Pitch { get; set; }
         public byte Roll { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
 
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            Item = ReadShort(str);
-            Count = ReadByte(str);
-            Damage = ReadShort(str);
-            X = ReadInt(str);
-            Y = ReadInt(str);
-            Z = ReadInt(str);
-            Rotation = ReadByte(str);
-            Pitch = ReadByte(str);
-            Roll = ReadByte(str);
+            EID = Int;
+            Item = Short;
+            Count = Byte;
+            Damage = Short;
+            X = Int;
+            Y = Int;
+            Z = Int;
+            Rotation = Byte;
+            Pitch = Byte;
+            Roll = Byte;
         }
     }
     //0x16
@@ -792,15 +853,15 @@ namespace MinecraftLibrary
     {
         public int ItemEID { get; set; }
         public int PlayerEID { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
 
-        public override void Read(Stream str)
+        public override void Read()
         {
-            ItemEID = ReadInt(str);
-            PlayerEID = ReadInt(str);
+            ItemEID = Int;
+            PlayerEID = Int;
         }
     }
     //0x17
@@ -816,24 +877,24 @@ namespace MinecraftLibrary
         public short SpeedY { get; set; }
         public short SpeedZ { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
 
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            type = ReadByte(str);
-            X = ReadInt(str);
-            Y = ReadInt(str);
-            Z = ReadInt(str);
-            FbEID = ReadInt(str);
+            EID = Int;
+            type = Byte;
+            X = Int;
+            Y = Int;
+            Z = Int;
+            FbEID = Int;
             if (FbEID > 0)
             {
-                SpeedX = ReadShort(str);
-                SpeedY = ReadShort(str);
-                SpeedZ = ReadShort(str);
+                SpeedX = Short;
+                SpeedY = Short;
+                SpeedZ = Short;
             }
         }
     }
@@ -849,22 +910,23 @@ namespace MinecraftLibrary
         public byte Pitch { get; set; }
         public byte HeadYaw { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            type = ReadSByte(str);
-            X = ReadInt(str);
-            Y = ReadInt(str);
-            Z = ReadInt(str);
-            Yaw = ReadByte(str);
-            Pitch = ReadByte(str);
-            HeadYaw = ReadByte(str);
+            EID = Int;
+            type = SByte;
+            X = Int;
+            Y = Int;
+            Z = Int;
+            Yaw = Byte;
+            Pitch = Byte;
+            HeadYaw = Byte;
             byte xx;
-            xx = ReadByte(str);
+            xx = Byte;
+            var n=0f;
             while (xx != (byte)127)
             {
                 int index = xx & 0x1F; //Lower 5 bits
@@ -872,32 +934,32 @@ namespace MinecraftLibrary
                 switch (ty)
                 {
                     case 0:
-                        ReadSByte(str);
+                        n = SByte;
                         break;
                     case 1:
-                        ReadShort(str);
+                        n = Short;
                         break;
                     case 2:
-                        ReadInt(str);
+                        n = Int;
                         break;
                     case 3:
-                        ReadFloat(str);
+                        n = Float;
                         break;
                     case 4:
-                        ReadString(str);
+                        var nn = String;
                         break;
                     case 5:
-                        ReadShort(str);
-                        ReadSByte(str);
-                        ReadShort(str);
+                        n = Short;
+                        n = SByte;
+                        n = Short;
                         break;
                     case 6:
-                        ReadInt(str);
-                        ReadInt(str);
-                        ReadInt(str);
+                        n = Int;
+                        n = Int;
+                        n = Int;
                         break;
                 }
-                xx = ReadByte(str);
+                xx = Byte;
             }
         }
     }
@@ -910,18 +972,18 @@ namespace MinecraftLibrary
         public int Y { get; set; }
         public int Z { get; set; }
         public int Dir { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            Name = ReadString(str);
-            X = ReadInt(str);
-            Y = ReadInt(str);
-            Z = ReadInt(str);
-            Dir = ReadInt(str);
+            EID = Int;
+            Name = String;
+            X = Int;
+            Y = Int;
+            Z = Int;
+            Dir = Int;
         }
     }
     //0x1A
@@ -932,17 +994,17 @@ namespace MinecraftLibrary
         public int Y { get; set; }
         public int Z { get; set; }
         public short Count { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            X = ReadInt(str);
-            Y = ReadInt(str);
-            Z = ReadInt(str);
-            Count = ReadShort(str);
+            EID = Int;
+            X = Int;
+            Y = Int;
+            Z = Int;
+            Count = Short;
         }
     }
     //0x1C
@@ -952,42 +1014,42 @@ namespace MinecraftLibrary
         public short VelocityX { get; set; }
         public short VelocityY { get; set; }
         public short VelocityZ { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            VelocityX = ReadShort(str);
-            VelocityY = ReadShort(str);
-            VelocityZ = ReadShort(str);
+            EID = Int;
+            VelocityX = Short;
+            VelocityY = Short;
+            VelocityZ = Short;
         }
     }
     //0x1D
     public class Packet_DestroyEntity : Packet
     {
         public int EID { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
+            EID = Int;
         }
     }
     //0x1E
     public class Packet_Entity : Packet
     {
         public int EID { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
+            EID = Int;
         }
     }
     //0x1F
@@ -997,16 +1059,16 @@ namespace MinecraftLibrary
         public byte X { get; set; }
         public byte Y { get; set; }
         public byte Z { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            X = ReadByte(str);
-            Y = ReadByte(str);
-            Z = ReadByte(str);
+            EID = Int;
+            X = Byte;
+            Y = Byte;
+            Z = Byte;
         }
     }
     //0x20
@@ -1015,15 +1077,15 @@ namespace MinecraftLibrary
         public int EID { get; set; }
         public byte Yaw { get; set; }
         public byte Pitch { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            Yaw = ReadByte(str);
-            Pitch = ReadByte(str);
+            EID = Int;
+            Yaw = Byte;
+            Pitch = Byte;
         }
     }
     //0x21
@@ -1035,18 +1097,18 @@ namespace MinecraftLibrary
         public int Z { get; set; }
         public byte Yaw { get; set; }
         public byte Pitch { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            X = ReadByte(str);
-            Y = ReadByte(str);
-            Z = ReadByte(str);
-            Yaw = ReadByte(str);
-            Pitch = ReadByte(str);
+            EID = Int;
+            X = Byte;
+            Y = Byte;
+            Z = Byte;
+            Yaw = Byte;
+            Pitch = Byte;
         }
     }
     //0x22
@@ -1058,18 +1120,18 @@ namespace MinecraftLibrary
         public int Z { get; set; }
         public byte Yaw { get; set; }
         public byte Pitch { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            X = ReadInt(str);
-            Y = ReadInt(str);
-            Z = ReadInt(str);
-            Yaw = ReadByte(str);
-            Pitch = ReadByte(str);
+            EID = Int;
+            X = Int;
+            Y = Int;
+            Z = Int;
+            Yaw = Byte;
+            Pitch = Byte;
         }
     }
     //0x23
@@ -1077,14 +1139,14 @@ namespace MinecraftLibrary
     {
         public int EID { get; set; }
         public int HeadYaw { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            HeadYaw = ReadByte(str);
+            EID = Int;
+            HeadYaw = Byte;
         }
     }
     //0x26
@@ -1092,14 +1154,14 @@ namespace MinecraftLibrary
     {
         public int EID { get; set; }
         public EntityStatus Status { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            Status = (EntityStatus)ReadByte(str);
+            EID = Int;
+            Status = (EntityStatus)Byte;
         }
     }
     //0x27
@@ -1107,14 +1169,14 @@ namespace MinecraftLibrary
     {
         public int EID { get; set; }
         public int VehicleEID { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            VehicleEID = ReadInt(str);
+            EID = Int;
+            VehicleEID = Int;
         }
     }
     //0x28
@@ -1123,15 +1185,16 @@ namespace MinecraftLibrary
         // TODO: Add more variables (0x28 EntityMetadata)
         public int EID { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
+            EID = Int;
             byte xx;
-            xx = ReadByte(str);
+            xx = Byte;
+            var n = 0f;
             while (xx != (byte)127)
             {
                 int index = xx & 0x1F; //Lower 5 bits
@@ -1139,32 +1202,32 @@ namespace MinecraftLibrary
                 switch (ty)
                 {
                     case 0:
-                        ReadSByte(str);
+                        n = SByte;
                         break;
                     case 1:
-                        ReadShort(str);
+                        n = Short;
                         break;
                     case 2:
-                        ReadInt(str);
+                        n = Int;
                         break;
                     case 3:
-                        ReadFloat(str);
+                        n = Float;
                         break;
                     case 4:
-                        ReadString(str);
+                        var nn = String;
                         break;
                     case 5:
-                        ReadShort(str);
-                        ReadSByte(str);
-                        ReadShort(str);
+                        n = Short;
+                        n = SByte;
+                        n = Short;
                         break;
                     case 6:
-                        ReadInt(str);
-                        ReadInt(str);
-                        ReadInt(str);
+                        n = Int;
+                        n = Int;
+                        n = Int;
                         break;
                 }
-                xx = ReadByte(str);
+                xx = Byte;
             }
         }
     }
@@ -1175,16 +1238,16 @@ namespace MinecraftLibrary
         public byte EffectID { get; set; }
         public byte Amplifier { get; set; }
         public short Duration { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            EffectID = ReadByte(str);
-            Amplifier = ReadByte(str);
-            Duration = ReadShort(str);
+            EID = Int;
+            EffectID = Byte;
+            Amplifier = Byte;
+            Duration = Short;
         }
     }
     //0x2A
@@ -1192,14 +1255,14 @@ namespace MinecraftLibrary
     {
         public int EID { get; set; }
         public byte EffectID { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            EffectID = ReadByte(str);
+            EID = Int;
+            EffectID = Byte;
         }
     }
     //0x2B
@@ -1208,15 +1271,15 @@ namespace MinecraftLibrary
         public float XPBar { get; set; }
         public short Level { get; set; }
         public short TotalXP { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            XPBar = ReadFloat(str);
-            Level = ReadShort(str);
-            TotalXP = ReadShort(str);
+            XPBar = Float;
+            Level = Short;
+            TotalXP = Short;
         }
     }
     //0x32
@@ -1225,15 +1288,15 @@ namespace MinecraftLibrary
         public int X { get; set; }
         public int Z { get; set; }
         public bool Mode { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            X = ReadInt(str);
-            Z = ReadInt(str);
-            Mode = ReadBool(str);
+            X = Int;
+            Z = Int;
+            Mode = Bool;
         }
     }
     //0x33  //!
@@ -1261,20 +1324,20 @@ namespace MinecraftLibrary
                 RawData = value;
             }
         }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
             //Some variables missing
-            X = ReadInt(str);
-            Z = ReadInt(str);
-            GroundUC = ReadBool(str);
-            PrimaryBM = ReadShort(str);
-            AddBM = ReadShort(str);
-            Size = ReadInt(str);
-            ReadInt(str);
+            X = Int;
+            Z = Int;
+            GroundUC = Bool;
+            PrimaryBM = Short;
+            AddBM = Short;
+            Size = Int;
+            var n = Int;
             Data = new byte[Size];
             str.Read(Data, 0, Size);
         }
@@ -1287,19 +1350,19 @@ namespace MinecraftLibrary
         public short Count { get; set; }
         public int[] Rawdata { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            X = ReadInt(str);
-            Z = ReadInt(str);
-            int count = ReadShort(str);
+            X = Int;
+            Z = Int;
+            int count = Short;
             Rawdata = new int[count];
-            int ds = ReadInt(str);
+            int ds = Int;
             for (int i = 0; i < count; i++)
-                Rawdata[i] = ReadInt(str);
+                Rawdata[i] = Int;
         }
     }
     //0x35
@@ -1310,17 +1373,17 @@ namespace MinecraftLibrary
         public int Z { get; set; }
         public byte Type { get; set; }
         public byte Metadata { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            X = ReadInt(str);
-            Y = ReadByte(str);
-            Z = ReadInt(str);
-            Type = ReadByte(str);
-            Metadata = ReadByte(str);
+            X = Int;
+            Y = Byte;
+            Z = Int;
+            Type = Byte;
+            Metadata = Byte;
         }
     }
     //0x36?
@@ -1331,17 +1394,17 @@ namespace MinecraftLibrary
         public int Z { get; set; }
         public byte Byte1 { get; set; }
         public byte Byte2 { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            X = ReadInt(str);
-            Y = ReadShort(str);
-            Z = ReadInt(str);
-            Byte1 = ReadByte(str);
-            Byte2 = ReadByte(str);
+            X = Int;
+            Y = Short;
+            Z = Int;
+            Byte1 = Byte;
+            Byte2 = Byte;
         }
     }
     //0x3C
@@ -1352,27 +1415,27 @@ namespace MinecraftLibrary
         public double Z { get; set; }
         public float Radius { get; set; }
         public int RecordCount { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
             // TODO: Add Records (0x3C Explosion)
-            X = ReadDouble(str);
-            Y = ReadDouble(str);
-            Z = ReadDouble(str);
-            Radius = ReadFloat(str);
-            RecordCount = ReadInt(str);
+            X = Double;
+            Y = Double;
+            Z = Double;
+            Radius = Float;
+            RecordCount = Int;
+            var n = 0;
             for (int i = 0; i < RecordCount; i++)
             {
-                ReadByte(str);
-                ReadByte(str);
-                ReadByte(str);
+                n = Byte;
+                n = Byte;
+                n = Byte;
             }
         }
     }
-
     //0x3D
     public class Packet_SoundEffect : Packet
     {
@@ -1381,31 +1444,31 @@ namespace MinecraftLibrary
         public byte Y { get; set; }
         public int Z { get; set; }
         public int Data { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EffectID = ReadInt(str);
-            X = ReadInt(str);
-            Y = ReadByte(str);
-            Z = ReadInt(str);
-            Data = ReadInt(str);
+            EffectID = Int;
+            X = Int;
+            Y = Byte;
+            Z = Int;
+            Data = Int;
         }
     }
     //0x3E?
     public class Packet_NewOrInvalidState : Packet
     {
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
             // TODO: Add variables (0x3E? NewOrInvalidState)
-            ReadSByte(str);
-            ReadSByte(str);
+            var n1=SByte;
+            var n2=SByte;
         }
     }
     //0x46
@@ -1413,17 +1476,16 @@ namespace MinecraftLibrary
     {
         public ChangeGameStateReason Reason { get; set; }
         public byte Gamemode { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            Reason = (ChangeGameStateReason)ReadByte(str);
-            Gamemode = ReadByte(str);
+            Reason = (ChangeGameStateReason)Byte;
+            Gamemode = Byte;
         }
     }
-
     //0x47
     public class Packet_Thunder : Packet
     {
@@ -1432,17 +1494,17 @@ namespace MinecraftLibrary
         public int X { get; set; }
         public int Y { get; set; }
         public int Z { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            EID = ReadInt(str);
-            isLightningBolt = ReadByte(str); 
-            X = ReadInt(str);
-            Y = ReadInt(str);
-            Z = ReadInt(str);
+            EID = Int;
+            isLightningBolt = Byte; 
+            X = Int;
+            Y = Int;
+            Z = Int;
         }
     }
     //0x64
@@ -1452,29 +1514,29 @@ namespace MinecraftLibrary
         public byte InvType { get; set; }
         public string WndTitle { get; set; }
         public byte SlotCount { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            WndID = ReadByte(str);
-            InvType = ReadByte(str);
-            WndTitle = ReadString(str);
-            SlotCount = ReadByte(str);
+            WndID = Byte;
+            InvType = Byte;
+            WndTitle = String;
+            SlotCount = Byte;
         }
     }
     //0x65
     public class Packet_CloseWnd : Packet
     {
         public byte WndID { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            WndID = ReadByte(str);
+            WndID = Byte;
         }
     }
     //0x66
@@ -1485,15 +1547,15 @@ namespace MinecraftLibrary
         public sbyte RightClick { get; set; }
         public short ActionNumber { get; set; }
         public bool IsShiftPressed { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteSByte(str, WndID);
-            WriteShort(str, Slot);
-            WriteSByte(str, RightClick);
-            WriteShort(str, ActionNumber);
-            WriteBool(str, IsShiftPressed);
+            SByte=(WndID);
+            Short=(Slot);
+            SByte=(RightClick);
+            Short=(ActionNumber);
+            Bool=(IsShiftPressed);
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
             throw new NotImplementedException();
         }
@@ -1503,16 +1565,16 @@ namespace MinecraftLibrary
     {
         sbyte WndID { get; set; }
         short Slot { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
             // TODO: Add slotData variable (0x67 SetSlot)
-            WndID = ReadSByte(str);
-            Slot = ReadShort(str);
-            ReadSlotData(str);
+            WndID = SByte;
+            Slot = Short;
+            ReadSlotData();
         }
     }
     //0x68
@@ -1520,18 +1582,18 @@ namespace MinecraftLibrary
     {
         byte WndID { get; set; }
         short Count { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
             // TODO: Add slotdata array (0x68 WndItems)
-            WndID = ReadByte(str);
-            Count = ReadShort(str);
+            WndID = Byte;
+            Count = Short;
             for (int i = 0; i < Count; i++)
             {
-                ReadSlotData(str);
+                ReadSlotData();
             }
         }
     }
@@ -1541,15 +1603,15 @@ namespace MinecraftLibrary
         byte WndID { get; set; }
         short Property { get; set; }
         short Value { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            WndID = ReadByte(str);
-            Property = ReadShort(str);
-            Value = ReadShort(str);
+            WndID = Byte;
+            Property = Short;
+            Value = Short;
         }
     }
     //0x6A
@@ -1558,17 +1620,17 @@ namespace MinecraftLibrary
         public sbyte WndID { get; set; }
         public short ActionNumber { get; set; }
         public bool Accepted { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteSByte(str, WndID);
-            WriteShort(str, ActionNumber);
-            WriteBool(str, Accepted);
+            SByte=(WndID);
+            Short=(ActionNumber);
+            Bool=(Accepted);
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            WndID = ReadSByte(str);
-            ActionNumber = ReadShort(str);
-            Accepted = ReadBool(str);
+            WndID = SByte;
+            ActionNumber = Short;
+            Accepted = Bool;
         }
     }
     //0x6B
@@ -1576,14 +1638,14 @@ namespace MinecraftLibrary
     {
         public short Slot { get; set; }
         //TODO: Implement Write 0x6B CreativeInventoryAction (Needs Slot data object to be implemented first)
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            Slot = ReadShort(str);
-            ReadSlotData(str);
+            Slot = Short;
+            ReadSlotData();
         }
     }
     //0x6C
@@ -1591,12 +1653,12 @@ namespace MinecraftLibrary
     {
         public sbyte WndID { get; set; }
         public sbyte Enchantment { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteSByte(str, WndID);
-            WriteSByte(str, Enchantment);
+            SByte=(WndID);
+            SByte=(Enchantment);
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
             throw new NotImplementedException();
         }
@@ -1612,19 +1674,19 @@ namespace MinecraftLibrary
         public string Text3 { get; set; }
         public string Text4 { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            X = ReadInt(str);
-            Y = ReadShort(str);
-            Z = ReadInt(str);
-            Text1 = ReadString(str);
-            Text2 = ReadString(str);
-            Text3 = ReadString(str);
-            Text4 = ReadString(str);
+            X = Int;
+            Y = Short;
+            Z = Int;
+            Text1 = String;
+            Text2 = String;
+            Text3 = String;
+            Text4 = String;
         }
     }
     //0x83
@@ -1635,16 +1697,16 @@ namespace MinecraftLibrary
         public byte TextLength { get; set; }
         public byte[] Text { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            Type = ReadShort(str);
-            ID = ReadShort(str);
-            TextLength = ReadByte(str);
-            Text = ReadByteArray(str, TextLength);
+            Type = Short;
+            ID = Short;
+            TextLength = Byte;
+            Text = ReadByteArray( TextLength);
         }
     }
     //0x84
@@ -1654,22 +1716,21 @@ namespace MinecraftLibrary
         public short Y { get; set; }
         public int Z { get; set; }
         public byte Action { get; set; }
-        public int Custom1 { get; set; }
-        public int Custom2 { get; set; }
-        public int Custom3 { get; set; }
-        public override void Write(Stream str)
+        public int DataLength { get { return NBTData.Length; } set { NBTData=new byte[value];} }
+        public byte[] NBTData { get; set; }
+
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            X = ReadInt(str);
-            Y = ReadShort(str);
-            Z = ReadInt(str);
-            Action = ReadByte(str);
-            Custom1 = ReadInt(str);
-            Custom2 = ReadInt(str);
-            Custom3 = ReadInt(str);
+            X = Int;
+            Y = Short;
+            Z = Int;
+            Action = Byte;
+            DataLength=Short;
+            NBTData = ReadByteArray( DataLength);
         }
     }
     //0xC8
@@ -1677,14 +1738,14 @@ namespace MinecraftLibrary
     {
         public int StatisticID { get; set; }
         public byte Amount { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            StatisticID = ReadInt(str);
-            Amount = ReadByte(str);
+            StatisticID = Int;
+            Amount = Byte;
         }
     }
     //0xC9
@@ -1694,34 +1755,46 @@ namespace MinecraftLibrary
         public bool Online { get; set; }
         public short Ping { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            Name = ReadString(str);
-            Online = ReadBool(str);
-            Ping = ReadShort(str);
+            Name = String;
+            Online = Bool;
+            Ping = Short;
         }
     }
     //0xCA
     public class Packet_PlayerAbilities : Packet
     {
-        public bool Invulnerability { get; set; }
-        public bool IsFlying { get; set; }
-        public bool CanFly { get; set; }
-        public bool InstantDestroy { get; set; }
-        public override void Write(Stream str)
+        public byte Flags { get; set; }
+        public byte FlySpeed { get; set; }
+        public byte WalkSpeed { get; set; }
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            Invulnerability = ReadBool(str);
-            IsFlying = ReadBool(str);
-            CanFly = ReadBool(str);
-            InstantDestroy = ReadBool(str);
+            Flags = Byte;
+            FlySpeed = Byte;
+            WalkSpeed = Byte;
+        }
+    }
+    //0xCD
+    public class Packet_ClientStatus : Packet
+    {
+        public byte Payload { get; set; }
+        public override void Write()
+        {
+            Byte=(0xCD);
+            Byte=(Payload);
+        }
+        public override void Read()
+        {
+            Payload = Byte;
         }
     }
     //0xFA
@@ -1730,15 +1803,61 @@ namespace MinecraftLibrary
         string Channel { get; set; }
         short Length { get; set; }
         byte[] Data { get; set; }
-        public override void Write(Stream str)
+        public override void Write()
         {
             throw new NotImplementedException();
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            Channel = ReadString(str);
-            Length = ReadShort(str);
-            Data = ReadByteArray(str, Length);
+            Channel = String;
+            Length = Short;
+            Data = ReadByteArray( Length);
+        }
+    }
+    //0xFC
+    public class Packet_EncryptionResponse : Packet
+    {
+        public short KeyLength { get { return (short)Key.Length; } set { Key = new byte[value]; } }
+        public byte[] Key { get; set; }
+        public short TokenLength { get { return (short)Token.Length; } set { Token = new byte[value]; } }
+        public byte[] Token { get; set; }
+
+        public override void Write()
+        {
+            Byte=(0xFC);
+            WriteShort(KeyLength);
+            WriteByteArray(Key,KeyLength);
+            Short=(TokenLength);
+            WriteByteArray( Token, TokenLength);
+        }
+        public override void Read()
+        {
+            KeyLength = Short;
+            Key = ReadByteArray( KeyLength);
+            TokenLength = Short;
+            Token = ReadByteArray( TokenLength);
+        }
+    }
+    //0xFD
+    public class Packet_EncryptionRequest : Packet
+    {
+        public string ServerID { get; set; }
+        public short KeyLength { get; set; }
+        public byte[] Key { get; set; }
+        public short TokenLength { get; set; }
+        public byte[] Token { get; set; }
+
+        public override void Write()
+        {
+            throw new NotImplementedException();
+        }
+        public override void Read()
+        {
+            ServerID = String;
+            KeyLength = Short;
+            Key = ReadByteArray( KeyLength);
+            TokenLength = Short;
+            Token = ReadByteArray( TokenLength);
         }
     }
     // TODO: Implement 0xFE Server List Ping (Basically get server info)
@@ -1747,13 +1866,13 @@ namespace MinecraftLibrary
     {
         public string Reason { get; set; }
 
-        public override void Write(Stream str)
+        public override void Write()
         {
-            WriteString(str, Reason);
+            String=(Reason);
         }
-        public override void Read(Stream str)
+        public override void Read()
         {
-            Reason = ReadString(str);
+            Reason = String;
         }
     }
 }

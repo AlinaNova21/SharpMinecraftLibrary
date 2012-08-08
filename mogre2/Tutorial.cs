@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Yaml;
 using MOIS;
+using System.IO;
 
 
 
@@ -15,6 +16,9 @@ namespace Mogre.Tutorials
 {
     class Tutorial : BaseApplication
     {
+        static FileStream debugFile=new FileStream("debug.log",FileMode.Create);
+        static StreamWriter debugStr=new StreamWriter(debugFile);
+
         static void writeDebug(string txt, bool show = false)
         {
             Debug.WriteLine(txt);
@@ -23,52 +27,54 @@ namespace Mogre.Tutorials
         }
         static void wl(string txt)
         {
+            debugStr.WriteLine(txt);
             Console.WriteLine(txt);
             Debug.WriteLine(txt);
         }
         static void w(string txt)
         {
+            debugStr.Write(txt);
             Console.Write(txt);
             Debug.Write(txt);
         }
         public void packetHandler(object sender,Client.packetReceivedEventArgs e)
         {
-            switch (e.ID)
+            switch ((byte)e.Type)
             {
                 case 0x0D:
                     Packet_PlayerPosAndLook p = (Packet_PlayerPosAndLook)e.packet;
-                    moveCamera((float)p.x, (float)p.y+3f, (float)p.z);
+                    moveCamera((float)p.X, (float)p.Y+3f, (float)p.Z);
                     break;
                 case 8:
                     Packet_UpdateHealth h = (Packet_UpdateHealth)e.packet;
-                    Console.WriteLine("Health Update: {0} {1}", h.health, h.food);
-                    if (h.health <= 0)
+                    Console.WriteLine("Health Update: {0} {1}", h.Health, h.Food);
+                    if (h.Health <= 0)
                     {
                         Packet_Respawn r = new Packet_Respawn();
-                        r.dim = 0;
-                        r.difficulty = 1;
-                        r.creative = 0;
-                        r.levelType = "default";
-                        r.worldHeight = 256;
+                        r.Dimension = 0;
+                        r.Difficulty = 1;
+                        r.Gamemode = 0;
+                        r.LevelType = "default";
+                        r.WorldHeight = 256;
                         mc.sendPacket(r);
                     }
                     break;
                 case 0x32:
                     Packet_PreChunk c = (Packet_PreChunk)e.packet;
-                    if (c.mode)
+                    if (c.Mode)
                     {
-                        if (!chunks.ContainsKey(c.x + "_" + c.z))
-                            chunks.Add(c.x + "_" + c.z, new Chunk());
+                        if (!chunks.ContainsKey(c.X + "_" + c.Z))
+                            chunks.Add(c.X + "_" + c.Z, new Chunk());
                     }
                     else
-                        if (chunks.ContainsKey(c.x + "_" + c.z))
-                            chunks.Remove(c.x + "_" + c.z);
+                        if (chunks.ContainsKey(c.X + "_" + c.Z))
+                            chunks.Remove(c.X + "_" + c.Z);
                     break;
                 case 0x33:
                     Packet_MapChunk mch = (Packet_MapChunk)e.packet;
                     int cx, cz;
-                    cx = mch.x;
-                    cz = mch.z;
+                    cx = mch.X;
+                    cz = mch.Z;
                     string key = cx + "_" + cz;
                     //output("Chunk: " + key, true);
                     if (!chunks.ContainsKey(key))
@@ -81,8 +87,8 @@ namespace Mogre.Tutorials
                     break;
                 case 0x34:
                     Packet_MultiBlockChange mb = (Packet_MultiBlockChange)e.packet;
-                    chunks[mb.x + "_" + mb.z].update(mb);
-                    QueueChunk(chunks[mb.x + "_" + mb.z]);
+                    chunks[mb.X + "_" + mb.Z].update(mb);
+                    QueueChunk(chunks[mb.X + "_" + mb.Z]);
                     break;
             }
         }
@@ -143,27 +149,28 @@ namespace Mogre.Tutorials
             mc.output2 = writeDebug;
             //mc.connect("127.0.0.1", 25564); //SMPROXY
             //mc.connect("127.0.0.1", 25565); //LOCAL
-            mc.connect("37.59.228.108", 25565); //mcags.com
+            mc.connect("192.168.0.119", 25565); //LOCAL
+            //mc.connect("37.59.228.108", 25565); //mcags.com
 
             
             string tmp = "";
-            while (!(tmp == ":exit" || tmp == ":quit"))
+            while (!(tmp == "/exit" || tmp == "/quit"))
             {
                 tmp = Console.ReadLine();
-                if (tmp.StartsWith(":"))
+                if (tmp.StartsWith("/"))
                 {
-                    if (tmp == ":respawn")
+                    if (tmp == "/respawn")
                     {
                         Packet_Respawn r = new Packet_Respawn();
-                        r.dim = 0;
-                        r.difficulty = 1;
-                        r.creative = 0;
-                        r.levelType = "default";
-                        r.worldHeight = 256;
+                        r.Dimension = 0;
+                        r.Difficulty = 1;
+                        r.Gamemode = 0;
+                        r.LevelType = "default";
+                        r.WorldHeight = 256;
                         mc.sendPacket(r);
                     }
                 }else{
-                    mc.sendPacket(new Packet_Chat() {dataString = tmp});
+                    mc.sendPacket(new Packet_Chat() { Message=tmp});
                 }
             }
             mc.disconnect();
@@ -230,12 +237,12 @@ namespace Mogre.Tutorials
                 mc.yaw = 180 + 360 - oldCamOr.Yaw.ValueDegrees;
                 mc.sendPacket(new Packet_PlayerPosAndLook()
                 {
-                    x = mc.x,
-                    y = mc.y,//-2f,
-                    z = mc.z,
-                    pitch = mc.pitch,//mCamera.Orientation.Pitch.ValueDegrees,
-                    yaw = mc.yaw,
-                    stance = mc.stance
+                    X = mc.x,
+                    Y = mc.y,//-2f,
+                    Z = mc.z,
+                    Pitch = mc.pitch,//mCamera.Orientation.Pitch.ValueDegrees,
+                    Yaw = mc.yaw,
+                    Stance = mc.stance,
                 });
             }
             return true;

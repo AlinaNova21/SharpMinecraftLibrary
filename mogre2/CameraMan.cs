@@ -111,12 +111,12 @@ namespace Mogre.Tutorials
             mc.yaw = 180 + 360 - mCamera.Orientation.Yaw.ValueDegrees;
             mc.sendPacket(new Packet_PlayerPosAndLook()
             {
-                x = mc.x,
-                y = mc.y,//-2f,
-                z = mc.z,
-                pitch = mc.pitch,//mCamera.Orientation.Pitch.ValueDegrees,
-                yaw = mc.yaw,
-                stance = mc.stance
+                X = mc.x,
+                Y = mc.y,//-2f,
+                Z = mc.z,
+                Pitch = mc.pitch,//mCamera.Orientation.Pitch.ValueDegrees,
+                Yaw = mc.yaw,
+                Stance = mc.stance
             });
         }
 

@@ -4,3 +4,7 @@ C:\programming\projects\NET\sharpMinecraftLibrary\Mogre\bin\Release\Mogre.dll
 C:\programming\projects\NET\sharpMinecraftLibrary\Mogre\obj\x86\Release\Mogre.csprojResolveAssemblyReference.cache
 C:\programming\projects\NET\sharpMinecraftLibrary\Mogre\obj\x86\Release\Mogre.exe
 C:\programming\projects\NET\sharpMinecraftLibrary\Mogre\obj\x86\Release\Mogre.pdb
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\Mogre\bin\Release\Mogre.pdb
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\Mogre\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\Mogre\obj\x86\Release\Mogre.exe
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\Mogre\obj\x86\Release\Mogre.pdb

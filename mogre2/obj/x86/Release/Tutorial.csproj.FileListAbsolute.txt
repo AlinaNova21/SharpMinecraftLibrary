@@ -22,3 +22,15 @@ C:\Users\Wouter Gerarts\Documents\GitHub\SharpMinecraftLibrary\mogre2\bin\Releas
 C:\Users\Wouter Gerarts\Documents\GitHub\SharpMinecraftLibrary\mogre2\bin\Release\YamlSerializer.dll
 C:\Users\Wouter Gerarts\Documents\GitHub\SharpMinecraftLibrary\mogre2\bin\Release\MinecraftLibrary.pdb
 C:\Users\Wouter Gerarts\Documents\GitHub\SharpMinecraftLibrary\mogre2\obj\x86\Release\Tutorial.csprojResolveAssemblyReference.cache
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\mogre2\bin\Release\MinecraftClient.exe.config
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\mogre2\obj\x86\Release\MinecraftClient.exe
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\mogre2\obj\x86\Release\MinecraftClient.pdb
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\mogre2\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\mogre2\bin\Release\MinecraftClient.exe
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\mogre2\bin\Release\MinecraftClient.pdb
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\mogre2\bin\Release\MinecraftLibrary.dll
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\mogre2\bin\Release\Mogre.dll
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\mogre2\bin\Release\Mogre.TutorialFramework.dll
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\mogre2\bin\Release\MOIS.dll
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\mogre2\bin\Release\YamlSerializer.dll
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\mogre2\bin\Release\MinecraftLibrary.pdb

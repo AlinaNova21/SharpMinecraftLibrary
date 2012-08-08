@@ -7,12 +7,15 @@ using System.Net.Sockets;
 using System.Threading;
 using System.IO;
 using System.Drawing;
+using System.Security.Cryptography;
+using CraftBotLib.Networking;
+using CraftBotLib.Networking.ASN1;
 
 namespace MinecraftLibrary
 {
     public class Client
     {
-        const int Protocol = 29;
+        const int Protocol = 39; //1.3.1!
         const int LauncherVersion = 13;
         public double x = 0;
         public double y = 0;
@@ -27,6 +30,7 @@ namespace MinecraftLibrary
         bool loggedin = false;
         string sessionid = "";
         NetworkStream str;
+        Stream NetStream;
         TcpClient client = new TcpClient();
         Queue<Packet> packets = new Queue<Packet>();
         Queue<byte> dataIn = new Queue<byte>();
@@ -82,12 +86,14 @@ namespace MinecraftLibrary
 
         void packetHandler()
         {
-            bool debug = false;
+            bool debug = true;
             byte[] tmp = new byte[1];
             Packet packet;
-            Stream str = new blockingStream(client.GetStream(), debug);
+            NetStream = new blockingStream(client.GetStream(), debug);
+            Stream str = NetStream;
             while (client.Connected)
             {
+                str = NetStream;
                 Packet pack = null;
                 bool p = false;
                 lock (packets)
@@ -98,13 +104,23 @@ namespace MinecraftLibrary
                 if (p)
                 {
                     MemoryStream tmps = new MemoryStream();
-                    pack.Write(tmps);
+                    pack.Stream = tmps;
+                    pack.Write();
                     tmps.WriteTo(str);
+                    if (debug)
+                    {
+                        tmps.Seek(0, SeekOrigin.Begin);
+                        tmps.Read(tmp, 0, 1);
+                        output("C->S "+BitConverter.ToString(tmp, 0, 1), true);
+                    }
                     tmps.Close();
                     str.Flush();
                 }
                 packet = null;
+                tmp = new byte[1];
                 str.Read(tmp, 0, 1);
+                if (debug)
+                    output("S->C "+BitConverter.ToString(tmp,0,1),true);
                 if (packet == null && customPackets.ContainsKey((PacketType)tmp[0]))
                 {
                     packet = (Packet)customPackets[(PacketType)tmp[0]].GetConstructor(Type.EmptyTypes).Invoke(null);
@@ -113,7 +129,8 @@ namespace MinecraftLibrary
                 {
                     if (debug)
                         output("Packet: " + packet.GetType().ToString().Split('_')[1]);
-                    packet.Read(str);
+                    packet.Stream = str;
+                    packet.Read();
                     packetReceived(this, new packetReceivedEventArgs(packet, (int)tmp[0]));
                 }
                 else
@@ -205,7 +222,10 @@ namespace MinecraftLibrary
             registerPacket(PacketType.IncStatistic, typeof(Packet_IncStatistic));
             registerPacket(PacketType.PlayerListItem, typeof(Packet_PlayerListItem));
             registerPacket(PacketType.PlayerAbilities, typeof(Packet_PlayerAbilities));
+            registerPacket(PacketType.ClientStatus, typeof(Packet_ClientStatus));
             registerPacket(PacketType.PluginMessage, typeof(Packet_PluginMessage));
+            registerPacket(PacketType.EncryptionResponse, typeof(Packet_EncryptionResponse));
+            registerPacket(PacketType.EncryptionRequest, typeof(Packet_EncryptionRequest));
             //registerPacket(PacketType.ServerListPing, typeof(Packet_ServerListPing));
             registerPacket(PacketType.Kick, typeof(Packet_Kick));
 
@@ -227,8 +247,11 @@ namespace MinecraftLibrary
             packetHandlerThread.Start();
 
             Packet_Handshake packet = new Packet_Handshake();
+            packet.ProtocolVersion = Protocol;
             packet.Username = name;
-            packet.Host = address + ":" + port;
+            packet.Host = address;
+            packet.Port = port;
+
             packets.Enqueue(packet);
         }
 
@@ -251,7 +274,14 @@ namespace MinecraftLibrary
         {
             packets.Enqueue(new Packet_KeepAlive() { ID = 0 });
         }
-
+        struct Server
+        {
+            public string ServerID;
+            public byte[] PublicKey;
+            public byte[] PrivateKey;
+            public byte[] Token;
+        }
+        Server server;
         public void onPacketReceived(object sender, packetReceivedEventArgs e)
         {
             switch (e.Type)
@@ -266,10 +296,30 @@ namespace MinecraftLibrary
                     packetSenderThread.Name = "PacketSender";
                     packetSenderThread.Start();
                     break;
-                case PacketType.Handshake:
-                    output("Beginning Login...", true);
-                    string serverid = ((Packet_Handshake)e.packet).ServerID;
-                    packets.Enqueue(new Packet_Login() { Username = name, ProtocolVersion = Protocol, ServerID = serverid, SessionID = sessionid });
+                case PacketType.ClientStatus:
+                    output("-"+((Packet_ClientStatus)e.packet).Payload.ToString());
+                    break;
+                case PacketType.EncryptionRequest:
+                    output("Negotiating Encryption...", true);
+                    Packet_EncryptionRequest enc = (Packet_EncryptionRequest)e.packet;
+                    server = new Server();
+                    server.ServerID = enc.ServerID;
+                    server.PublicKey = enc.Key;
+                    server.PrivateKey = GenerateKey();
+                    server.Token = enc.Token;
+                    
+                    packets.Enqueue(new Packet_EncryptionResponse() {
+                        Key=RSAEncrypt(server.PrivateKey,server.PublicKey),
+                        Token = RSAEncrypt(server.Token, server.PublicKey)
+                    });
+                    break;
+                case PacketType.EncryptionResponse:
+                    output("Encryption ready!", true);
+                    //NetStream = new AesStream(NetStream, server.PrivateKey);
+                    //NetStream = new blockingStream(new AesStream(client.GetStream(), server.PrivateKey),false);
+                    NetStream = new AesStream(client.GetStream(), server.PrivateKey);
+                    packets.Enqueue(new Packet_ClientStatus() { Payload = 0 });
+                    //packets.Enqueue(new Packet_Login() { Username = name, ProtocolVersion = Protocol, ServerID = server.ServerID, SessionID = sessionid });
                     break;
                 case PacketType.Chat:
                     Dictionary<char, ConsoleColor> cc = new Dictionary<char, ConsoleColor>();
@@ -345,6 +395,34 @@ namespace MinecraftLibrary
                 customPackets.Add(id, packet);
             }
         }
+
+        public static byte[] GenerateKey()
+        {
+            RijndaelManaged rijndaelCipher = new RijndaelManaged();
+            rijndaelCipher.KeySize = 128;
+            rijndaelCipher.GenerateKey();
+
+            return rijndaelCipher.Key;
+        }
+
+        public static byte[] RSAEncrypt(byte[] data, byte[] key)
+        {
+            AsnKeyParser keyParser = new AsnKeyParser(key);
+            RSAParameters publicKey = keyParser.ParseRSAPublicKey();
+
+            CspParameters csp = new CspParameters();
+
+            csp.ProviderType = 1;
+
+            csp.KeyNumber = 1;
+
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(csp);
+            rsa.PersistKeyInCsp = false;
+            rsa.ImportParameters(publicKey);
+            byte[] enc = rsa.Encrypt(data, false);
+            rsa.Clear();
+            return enc;
+        }
     }
 
     public class blockingStream : Stream
@@ -413,6 +491,8 @@ namespace MinecraftLibrary
 
         public override long Seek(long offset, SeekOrigin origin)
         {
+            if(!_str.CanSeek)
+                throw new NotSupportedException();
             return _str.Seek(offset, origin);
         }
 

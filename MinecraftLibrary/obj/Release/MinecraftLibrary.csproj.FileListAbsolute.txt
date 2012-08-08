@@ -13,3 +13,8 @@ C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftLibrary\bin\Rele
 C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.csprojResolveAssemblyReference.cache
 C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.dll
 C:\Users\Sepehr\Documents\GitHub\SharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.pdb
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftLibrary\bin\Release\MinecraftLibrary.dll
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftLibrary\bin\Release\MinecraftLibrary.pdb
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftLibrary\obj\Release\ResolveAssemblyReference.cache
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.dll
+C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.pdb
