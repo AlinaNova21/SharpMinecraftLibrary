@@ -50,3 +50,12 @@ C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\MinecraftClient\obj\x86\Releas
 G:\github\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.exe
 G:\github\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.xml
 G:\github\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.pdb
+G:\github\SharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftClient.exe
+G:\github\SharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftClient.pdb
+G:\github\SharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftClient.xml
+G:\github\SharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftLibrary.dll
+G:\github\SharpMinecraftLibrary\MinecraftClient\bin\Release\MinecraftLibrary.pdb
+G:\github\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.vbprojResolveAssemblyReference.cache
+G:\github\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.Form1.resources
+G:\github\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.Resources.resources
+G:\github\SharpMinecraftLibrary\MinecraftClient\obj\x86\Release\MinecraftClient.vbproj.GenerateResource.Cache

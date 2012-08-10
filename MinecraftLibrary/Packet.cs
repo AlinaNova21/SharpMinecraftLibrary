@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using Ionic.Zlib;
 using System.Net;
+using Craft.Net.Server;
 
 namespace MinecraftLibrary
 {
@@ -54,6 +55,9 @@ namespace MinecraftLibrary
         MultiBlockChange = 0x34,
         BlockChange = 0x35,
         BlockAction = 0x36,
+        BlockBreakAnimation = 0x37,
+        MapChunkBulk = 0x38,
+        NamedSoundEffect = 0x3E,
         Explosion = 0x3C,
         SoundEffect = 0x3D,
         NewOrInvalidState = 0x46,
@@ -72,6 +76,8 @@ namespace MinecraftLibrary
         IncStatistic = 0xC8,
         PlayerListItem = 0xC9,
         PlayerAbilities = 0xCA,
+        TabComplete = 0xCB,
+        LocaleandViewDistance = 0xCC,
         ClientStatus = 0xCD,
         PluginMessage = 0xFA,
         EncryptionResponse = 0xFC,
@@ -273,7 +279,7 @@ namespace MinecraftLibrary
         }
         protected void ReadSlotData()
         {
-            short[] enchantable = {
+            /* short[] enchantable = {
                 0x103, //#Flint and steel
                 0x105, //#Bow
                 0x15A, //#Fishing rod
@@ -294,21 +300,25 @@ namespace MinecraftLibrary
                 0x132, 0x133, 0x134, 0x135, //#IRON
                 0x136, 0x137, 0x138, 0x139, //#DIAMOND
                 0x13A, 0x13B, 0x13C, 0x14D  //#GOLD
-            };
+            }; 
             short itemID = Short;
             if (itemID != -1)
             {
                 sbyte cnt = SByte;
                 short Damage = Short;
-                if (enchantable.Contains(itemID))
-                {
+                //if (enchantable.Contains(itemID))
+                //{
                     short tmp = Short;
                     if (tmp != -1)
                     {
                         ReadSTUB( tmp);
                     }
-                }
-            }
+                //}
+             }
+            */
+         Slot slot=new Slot();
+        Slot.ReadSlot(str);
+        
         }
 
         protected Stream str;
@@ -637,7 +647,8 @@ namespace MinecraftLibrary
             throw new NotImplementedException();
         }
     }
-<    public class Packet_PlayerPosAndLook : Packet_Player
+    //0x0D
+    public class Packet_PlayerPosAndLook : Packet_Player
     {
         public override void Write()
         {
@@ -694,6 +705,9 @@ namespace MinecraftLibrary
         public int Z { get; set; }
         public Face Direction { get; set; }
         public int Held { get; set; }
+        public byte curX { get; set; }
+        public byte curY { get; set; }
+        public byte curZ { get; set; }
 
         public override void Write()
         {
@@ -703,6 +717,9 @@ namespace MinecraftLibrary
             Int=(Z);
             SByte=((sbyte)Direction);
             Int=(Held);
+            Byte = curX;
+            Byte = curY;
+            Byte = curZ;
         }
 
         public override void Read()
@@ -796,7 +813,6 @@ namespace MinecraftLibrary
         public Byte Rotation { get; set; }
         public Byte Pitch { get; set; }
         public short Item { get; set; }
-
         public override void Write()
         {
             throw new NotImplementedException();
@@ -812,6 +828,43 @@ namespace MinecraftLibrary
             Rotation = Byte;
             Pitch = Byte;
             Item = Short;
+            byte xx;
+            xx = Byte;
+            var n = 0f;
+            while (xx != (byte)127)
+            {
+                int index = xx & 0x1F; //Lower 5 bits
+                int ty = xx >> 5;     //Upper 3 bits
+                switch (ty)
+                {
+                    case 0:
+                        n = SByte;
+                        break;
+                    case 1:
+                        n = Short;
+                        break;
+                    case 2:
+                        n = Int;
+                        break;
+                    case 3:
+                        n = Float;
+                        break;
+                    case 4:
+                        var nn = String;
+                        break;
+                    case 5:
+                        n = Short;
+                        n = SByte;
+                        n = Short;
+                        break;
+                    case 6:
+                        n = Int;
+                        n = Int;
+                        n = Int;
+                        break;
+                }
+                xx = Byte;
+            }
         }
     }
     //0x15
@@ -1282,7 +1335,7 @@ namespace MinecraftLibrary
         }
     }
     //0x32
-    public class Packet_PreChunk : Packet
+  /*  public class Packet_PreChunk : Packet
     {
         public int X { get; set; }
         public int Z { get; set; }
@@ -1298,6 +1351,7 @@ namespace MinecraftLibrary
             Mode = Bool;
         }
     }
+    */
     //0x33  //!
     public class Packet_MapChunk : Packet
     {
@@ -1423,6 +1477,24 @@ namespace MinecraftLibrary
             X = Int;
             Y = Int;
             Z = Int;
+        }
+    }
+    //0x38
+        public class Packet_MapChunkBulk : Packet
+    {
+        public short Count { get; set; }
+        public int Length { get; set; }
+        public byte Metadata { get; set; }
+        public override void Write()
+        {
+            throw new NotImplementedException();
+        }
+        public override void Read()
+        {
+            Count = Short;
+            Length = Int;
+            Metadata = Byte;
+            ReadByteArray((Length)+(12*Count));
         }
     }
     //0x3C

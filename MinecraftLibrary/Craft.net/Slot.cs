@@ -112,7 +112,7 @@ namespace Craft.Net.Server
             return s;
         }
 
-        public static bool TryReadSlot(byte[] buffer, ref int offset, out Slot slot)
+        /* public static bool TryReadSlot(byte[] buffer, ref int offset, out Slot slot)
         {
             slot = new Slot();
             if (!Packet.TryReadShort(buffer, ref offset, out slot.Id))
@@ -172,7 +172,7 @@ namespace Craft.Net.Server
         /// </summary>
         /// <returns></returns>
         /// <remarks></remarks>
-        public byte[] GetFullData()
+       public byte[] GetFullData()
         {
             byte[] data = new byte[0]
                 .Concat(Packet.CreateShort(Id)).ToArray();
@@ -187,7 +187,7 @@ namespace Craft.Net.Server
             data = data.Concat(Packet.CreateShort((short)b.Length)).Concat(b).ToArray();
 
             return data;
-        }
+        } */
 
         static short ReadShort(Stream stream)
         {

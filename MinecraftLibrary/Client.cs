@@ -199,14 +199,17 @@ namespace MinecraftLibrary
             registerPacket(PacketType.EntityEffect, typeof(Packet_EntityEffect));
             registerPacket(PacketType.RemoveEntityEffect, typeof(Packet_RemoveEntityEffect));
             registerPacket(PacketType.Experience, typeof(Packet_Experience));
-            registerPacket(PacketType.PreChunk, typeof(Packet_PreChunk));
+            //registerPacket(PacketType.PreChunk, typeof(Packet_PreChunk));
             registerPacket(PacketType.MapChunk, typeof(Packet_MapChunk));
             registerPacket(PacketType.MultiBlockChange, typeof(Packet_MultiBlockChange));
             registerPacket(PacketType.BlockChange, typeof(Packet_BlockChange));
             registerPacket(PacketType.BlockAction, typeof(Packet_BlockAction));
+            registerPacket(PacketType.BlockBreakAnimation, typeof(Packet_BlockBreakingAnimation));
+            registerPacket(PacketType.MapChunkBulk, typeof(Packet_MapChunkBulk));
             registerPacket(PacketType.Explosion, typeof(Packet_Explosion));
             registerPacket(PacketType.SoundEffect, typeof(Packet_SoundEffect));
-            registerPacket(PacketType.NewOrInvalidState, typeof(Packet_NewOrInvalidState));
+            registerPacket(PacketType.NamedSoundEffect, typeof(Packet_NamedSoundEffect));
+            //registerPacket(PacketType.NewOrInvalidState, typeof(Packet_NewOrInvalidState));
             registerPacket(PacketType.Thunder, typeof(Packet_Thunder));
             registerPacket(PacketType.OpenWnd, typeof(Packet_OpenWnd));
             registerPacket(PacketType.CloseWnd, typeof(Packet_CloseWnd));
@@ -228,6 +231,7 @@ namespace MinecraftLibrary
             registerPacket(PacketType.EncryptionRequest, typeof(Packet_EncryptionRequest));
             //registerPacket(PacketType.ServerListPing, typeof(Packet_ServerListPing));
             registerPacket(PacketType.Kick, typeof(Packet_Kick));
+
 
             //PacketMap.Initialize();
             if (File.Exists("Out.bin"))
