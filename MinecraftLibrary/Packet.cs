@@ -167,7 +167,7 @@ namespace MinecraftLibrary
             System.Diagnostics.Debug.WriteLine("STUBBED!");
             return tmp;
         }
-        protected byte[] ReadByteArray(int len)
+        public byte[] ReadByteArray(int len)
         {
             byte[] tmp = new byte[len];
             str.Read(tmp, 0, len);
@@ -316,63 +316,63 @@ namespace MinecraftLibrary
                 //}
              }
             */
-         Slot slot=new Slot();
-        Slot.ReadSlot(str);
+         //Slot slot=new Slot();
+        //Slot.ReadSlot(str);
         
         }
 
         protected Stream str;
         public Stream Stream { get { return str; } set { str = value; } }
-        protected char Char
+        public char Char
         {
             get { return (char)ReadByte(); }
             set { WriteByte((byte)value); }
         }
-        protected byte Byte
+        public byte Byte
         {
             get { return ReadByte(); }
             set { WriteByte( value); }
         }
-        protected SByte SByte
+        public SByte SByte
         {
             get { return (SByte)Byte; }
             set { Byte=(byte)value; }
         }
-        protected byte[] Bytes
+        public byte[] Bytes
         {
             set { WriteByteArray(value,value.Length); }
         }
-        protected short Short
+        public short Short
         {
             get { return ReadShort(); }
             set { WriteShort(value); }
         }
-        protected int Int
+        public int Int
         {
             get { return ReadInt(); }
             set { WriteInt(value); }
         }
-        protected long Long
+        public long Long
         {
             get { return ReadLong(); }
             set { WriteLong(value); }
         }
-        protected bool Bool
+        public bool Bool
         {
             get { return ReadBool(); }
             set { WriteBool(value); }
         }
-        protected float Float
+        public float Float
         {
             get { return ReadFloat(); }
             set { WriteFloat(value); }
         }
-        protected double Double
+        public double Double
         {
             get { return ReadDouble(); }
             set { WriteDouble(value); }
         }
-        protected string String
+        public string String
         {
             get { return ReadString(); }
             set { WriteString(value); }

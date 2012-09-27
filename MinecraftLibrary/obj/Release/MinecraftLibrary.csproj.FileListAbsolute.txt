@@ -23,3 +23,8 @@ G:\github\SharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.dl
 G:\github\SharpMinecraftLibrary\MinecraftLibrary\bin\Release\MinecraftLibrary.dll
 G:\github\SharpMinecraftLibrary\MinecraftLibrary\bin\Release\MinecraftLibrary.pdb
 G:\github\SharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.pdb
+C:\programming\NET\SharpMinecraftLibrary\MinecraftLibrary\bin\Release\MinecraftLibrary.dll
+C:\programming\NET\SharpMinecraftLibrary\MinecraftLibrary\bin\Release\MinecraftLibrary.pdb
+C:\programming\NET\SharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.csprojResolveAssemblyReference.cache
+C:\programming\NET\SharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.dll
+C:\programming\NET\SharpMinecraftLibrary\MinecraftLibrary\obj\Release\MinecraftLibrary.pdb
