@@ -209,6 +209,7 @@ namespace MinecraftLibrary
             registerPacket(PacketType.Explosion, typeof(Packet_Explosion));
             registerPacket(PacketType.SoundEffect, typeof(Packet_SoundEffect));
             registerPacket(PacketType.NamedSoundEffect, typeof(Packet_NamedSoundEffect));
+            registerPacket(PacketType.GameStateChange, typeof(Packet_GameStateChange));
             //registerPacket(PacketType.NewOrInvalidState, typeof(Packet_NewOrInvalidState));
             registerPacket(PacketType.Thunder, typeof(Packet_Thunder));
             registerPacket(PacketType.OpenWnd, typeof(Packet_OpenWnd));

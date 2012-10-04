@@ -59,7 +59,7 @@ namespace Mogre.Tutorials
                         mc.sendPacket(r);
                     }
                     break;
-                case 0x32:
+               /* case 0x32:
                     Packet_PreChunk c = (Packet_PreChunk)e.packet;
                     if (c.Mode)
                     {
@@ -69,7 +69,7 @@ namespace Mogre.Tutorials
                     else
                         if (chunks.ContainsKey(c.X + "_" + c.Z))
                             chunks.Remove(c.X + "_" + c.Z);
-                    break;
+                    break; */
                 case 0x33:
                     Packet_MapChunk mch = (Packet_MapChunk)e.packet;
                     int cx, cz;

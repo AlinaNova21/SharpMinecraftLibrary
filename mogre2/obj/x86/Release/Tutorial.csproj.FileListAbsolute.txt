@@ -37,3 +37,15 @@ C:\Users\ADAM\Documents\Git\sharpMinecraftLibrary\mogre2\bin\Release\MinecraftLi
 C:\programming\NET\SharpMinecraftLibrary\mogre2\bin\Release\MinecraftClient.exe.config
 C:\programming\NET\SharpMinecraftLibrary\mogre2\obj\x86\Release\MinecraftClient.exe
 C:\programming\NET\SharpMinecraftLibrary\mogre2\obj\x86\Release\MinecraftClient.pdb
+G:\github\SharpMinecraftLibrary\mogre2\bin\Release\MinecraftClient.exe.config
+G:\github\SharpMinecraftLibrary\mogre2\obj\x86\Release\MinecraftClient.exe
+G:\github\SharpMinecraftLibrary\mogre2\obj\x86\Release\MinecraftClient.pdb
+G:\github\SharpMinecraftLibrary\mogre2\obj\x86\Release\Tutorial.csprojResolveAssemblyReference.cache
+G:\github\SharpMinecraftLibrary\mogre2\bin\Release\MinecraftClient.exe
+G:\github\SharpMinecraftLibrary\mogre2\bin\Release\MinecraftClient.pdb
+G:\github\SharpMinecraftLibrary\mogre2\bin\Release\MinecraftLibrary.dll
+G:\github\SharpMinecraftLibrary\mogre2\bin\Release\Mogre.dll
+G:\github\SharpMinecraftLibrary\mogre2\bin\Release\Mogre.TutorialFramework.dll
+G:\github\SharpMinecraftLibrary\mogre2\bin\Release\MOIS.dll
+G:\github\SharpMinecraftLibrary\mogre2\bin\Release\YamlSerializer.dll
+G:\github\SharpMinecraftLibrary\mogre2\bin\Release\MinecraftLibrary.pdb

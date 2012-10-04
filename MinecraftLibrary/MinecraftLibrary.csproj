@@ -179,6 +179,7 @@
     <Compile Include="Craft.net\Cryptography.cs" />
     <Compile Include="Craft.net\Difficulty.cs" />
     <Compile Include="Craft.net\GameMode.cs" />
+    <Compile Include="Craft.net\Slot.cs" />
     <Compile Include="Craft.net\Worlds\Chunk.cs" />
     <Compile Include="Craft.net\Worlds\Dimension.cs" />
     <Compile Include="Craft.net\Worlds\Entities\Entity.cs" />
@@ -231,7 +232,6 @@
     <Content Include="Zlib\LICENSE.jzlib.txt" />
     <Content Include="Zlib\License.zlib.txt" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

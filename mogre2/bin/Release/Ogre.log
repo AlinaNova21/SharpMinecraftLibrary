@@ -1,52 +1,53 @@
-14:03:37: Creating resource group General
-14:03:37: Creating resource group Internal
-14:03:37: Creating resource group Autodetect
-14:03:37: SceneManagerFactory for type 'DefaultSceneManager' registered.
-14:03:37: Registering ResourceManager for type Material
-14:03:37: Registering ResourceManager for type Mesh
-14:03:37: Registering ResourceManager for type Skeleton
-14:03:37: MovableObjectFactory for type 'ParticleSystem' registered.
-14:03:37: OverlayElementFactory for type Panel registered.
-14:03:37: OverlayElementFactory for type BorderPanel registered.
-14:03:37: OverlayElementFactory for type TextArea registered.
-14:03:37: Registering ResourceManager for type Font
-14:03:37: ArchiveFactory for archive type FileSystem registered.
-14:03:37: ArchiveFactory for archive type Zip registered.
-14:03:37: DDS codec registering
-14:03:37: FreeImage version: 3.13.1
-14:03:37: This program uses FreeImage, a free, open source image library supporting all common bitmap formats. See http://freeimage.sourceforge.net for details
-14:03:37: Supported formats: bmp,ico,jpg,jif,jpeg,jpe,jng,koa,iff,lbm,mng,pbm,pbm,pcd,pcx,pgm,pgm,png,ppm,ppm,ras,tga,targa,tif,tiff,wap,wbmp,wbm,psd,cut,xbm,xpm,gif,hdr,g3,sgi,exr,j2k,j2c,jp2,pfm,pct,pict,pic,bay,bmq,cr2,crw,cs1,dc2,dcr,dng,erf,fff,hdr,k25,kdc,mdc,mos,mrw,nef,orf,pef,pxn,raf,raw,rdc,sr2,srf,arw,3fr,cine,ia,kc2,mef,nrw,qtk,rw2,sti,drf,dsc,ptx,cap,iiq,rwz
-14:03:37: PVRTC codec registering
-14:03:37: Registering ResourceManager for type HighLevelGpuProgram
-14:03:37: Registering ResourceManager for type Compositor
-14:03:37: MovableObjectFactory for type 'Entity' registered.
-14:03:37: MovableObjectFactory for type 'Light' registered.
-14:03:37: MovableObjectFactory for type 'BillboardSet' registered.
-14:03:37: MovableObjectFactory for type 'ManualObject' registered.
-14:03:37: MovableObjectFactory for type 'BillboardChain' registered.
-14:03:37: MovableObjectFactory for type 'RibbonTrail' registered.
-14:03:37: Loading library .\RenderSystem_Direct3D9
-14:03:37: Installing plugin: D3D9 RenderSystem
-14:03:37: D3D9 : Direct3D9 Rendering Subsystem created.
-14:03:37: D3D9: Driver Detection Starts
-14:03:37: D3D9: Driver Detection Ends
-14:03:38: Plugin successfully installed
-14:03:38: Loading library .\RenderSystem_GL
-14:03:38: Installing plugin: GL RenderSystem
-14:03:38: OpenGL Rendering Subsystem created.
-14:03:38: Plugin successfully installed
-14:03:38: Loading library .\Plugin_OctreeSceneManager
-14:03:38: Installing plugin: Octree & Terrain Scene Manager
-14:03:38: Plugin successfully installed
-14:03:38: *-*-* OGRE Initialising
-14:03:38: *-*-* Version 1.7.1 (Cthugha)
-14:03:38: D3D9 : RenderSystem Option: Allow NVPerfHUD = Yes
-14:03:38: D3D9 : RenderSystem Option: FSAA = 0
-14:03:38: D3D9 : RenderSystem Option: Floating-point mode = Fastest
-14:03:38: D3D9 : RenderSystem Option: Full Screen = No
-14:03:38: D3D9 : RenderSystem Option: Rendering Device = Monitor-1-Intel(R) HD Graphics
-14:03:38: D3D9 : RenderSystem Option: Resource Creation Policy = Create on all devices
-14:03:38: D3D9 : RenderSystem Option: VSync = No
-14:03:38: D3D9 : RenderSystem Option: VSync Interval = 1
-14:03:38: D3D9 : RenderSystem Option: Video Mode = 800 x 600 @ 32-bit colour
-14:03:38: D3D9 : RenderSystem Option: sRGB Gamma Conversion = No
+22:15:34: Creating resource group General
+22:15:34: Creating resource group Internal
+22:15:34: Creating resource group Autodetect
+22:15:34: SceneManagerFactory for type 'DefaultSceneManager' registered.
+22:15:34: Registering ResourceManager for type Material
+22:15:34: Registering ResourceManager for type Mesh
+22:15:34: Registering ResourceManager for type Skeleton
+22:15:34: MovableObjectFactory for type 'ParticleSystem' registered.
+22:15:34: OverlayElementFactory for type Panel registered.
+22:15:34: OverlayElementFactory for type BorderPanel registered.
+22:15:34: OverlayElementFactory for type TextArea registered.
+22:15:34: Registering ResourceManager for type Font
+22:15:34: ArchiveFactory for archive type FileSystem registered.
+22:15:34: ArchiveFactory for archive type Zip registered.
+22:15:34: DDS codec registering
+22:15:34: FreeImage version: 3.13.1
+22:15:34: This program uses FreeImage, a free, open source image library supporting all common bitmap formats. See http://freeimage.sourceforge.net for details
+22:15:34: Supported formats: bmp,ico,jpg,jif,jpeg,jpe,jng,koa,iff,lbm,mng,pbm,pbm,pcd,pcx,pgm,pgm,png,ppm,ppm,ras,tga,targa,tif,tiff,wap,wbmp,wbm,psd,cut,xbm,xpm,gif,hdr,g3,sgi,exr,j2k,j2c,jp2,pfm,pct,pict,pic,bay,bmq,cr2,crw,cs1,dc2,dcr,dng,erf,fff,hdr,k25,kdc,mdc,mos,mrw,nef,orf,pef,pxn,raf,raw,rdc,sr2,srf,arw,3fr,cine,ia,kc2,mef,nrw,qtk,rw2,sti,drf,dsc,ptx,cap,iiq,rwz
+22:15:34: PVRTC codec registering
+22:15:34: Registering ResourceManager for type HighLevelGpuProgram
+22:15:34: Registering ResourceManager for type Compositor
+22:15:34: MovableObjectFactory for type 'Entity' registered.
+22:15:34: MovableObjectFactory for type 'Light' registered.
+22:15:34: MovableObjectFactory for type 'BillboardSet' registered.
+22:15:34: MovableObjectFactory for type 'ManualObject' registered.
+22:15:34: MovableObjectFactory for type 'BillboardChain' registered.
+22:15:34: MovableObjectFactory for type 'RibbonTrail' registered.
+22:15:34: Loading library .\RenderSystem_Direct3D9
+22:15:34: Installing plugin: D3D9 RenderSystem
+22:15:34: D3D9 : Direct3D9 Rendering Subsystem created.
+22:15:34: D3D9: Driver Detection Starts
+22:15:34: D3D9: Driver Detection Ends
+22:15:35: Plugin successfully installed
+22:15:35: Loading library .\RenderSystem_GL
+22:15:35: Installing plugin: GL RenderSystem
+22:15:35: OpenGL Rendering Subsystem created.
+22:15:36: Plugin successfully installed
+22:15:36: Loading library .\Plugin_OctreeSceneManager
+22:15:36: Installing plugin: Octree & Terrain Scene Manager
+22:15:36: Plugin successfully installed
+22:15:36: *-*-* OGRE Initialising
+22:15:36: *-*-* Version 1.7.1 (Cthugha)
+22:15:36: D3D9 : RenderSystem Option: Allow NVPerfHUD = Yes
+22:15:36: D3D9 : RenderSystem Option: FSAA = 0
+22:15:36: D3D9 : RenderSystem Option: Floating-point mode = Fastest
+22:15:36: D3D9 : RenderSystem Option: Full Screen = No
+22:15:36: D3D9 : RenderSystem Option: Rendering Device = Monitor-1-Intel(R) HD Graphics
+22:15:36: D3D9 : RenderSystem Option: Resource Creation Policy = Create on all devices
+22:15:36: D3D9 : RenderSystem Option: VSync = No
+22:15:36: D3D9 : RenderSystem Option: VSync Interval = 1
+22:15:36: D3D9 : RenderSystem Option: Video Mode = 800 x 600 @ 32-bit colour
+22:15:36: D3D9 : RenderSystem Option: sRGB Gamma Conversion = No
+22:15:36: D3D9 : RenderSystem Option: Rendering Device = Monitor-1-ATI Radeon HD 5400 Series
