@@ -15,7 +15,7 @@ namespace MinecraftLibrary
 {
     public class Client
     {
-        const int Protocol = 39; //1.3.1!
+        const int Protocol = 47; //1.3.1!
         const int LauncherVersion = 13;
         public double x = 0;
         public double y = 0;
@@ -86,7 +86,7 @@ namespace MinecraftLibrary
 
         void packetHandler()
         {
-            bool debug = true;
+            bool debug = false;
             byte[] tmp = new byte[1];
             Packet packet;
             NetStream = new blockingStream(client.GetStream(), debug);

@@ -58,8 +58,8 @@ Public Class Form1
         'mc.connect("192.168.159.129", 25566) 'MineOS+
         'mc.connect("127.0.0.1", 25564) 'SMPROXY
         'mc.connect("178.33.81.147", 25565)
-        'mc.connect("37.59.228.108", 25565)
-        mc.connect("localhost", 25565)
+        mc.connect("37.59.228.108", 25565)
+        'mc.connect("localhost", 25565)
         'mc.packetReceivedEventHandler+
         Dim tmp As String = ""
         While Not tmp = ":exit" And Not tmp = ":quit"

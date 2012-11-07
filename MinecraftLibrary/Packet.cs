@@ -482,6 +482,7 @@ namespace MinecraftLibrary
     public class Packet_Time : Packet
     {
         public long Time { get; set; }
+        public long TimeofDay { get; set; }
         public override void Write()
         {
             throw new NotImplementedException();
@@ -489,6 +490,7 @@ namespace MinecraftLibrary
         public override void Read()
         {
             Time = Long;
+            TimeofDay = Long;
         }
     }
     //0x05
@@ -1543,6 +1545,7 @@ namespace MinecraftLibrary
         public byte Y { get; set; }
         public int Z { get; set; }
         public int Data { get; set; }
+        public bool NoVolumeDecrease { get; set; }
         public override void Write()
         {
             throw new NotImplementedException();
@@ -1554,6 +1557,7 @@ namespace MinecraftLibrary
             Y = Byte;
             Z = Int;
             Data = Int;
+            NoVolumeDecrease = Bool; 
         }
     }
     //0x3E
@@ -1911,16 +1915,18 @@ namespace MinecraftLibrary
         public byte ViewDistance { get; set; }
         public byte ChatFlags { get; set; }
         public byte Difficulty { get; set; }
+        public bool ShowCape { get; set; }
         public override void Write()
         {
-            throw new NotImplementedException();
+            String = Locale;
+            Byte = ViewDistance;
+            Byte = ChatFlags;
+            Byte = Difficulty;
+            Bool = ShowCape;
         }
         public override void Read()
         {
-            Locale = String;
-            ViewDistance = Byte;
-            ChatFlags = Byte;
-            Difficulty = Byte;
+           throw new NotImplementedException(); 
         }
     }
     //0xCD
@@ -2001,6 +2007,20 @@ namespace MinecraftLibrary
         }
     }
     // TODO: Implement 0xFE Server List Ping (Basically get server info)
+    //0xFE
+    public class Packet_ServerListPing : Packet
+    {
+        public byte Magic { get; set; }
+
+        public override void Write()
+        {
+            Magic = 1;
+        }
+        public override void Read()
+        {
+            throw new NotImplementedException();
+        }
+    }
     //0xFF
     public class Packet_Kick : Packet
     {
