@@ -15,7 +15,7 @@ namespace MinecraftLibrary
 {
     public class Client
     {
-        const int Protocol = 47; //1.3.1!
+        const int Protocol = 49; //1.4.4!
         const int LauncherVersion = 13;
         public double x = 0;
         public double y = 0;
