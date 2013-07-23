@@ -49,7 +49,7 @@ Public Class Form1
         mc.name = Console.ReadLine()
         w("Please enter a password (or leave empty):")
         mc.pass = Console.ReadLine
-        If Not mc.Verify() Then
+        If Not mc.Verify() And Not mc.pass = "" Then
             w("wrong data")
         End If
         mc.output2 = AddressOf writeDebug
@@ -58,7 +58,8 @@ Public Class Form1
         'mc.connect("192.168.159.129", 25566) 'MineOS+
         'mc.connect("127.0.0.1", 25564) 'SMPROXY
         'mc.connect("178.33.81.147", 25565)
-        mc.connect("37.59.228.108", 25565)
+        'mc.connect("37.59.228.108", 25565)
+        mc.connect("mcags.com", 25566)
         'mc.connect("localhost", 25565)
         'mc.packetReceivedEventHandler+
         Dim tmp As String = ""

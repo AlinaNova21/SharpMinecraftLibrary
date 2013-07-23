@@ -26,6 +26,8 @@ namespace MinecraftLibrary
         PlayerLook = 0x0C,
         PlayerPosAndLook = 0x0D,
         PlayerDigging = 0x0E,
+        PlayerBlockPlacement = 0x0F,
+        HeldItemChange = 0x10,
         UseBed = 0x11,
         Animation = 0x12,
         EntityAction = 0x13,
@@ -36,6 +38,7 @@ namespace MinecraftLibrary
         MobSpawn = 0x18,
         EntityPainting = 0x19,
         ExpOrb = 0x1A,
+        SteerVehicle = 0x1B,
         EntityVel = 0x1C,
         DestroyEntity = 0x1D,
         Entity = 0x1E,
@@ -50,16 +53,17 @@ namespace MinecraftLibrary
         EntityEffect = 0x29,
         RemoveEntityEffect = 0x2A,
         Experience = 0x2B,
-        PreChunk = 0x32,
+        EntityProperties = 0x2C,
         MapChunk = 0x33,
         MultiBlockChange = 0x34,
         BlockChange = 0x35,
         BlockAction = 0x36,
         BlockBreakAnimation = 0x37,
         MapChunkBulk = 0x38,
-        NamedSoundEffect = 0x3E,
         Explosion = 0x3C,
         SoundEffect = 0x3D,
+        NamedSoundEffect = 0x3E,
+        Particle = 0x3F,
         GameStateChange = 0x46,
         Thunder = 0x47,
         OpenWnd = 0x64,
@@ -70,15 +74,21 @@ namespace MinecraftLibrary
         UpdateWndProp = 0x69,
         Transaction = 0x6A,
         CreativeInventoryAction = 0x6B,
+        EnchantItem = 0x6C,
         UpdateSign = 0x82,
         ItemData = 0x83,
         EntityTileUpdate = 0x84,
+        TileEditorOpen = 0x85,
         IncStatistic = 0xC8,
         PlayerListItem = 0xC9,
         PlayerAbilities = 0xCA,
         TabComplete = 0xCB,
         LocaleandViewDistance = 0xCC,
         ClientStatus = 0xCD,
+        ScoreboardObjective = 0xCE,
+        UpdateScore = 0xCF,
+        DisplayScoreboard = 0xD0,
+        Teams = 0xD1,
         PluginMessage = 0xFA,
         EncryptionResponse = 0xFC,
         EncryptionRequest = 0xFD,
@@ -88,7 +98,9 @@ namespace MinecraftLibrary
     public enum DigStatus
     {
         StartedDigging = 0,
+        CancelDigging = 1,
         FinishedDigging = 2,
+        DropItemStack = 3,
         DropItem = 4,
         ShootArrowOrFinishEating = 5
     }
@@ -319,6 +331,44 @@ namespace MinecraftLibrary
             Slot slot = new Slot();
             Slot.ReadSlot(str);
 
+        }
+        protected void ReadMetaData()
+        {
+            byte xx;
+            xx = Byte;
+            var n = 0f;
+            while (xx != (byte)127)
+            {
+                int index = xx & 0x1F; //Lower 5 bits
+                int ty = xx >> 5;     //Upper 3 bits
+                switch (ty)
+                {
+                    case 0:
+                        n = SByte;
+                        break;
+                    case 1:
+                        n = Short;
+                        break;
+                    case 2:
+                        n = Int;
+                        break;
+                    case 3:
+                        n = Float;
+                        break;
+                    case 4:
+                        var nn = String;
+                        break;
+                    case 5:
+                        ReadSlotData();
+                        break;
+                    case 6:
+                        n = Int;
+                        n = Int;
+                        n = Int;
+                        break;
+                }
+                xx = Byte;
+            }
         }
 
         protected Stream str;
@@ -551,7 +601,7 @@ namespace MinecraftLibrary
     //0x08
     public class Packet_UpdateHealth : Packet
     {
-        public short Health { get; set; }
+        public float Health { get; set; }
         public short Food { get; set; }
         public float Saturation { get; set; }
 
@@ -561,7 +611,7 @@ namespace MinecraftLibrary
         }
         public override void Read()
         {
-            Health = Short;
+            Health = Float;
             Food = Short;
             Saturation = Float;
         }
@@ -719,7 +769,7 @@ namespace MinecraftLibrary
             SByte = (Y);
             Int = (Z);
             SByte = ((sbyte)Direction);
-            Int = (Held);
+            Int = (Held); //TODO: Fix this! Should be Slot!
             Byte = curX;
             Byte = curY;
             Byte = curZ;
@@ -742,7 +792,7 @@ namespace MinecraftLibrary
         }
         public override void Read()
         {
-            throw new NotImplementedException();
+            SlotID = Short;
         }
     }
     //0x11
@@ -792,17 +842,20 @@ namespace MinecraftLibrary
     {
         public int EID { get; set; }
         public MobAction mobAction { get; set; }
+        public int JumpBoost { get; set; }
 
         public override void Write()
         {
             Int = (EID);
             SByte = ((sbyte)mobAction);
+            Int = JumpBoost;
         }
 
         public override void Read()
         {
             EID = Int;
             mobAction = (MobAction)SByte;
+            JumpBoost = Int;
         }
     }
     //0x14
@@ -831,7 +884,7 @@ namespace MinecraftLibrary
             Rotation = Byte;
             Pitch = Byte;
             Item = Short;
-            byte xx;
+            byte xx; //TODO: Check Metadata
             xx = Byte;
             var n = 0f;
             while (xx != (byte)127)
@@ -870,7 +923,7 @@ namespace MinecraftLibrary
             }
         }
     }
-    //0x15
+    //0x15 //TODO: No longer needed
     public class Packet_PickupSpawn : Packet
     {
         public int EID { get; set; }
@@ -927,6 +980,8 @@ namespace MinecraftLibrary
         public int X { get; set; }
         public int Y { get; set; }
         public int Z { get; set; }
+        public sbyte Pitch { get; set; }
+        public sbyte Yaw { get; set; }
         public int FbEID { get; set; }
         public short SpeedX { get; set; }
         public short SpeedY { get; set; }
@@ -944,6 +999,8 @@ namespace MinecraftLibrary
             X = Int;
             Y = Int;
             Z = Int;
+            Pitch = SByte;
+            Yaw = SByte;
             FbEID = Int;
             if (FbEID > 0)
             {
@@ -976,50 +1033,14 @@ namespace MinecraftLibrary
             X = Int;
             Y = Int;
             Z = Int;
-            Yaw = Byte;
             Pitch = Byte;
             HeadYaw = Byte;
+            Yaw = Byte;
             short t;
             t = Short;
             t = Short;
             t = Short;
-            byte xx;
-            xx = Byte;
-            var n = 0f;
-            while (xx != (byte)127)
-            {
-                int index = xx & 0x1F; //Lower 5 bits
-                int ty = xx >> 5;     //Upper 3 bits
-                switch (ty)
-                {
-                    case 0:
-                        n = SByte;
-                        break;
-                    case 1:
-                        n = Short;
-                        break;
-                    case 2:
-                        n = Int;
-                        break;
-                    case 3:
-                        n = Float;
-                        break;
-                    case 4:
-                        var nn = String;
-                        break;
-                    case 5:
-                        n = Short;
-                        n = SByte;
-                        n = Short;
-                        break;
-                    case 6:
-                        n = Int;
-                        n = Int;
-                        n = Int;
-                        break;
-                }
-                xx = Byte;
-            }
+            ReadMetaData();
         }
     }
     //0x19
@@ -1066,6 +1087,27 @@ namespace MinecraftLibrary
             Count = Short;
         }
     }
+    //0x1B
+    public class Packet_SteerVehicle : Packet
+    {
+        public float Sideways { get; set; }
+        public float Forward { get; set; }
+        public bool Jump { get; set; }
+        public bool Unmount { get; set; }
+
+        public override void Write()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Read()
+        {
+            Sideways = Float;
+            Forward = Float;
+            Jump = Bool;
+            Unmount = Bool;
+        }
+    }
     //0x1C
     public class Packet_EntityVel : Packet
     {
@@ -1088,7 +1130,7 @@ namespace MinecraftLibrary
     //0x1D
     public class Packet_DestroyEntity : Packet
     {
-        public int EID { get; set; }
+        public int[] EIDs { get; set; }
         public override void Write()
         {
             throw new NotImplementedException();
@@ -1096,9 +1138,9 @@ namespace MinecraftLibrary
         public override void Read()
         {
             byte cnt = Byte;
-            int tmp;
+            EIDs = new int[cnt];
             for (int i = 0; i < cnt; i++)
-                tmp = Int;
+                EIDs[i] = Int;
         }
     }
     //0x1E
@@ -1223,7 +1265,7 @@ namespace MinecraftLibrary
         public override void Read()
         {
             EID = Int;
-            Status = (EntityStatus)Byte;
+            Status = (EntityStatus)Byte; //TODO: EntityStatus Enum
         }
     }
     //0x27
@@ -1231,6 +1273,7 @@ namespace MinecraftLibrary
     {
         public int EID { get; set; }
         public int VehicleEID { get; set; }
+        public byte Leash { get; set; }
         public override void Write()
         {
             throw new NotImplementedException();
@@ -1239,6 +1282,7 @@ namespace MinecraftLibrary
         {
             EID = Int;
             VehicleEID = Int;
+            Leash = Byte;
         }
     }
     //0x28
@@ -1254,43 +1298,7 @@ namespace MinecraftLibrary
         public override void Read()
         {
             EID = Int;
-            byte xx;
-            xx = Byte;
-            var n = 0f;
-            while (xx != (byte)127)
-            {
-                int index = xx & 0x1F; //Lower 5 bits
-                int ty = xx >> 5;     //Upper 3 bits
-                switch (ty)
-                {
-                    case 0:
-                        n = SByte;
-                        break;
-                    case 1:
-                        n = Short;
-                        break;
-                    case 2:
-                        n = Int;
-                        break;
-                    case 3:
-                        n = Float;
-                        break;
-                    case 4:
-                        var nn = String;
-                        break;
-                    case 5:
-                        n = Short;
-                        n = SByte;
-                        n = Short;
-                        break;
-                    case 6:
-                        n = Int;
-                        n = Int;
-                        n = Int;
-                        break;
-                }
-                xx = Byte;
-            }
+            ReadMetaData();
         }
     }
     //0x29
@@ -1342,6 +1350,36 @@ namespace MinecraftLibrary
             XPBar = Float;
             Level = Short;
             TotalXP = Short;
+        }
+    }
+    //0x2C
+    public class Packet_EntityProperties : Packet
+    {
+        public int EID { get; set; }
+
+        public override void Write()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Read()
+        {
+            EID = Int;
+            int cnt = Int;
+            object tmp;
+            for (int i = 0; i < cnt; i++)
+            {
+                tmp = String;
+                tmp = Double;
+                short cnt2 = Short;
+                for (int ii = 0; ii < cnt2; ii++)
+                {
+                    tmp = Long;
+                    tmp = Long;
+                    tmp = Double;
+                    tmp = Byte;
+                }
+            }
         }
     }
     //0x32
@@ -1401,8 +1439,8 @@ namespace MinecraftLibrary
             AddBM = Short;
             Size = Int;
             //var n = Int;
-            Data = new byte[Size];
-            str.Read(Data, 0, Size);
+            Data = ReadByteArray(Size); //new byte[Size];
+            //str.Read(Data, 0, Size);
         }
     }
     //0x34 //!
@@ -1449,7 +1487,7 @@ namespace MinecraftLibrary
             Metadata = Byte;
         }
     }
-    //0x36?
+    //0x36
     public class Packet_BlockAction : Packet
     {
         public int X { get; set; }
@@ -1457,6 +1495,7 @@ namespace MinecraftLibrary
         public int Z { get; set; }
         public byte Byte1 { get; set; }
         public byte Byte2 { get; set; }
+        public short BlockID { get; set; }
         public override void Write()
         {
             throw new NotImplementedException();
@@ -1468,6 +1507,7 @@ namespace MinecraftLibrary
             Z = Int;
             Byte1 = Byte;
             Byte2 = Byte;
+            BlockID = Short;
         }
     }
     //0x37
@@ -1477,6 +1517,7 @@ namespace MinecraftLibrary
         public int X { get; set; }
         public int Y { get; set; }
         public int Z { get; set; }
+        public sbyte Stage { get; set; }
         public override void Write()
         {
             throw new NotImplementedException();
@@ -1487,7 +1528,7 @@ namespace MinecraftLibrary
             X = Int;
             Y = Int;
             Z = Int;
-            byte state = Byte;
+            Stage = SByte;
         }
     }
     //0x38
@@ -1495,6 +1536,7 @@ namespace MinecraftLibrary
     {
         public short Count { get; set; }
         public int Length { get; set; }
+        public bool SkyLightSent { get; set; }
         public byte Metadata { get; set; }
         public override void Write()
         {
@@ -1504,6 +1546,7 @@ namespace MinecraftLibrary
         {
             Count = Short;
             Length = Int;
+            SkyLightSent = Bool;
             //Metadata = Byte;
             ReadByteArray((Length) + (12 * Count));
         }
@@ -1516,6 +1559,10 @@ namespace MinecraftLibrary
         public double Z { get; set; }
         public float Radius { get; set; }
         public int RecordCount { get; set; }
+        public float PlayerMotionX { get; set; }
+        public float PlayerMotionY { get; set; }
+        public float PlayerMotionZ { get; set; }
+        
         public override void Write()
         {
             throw new NotImplementedException();
@@ -1535,6 +1582,9 @@ namespace MinecraftLibrary
                 n = Byte;
                 n = Byte;
             }
+            PlayerMotionX = Float;
+            PlayerMotionY = Float;
+            PlayerMotionZ = Float;
         }
     }
     //0x3D
@@ -1583,6 +1633,36 @@ namespace MinecraftLibrary
             Pitch = Byte;
         }
     }
+    //0x3F
+    public class Packet_Particle : Packet
+    {
+        public string ParticleName { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
+        public float OffsetX { get; set; }
+        public float OffsetY { get; set; }
+        public float OffsetZ { get; set; }
+        public float Speed { get; set; }
+        public int Count { get; set; }
+
+        public override void Write()
+        {
+            throw new NotImplementedException();
+        }
+        public override void Read()
+        {
+            ParticleName = String;
+            X = Float;
+            Y = Float;
+            Z = Float;
+            OffsetX = Float;
+            OffsetY = Float;
+            OffsetZ = Float;
+            Speed = Float;
+            Count = Int;
+        }
+    }
     //0x46
     public class Packet_GameStateChange : Packet
     {
@@ -1594,7 +1674,7 @@ namespace MinecraftLibrary
         }
         public override void Read()
         {
-            Reason = (ChangeGameStateReason)Byte;
+            Reason = (ChangeGameStateReason)Byte; //TODO: Update Enum
             Gamemode = Byte;
         }
     }
@@ -1626,6 +1706,9 @@ namespace MinecraftLibrary
         public byte InvType { get; set; }
         public string WndTitle { get; set; }
         public byte SlotCount { get; set; }
+        public bool UseWndTitle { get; set; }
+        public int EID { get; set; }
+
         public override void Write()
         {
             throw new NotImplementedException();
@@ -1636,6 +1719,8 @@ namespace MinecraftLibrary
             InvType = Byte;
             WndTitle = String;
             SlotCount = Byte;
+            UseWndTitle = Bool;
+            EID = Int;
         }
     }
     //0x65
@@ -1661,11 +1746,12 @@ namespace MinecraftLibrary
         public bool IsShiftPressed { get; set; }
         public override void Write()
         {
+            throw new NotImplementedException();
             SByte = (WndID);
             Short = (Slot);
             SByte = (RightClick);
             Short = (ActionNumber);
-            Bool = (IsShiftPressed);
+            Bool = (IsShiftPressed); //TODO: Implement! THis is different in latest protocol!
         }
         public override void Read()
         {
@@ -1806,7 +1892,7 @@ namespace MinecraftLibrary
     {
         public short Type { get; set; }
         public short ID { get; set; }
-        public byte TextLength { get; set; }
+        public short TextLength { get; set; }
         public byte[] Text { get; set; }
 
         public override void Write()
@@ -1817,7 +1903,7 @@ namespace MinecraftLibrary
         {
             Type = Short;
             ID = Short;
-            TextLength = Byte;
+            TextLength = Short;
             Text = ReadByteArray(TextLength);
         }
     }
@@ -1845,11 +1931,31 @@ namespace MinecraftLibrary
             NBTData = ReadByteArray(DataLength);
         }
     }
+    //0x85
+    public class Packet_TileEditorOpen : Packet
+    {
+        public sbyte TileEID { get; set; }
+        public int X { get; set; }
+        public short Y { get; set; }
+        public int Z { get; set; }
+
+        public override void Write()
+        {
+            throw new NotImplementedException();
+        }
+        public override void Read()
+        {
+            TileEID = SByte;
+            X = Int;
+            Y = Short;
+            Z = Int;
+        }
+    }
     //0xC8
     public class Packet_IncStatistic : Packet
     {
         public int StatisticID { get; set; }
-        public byte Amount { get; set; }
+        public int Amount { get; set; }
         public override void Write()
         {
             throw new NotImplementedException();
@@ -1857,7 +1963,7 @@ namespace MinecraftLibrary
         public override void Read()
         {
             StatisticID = Int;
-            Amount = Byte;
+            Amount = Int;
         }
     }
     //0xC9
@@ -1882,8 +1988,8 @@ namespace MinecraftLibrary
     public class Packet_PlayerAbilities : Packet
     {
         public byte Flags { get; set; }
-        public byte FlySpeed { get; set; }
-        public byte WalkSpeed { get; set; }
+        public float FlySpeed { get; set; }
+        public float WalkSpeed { get; set; }
         public override void Write()
         {
             throw new NotImplementedException();
@@ -1891,8 +1997,8 @@ namespace MinecraftLibrary
         public override void Read()
         {
             Flags = Byte;
-            FlySpeed = Byte;
-            WalkSpeed = Byte;
+            FlySpeed = Float;
+            WalkSpeed = Float;
         }
     }
     //0xCB
@@ -1943,6 +2049,7 @@ namespace MinecraftLibrary
             Payload = Byte;
         }
     }
+    //TODO: Scoreboards! (0xCF-0xD1)
     //0xFA
     public class Packet_PluginMessage : Packet
     {

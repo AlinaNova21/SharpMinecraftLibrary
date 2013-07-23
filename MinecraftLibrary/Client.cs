@@ -15,7 +15,7 @@ namespace MinecraftLibrary
 {
     public class Client
     {
-        const int Protocol = 49; //1.4.4!
+        const int Protocol = 74; //1.4.4!
         const int LauncherVersion = 13;
         public double x = 0;
         public double y = 0;
@@ -86,7 +86,7 @@ namespace MinecraftLibrary
 
         void packetHandler()
         {
-            bool debug = false;
+            bool debug = true;
             byte[] tmp = new byte[1];
             Packet packet;
             NetStream = new blockingStream(client.GetStream(), debug);
@@ -175,6 +175,7 @@ namespace MinecraftLibrary
             registerPacket(PacketType.PlayerLook, typeof(Packet_PlayerLook));
             registerPacket(PacketType.PlayerPosAndLook, typeof(Packet_PlayerPosAndLook));
             registerPacket(PacketType.PlayerDigging, typeof(Packet_PlayerDigging));
+            registerPacket(PacketType.HeldItemChange, typeof(Packet_HoldingChange));
             registerPacket(PacketType.UseBed, typeof(Packet_UseBed));
             registerPacket(PacketType.Animation, typeof(Packet_Animation));
             registerPacket(PacketType.EntityAction, typeof(Packet_EntityAction));
@@ -199,6 +200,7 @@ namespace MinecraftLibrary
             registerPacket(PacketType.EntityEffect, typeof(Packet_EntityEffect));
             registerPacket(PacketType.RemoveEntityEffect, typeof(Packet_RemoveEntityEffect));
             registerPacket(PacketType.Experience, typeof(Packet_Experience));
+            registerPacket(PacketType.EntityProperties, typeof(Packet_EntityProperties));
             //registerPacket(PacketType.PreChunk, typeof(Packet_PreChunk));
             registerPacket(PacketType.MapChunk, typeof(Packet_MapChunk));
             registerPacket(PacketType.MultiBlockChange, typeof(Packet_MultiBlockChange));
@@ -306,6 +308,8 @@ namespace MinecraftLibrary
                     break;
                 case PacketType.EncryptionRequest:
                     output("Negotiating Encryption...", true);
+                    packets.Enqueue(new Packet_ClientStatus() { Payload = 0x00 });
+                    break;
                     Packet_EncryptionRequest enc = (Packet_EncryptionRequest)e.packet;
                     server = new Server();
                     server.ServerID = enc.ServerID;

@@ -111,6 +111,28 @@ namespace Craft.Net.Server
 
             return s;
         }
+        public void WriteSlot(Stream stream)
+        {
+            WriteSlot(stream, this);
+        }
+        public static void WriteSlot(Stream stream, Slot s)
+        {
+            WriteShort(stream, s.Id);
+            if (s.Id == -1)
+                return;
+            stream.WriteByte(s.Count);
+            WriteShort(stream, s.Metadata);
+            MemoryStream output = new MemoryStream();
+            MemoryStream nbt = new MemoryStream();
+            s.Nbt.SaveFile(output);
+            GZipStream gzs = new GZipStream(nbt, CompressionMode.Compress, true);
+            gzs.CopyTo(output);
+            gzs.Close();
+            nbt.Close();
+            WriteShort(stream, (short)output.Length);
+            output.CopyTo(stream);
+            output.Close();
+        }
 
         /* public static bool TryReadSlot(byte[] buffer, ref int offset, out Slot slot)
         {
@@ -195,6 +217,13 @@ namespace Craft.Net.Server
             stream.Read(buffer, 0, 2);
             buffer.Reverse();
             return BitConverter.ToInt16(buffer, 0);
+        }
+        static void WriteShort(Stream stream, short value)
+        {
+            byte[] buffer = new byte[2];
+            buffer = BitConverter.GetBytes(value);
+            buffer.Reverse();
+            stream.Write(buffer, 0, 2);
         }
     }
 }
